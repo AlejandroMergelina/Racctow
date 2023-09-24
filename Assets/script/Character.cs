@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Character : MonoBehaviour
 {
     [SerializeField]
-    protected string _name;
+    protected string name;
 
     [SerializeField]
     protected int maxHP;
@@ -21,7 +21,7 @@ public abstract class Character : MonoBehaviour
     protected bool stoon;
 
 
-    protected virtual void Start()
+    private void Start()
     {
 
         currentHP = maxHP;
@@ -31,13 +31,13 @@ public abstract class Character : MonoBehaviour
     public string GetName()
     {
 
-        return _name;
+        return name;
 
     }
     public void SetName(string name)
     {
 
-        this._name = name;
+        this.name = name;
 
     }
 
@@ -106,7 +106,7 @@ public abstract class Character : MonoBehaviour
 
     }
 
-    public abstract IEnumerator Attack(Character it);
+    public abstract void Attack(Character it);
 
     public void TakeDamage(int dmg)
     {

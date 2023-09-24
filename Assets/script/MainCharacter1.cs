@@ -4,30 +4,35 @@ using UnityEngine;
 
 public class MainCharacter1 : Character
 {
+    [SerializeField]
+    private Vector3 center;
+    [SerializeField]
+    float radius;
+    [SerializeField]
+    LayerMask enemyMask;
 
-    bool dodge = false;
+    private float cooldDownDodge;
 
-    public bool GetDodge()
+    private void Update()
     {
 
-        return dodge;
+        if (Input.GetKeyDown(KeyCode.Escape) && cooldDownDodge <= 0)
+        {
+
+            //esquivar
+
+        }
+
+
+
     }
 
-    public void SetDodge(bool dodge)
+    public override void Attack(Character it)
     {
 
-        this.dodge = dodge;
+        transform.position = it.transform.position - new Vector3(0f,0f,0f);
 
-    }
-
-    public override IEnumerator Attack(Character it)
-    {
-
-        EnemyCharacter enemy = it as EnemyCharacter;
-
-        yield return new WaitForSeconds(0f);//cambiar por el tiempo de la animacion
-
-        it.TakeDamage(3);
+        Collider[] spawners = Physics.OverlapSphere(center,radius,enemyMask);
 
         print(it.GetHP());
 

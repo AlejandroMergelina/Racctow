@@ -310,8 +310,8 @@ public class BattleSistem : MonoBehaviour
 
         MainCharacters.TryGetValue(rng, out Character it);
 
-        StartCoroutine(me.Attack(it));  
-        
+        me.Attack(it);
+
         if (it.GetHP() <= 0)
         {
 
@@ -354,7 +354,7 @@ public class BattleSistem : MonoBehaviour
                  
         EnemyCharacters.TryGetValue(i, out Character it);
 
-        StartCoroutine(me.Attack(it));
+        me.Attack(it);
 
         MainChOrder.Dequeue();
 
