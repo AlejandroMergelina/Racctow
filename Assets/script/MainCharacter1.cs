@@ -5,36 +5,53 @@ using UnityEngine;
 public class MainCharacter1 : Character
 {
     [SerializeField]
-    private Vector3 center;
+    private Vector3 centerOfPunch;
     [SerializeField]
     float radius;
     [SerializeField]
-    LayerMask enemyMask;
+    private LayerMask enemyMask;
+    [SerializeField]
+    private Vector3 distanceToEnemy;
+
+    private Vector3 initialPosition;
 
     private float cooldDownDodge;
+
+    protected override void Start()
+    {
+        base.Start();
+        initialPosition = transform.position;
+    }
 
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Escape) && cooldDownDodge <= 0)
+        if (Input.GetKeyDown(KeyCode.Escape) && cooldDownDodge <= 0/* y puede esquivar*/)
         {
 
             //esquivar
 
         }
 
+        else if (Input.GetKeyDown(KeyCode.Escape) /* y puede atacar*/)
+        {
 
+            //atacar
+
+        }
 
     }
 
     public override void Attack(Character it)
     {
 
-        transform.position = it.transform.position - new Vector3(0f,0f,0f);
+        transform.position = it.transform.position - distanceToEnemy;
 
-        Collider[] spawners = Physics.OverlapSphere(center,radius,enemyMask);
+        Collider[] spawners = Physics.OverlapSphere(centerOfPunch,radius,enemyMask);
 
         print(it.GetHP());
+
+        transform.position = initialPosition;
 
     }
 

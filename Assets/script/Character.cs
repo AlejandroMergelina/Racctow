@@ -21,7 +21,7 @@ public abstract class Character : MonoBehaviour
     protected bool stoon;
 
 
-    private void Start()
+    protected virtual void Start()
     {
 
         currentHP = maxHP;
