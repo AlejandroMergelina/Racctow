@@ -32,8 +32,8 @@ public class BattleSistem : MonoBehaviour
     private Queue<Character> EnemyOrder = new Queue<Character>();
     private Queue<Character> MainChOrder = new Queue<Character>();
 
-    Dictionary<int, Character> MainCharacters = new Dictionary<int, Character>();
-    Dictionary<int, Character> EnemyCharacters = new Dictionary<int, Character>();
+    private Dictionary<int, Character> MainCharacters = new Dictionary<int, Character>();
+    private Dictionary<int, Character> EnemyCharacters = new Dictionary<int, Character>();
 
     [SerializeField]
     int tusTurnos, turnosEnemigo;

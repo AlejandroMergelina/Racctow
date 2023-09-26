@@ -7,15 +7,20 @@ public class MainCharacter1 : Character
     [SerializeField]
     private Vector3 centerOfPunch;
     [SerializeField]
-    float radius;
+    private float radius;
     [SerializeField]
     private LayerMask enemyMask;
     [SerializeField]
     private Vector3 distanceToEnemy;
 
+    [SerializeField]
+    private float atackTime;
+    private float currentatAckTime;
+
     private Vector3 initialPosition;
 
     private float cooldDownDodge;
+    private bool canAtack;
 
     protected override void Start()
     {
@@ -32,11 +37,25 @@ public class MainCharacter1 : Character
             //esquivar
 
         }
-
-        else if (Input.GetKeyDown(KeyCode.Escape) /* y puede atacar*/)
+        else if (Input.GetKeyDown(KeyCode.Escape) && canAtack)
         {
 
             ComfirmAtack();
+
+        }
+
+        if (canAtack)
+        {
+
+            currentatAckTime += Time.deltaTime;
+
+            if(currentatAckTime >= atackTime)
+            {
+
+                canAtack = false;
+                currentatAckTime = 0;
+
+            }
 
         }
 
@@ -47,6 +66,8 @@ public class MainCharacter1 : Character
 
         transform.position = it.transform.position - distanceToEnemy;
 
+        canAtack= true;
+
         print(it.GetHP());
 
         transform.position = initialPosition;
@@ -55,6 +76,8 @@ public class MainCharacter1 : Character
 
     void ComfirmAtack()
     {
+
+        canAtack = false;
 
         Collider[] enemy = Physics.OverlapSphere(centerOfPunch, radius, enemyMask);
 
