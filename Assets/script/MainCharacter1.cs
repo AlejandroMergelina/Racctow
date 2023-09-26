@@ -36,7 +36,7 @@ public class MainCharacter1 : Character
         else if (Input.GetKeyDown(KeyCode.Escape) /* y puede atacar*/)
         {
 
-            //atacar
+            ComfirmAtack();
 
         }
 
@@ -47,11 +47,18 @@ public class MainCharacter1 : Character
 
         transform.position = it.transform.position - distanceToEnemy;
 
-        Collider[] spawners = Physics.OverlapSphere(centerOfPunch,radius,enemyMask);
-
         print(it.GetHP());
 
         transform.position = initialPosition;
+
+    }
+
+    void ComfirmAtack()
+    {
+
+        Collider[] enemy = Physics.OverlapSphere(centerOfPunch, radius, enemyMask);
+
+        enemy[1].GetComponent<EnemyCharacter>().TakeDamage(power);
 
     }
 

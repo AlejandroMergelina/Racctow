@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Character : MonoBehaviour
 {
     [SerializeField]
-    protected string name;
+    protected string _name;
 
     [SerializeField]
     protected int maxHP;
@@ -31,13 +31,13 @@ public abstract class Character : MonoBehaviour
     public string GetName()
     {
 
-        return name;
+        return _name;
 
     }
     public void SetName(string name)
     {
 
-        this.name = name;
+        this._name = name;
 
     }
 
