@@ -22,6 +22,9 @@ public class MainCharacter1 : Character
     private float cooldDownDodge;
     private bool canAtack;
 
+    int i;
+    Character it;
+
     [SerializeField]
     private Animator animator;
 
@@ -73,8 +76,10 @@ public class MainCharacter1 : Character
 
     }
 
-    public override void Attack(Character it)
+    public override void Attack(int i,Character it)
     {
+        this.it = it;
+        this.i = i;
 
         transform.position = it.transform.position - distanceToEnemy;
 
@@ -97,11 +102,12 @@ public class MainCharacter1 : Character
 
     }
 
-    public void FinishAnimationAtack()
+    void FinishAnimationAtack()
     {
 
-
+        BattleSistem.Instance.CheckLive(i, it);
 
     }
+    
 
 }

@@ -106,7 +106,7 @@ public abstract class Character : MonoBehaviour
 
     }
 
-    public abstract void Attack(Character it);
+    public abstract void Attack(int i,Character it);
 
     public void TakeDamage(int dmg)
     {

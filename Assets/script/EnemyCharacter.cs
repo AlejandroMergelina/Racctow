@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyCharacter : Character
 {
-    public override void Attack(Character it)
+    public override void Attack(int i, Character it)
     {
 
 

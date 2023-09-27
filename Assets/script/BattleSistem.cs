@@ -38,7 +38,7 @@ public class BattleSistem : MonoBehaviour
     [SerializeField]
     int tusTurnos, turnosEnemigo;
 
-
+    public static BattleSistem Instance;
 
     public void Start()
     {
@@ -46,6 +46,20 @@ public class BattleSistem : MonoBehaviour
         state = BattleState.START;
 
         StartCoroutine(SetupBattle());
+
+        if (Instance != null && Instance != this)
+        {
+
+            Destroy(this);
+
+        }
+        else
+        {
+
+            Instance = this;
+            DontDestroyOnLoad(this);
+
+        }
 
     }
 
@@ -310,32 +324,34 @@ public class BattleSistem : MonoBehaviour
 
         MainCharacters.TryGetValue(rng, out Character it);
 
-        me.Attack(it);
+        me.Attack(rng,it);
 
-        if (it.GetHP() <= 0)
-        {
+        CheckLive(rng, it);//active at the end of enemy animation
 
-            MainCharacters.Remove(rng);
+        //if (it.GetHP() <= 0)
+        //{
 
-        }
+        //    MainCharacters.Remove(rng);
 
-        if (MainCharacters == null)
-        {
+        //}
 
-            state = BattleState.LOST;
+        //if (MainCharacters == null)
+        //{
 
-            EndBattle();
+        //    state = BattleState.LOST;
 
-        }
+        //    EndBattle();
 
-        else
-        {
-            
-            state = BattleState.ORDER;
+        //}
 
-            Order();
+        //else
+        //{
 
-        }
+        //    state = BattleState.ORDER;
+
+        //    Order();
+
+        //}
 
     }
 
@@ -354,29 +370,59 @@ public class BattleSistem : MonoBehaviour
                  
         EnemyCharacters.TryGetValue(i, out Character it);
 
-        me.Attack(it);
+        me.Attack(i,it);
 
         MainChOrder.Dequeue();
 
         enemySelectCanvas.SetActive(false);
 
-        if (it.GetHP() <= 0) 
+        //if (it.GetHP() <= 0) 
+        //{
+
+        //    EnemyCharacters.Remove(i);
+
+
+        //}
+
+        //if (EnemyCharacters == null)
+        //{
+
+        //    state = BattleState.WON;
+
+        //    EndBattle();
+
+        //}
+        //else 
+        //{
+
+        //    state = BattleState.ORDER;
+
+        //    Order();
+
+        //}
+
+    }
+
+    public void CheckLive(int i, Character it)
+    {
+       
+        if (it.GetHP() <= 0)
         {
 
-            EnemyCharacters.Remove(i);
-
+            MainCharacters.Remove(i);
 
         }
 
-        if (EnemyCharacters == null)
+        if (MainCharacters == null)
         {
 
-            state = BattleState.WON;
+            state = BattleState.LOST;
 
             EndBattle();
 
         }
-        else 
+
+        else
         {
 
             state = BattleState.ORDER;
