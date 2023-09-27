@@ -22,6 +22,9 @@ public class MainCharacter1 : Character
     private float cooldDownDodge;
     private bool canAtack;
 
+    [SerializeField]
+    private Animator animator;
+
     protected override void Start()
     {
         base.Start();
@@ -30,6 +33,15 @@ public class MainCharacter1 : Character
 
     private void Update()
     {
+        
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            print("entro");
+            animator.SetBool("Coso", true);
+
+        }
+        
+        
 
         if (Input.GetKeyDown(KeyCode.Escape) && cooldDownDodge <= 0/* y puede esquivar*/)
         {
@@ -82,6 +94,13 @@ public class MainCharacter1 : Character
         Collider[] enemy = Physics.OverlapSphere(centerOfPunch, radius, enemyMask);
 
         enemy[1].GetComponent<EnemyCharacter>().TakeDamage(power);
+
+    }
+
+    public void FinishAnimationAtack()
+    {
+
+
 
     }
 

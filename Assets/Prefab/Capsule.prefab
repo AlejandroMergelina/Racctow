@@ -128,9 +128,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542a90cfbbe2349498f468ff65a71cd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: paco
+  _name: 
   maxHP: 100
   currentHP: 0
   power: 2
   defense: 2
   speed: 2
+  centerOfPunch: {x: 0, y: 0, z: 0}
+  radius: 0
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 0
+  distanceToEnemy: {x: 0, y: 0, z: 0}
+  atackTime: 0
