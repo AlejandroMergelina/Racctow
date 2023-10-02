@@ -85,5 +85,17 @@ public class MainCharacter : Character
 
     }
 
+    protected void Fall()
+    {
 
+        canAttack = false;
+
+        canMove = true;
+        animator.SetBool("move", canMove);
+        animator.SetBool("attack", canAttack);
+
+        end = initialPosition;
+        start = transform.position;
+
+    }
 }
