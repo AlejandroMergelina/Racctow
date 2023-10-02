@@ -37,7 +37,7 @@ public abstract class Character : MonoBehaviour
     public void SetName(string name)
     {
 
-        this._name = name;
+        _name = name;
 
     }
 
@@ -106,12 +106,19 @@ public abstract class Character : MonoBehaviour
 
     }
 
-    public abstract void Attack(int i,Character it);
+    public abstract void Attack(Character it);
 
     public void TakeDamage(int dmg)
     {
 
         currentHP -= dmg;
+
+    }
+
+    protected void FinishAnimationAtack()
+    {
+
+        BattleSistem.Instance.CheckLive("Enemy");
 
     }
 

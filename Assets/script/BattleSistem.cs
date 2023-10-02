@@ -40,6 +40,9 @@ public class BattleSistem : MonoBehaviour
 
     public static BattleSistem Instance;
 
+    private int i;
+    private Character it;
+
     public void Start()
     {
 
@@ -99,7 +102,7 @@ public class BattleSistem : MonoBehaviour
 
     void Order()
     {
-
+        
         if (EnemyOrder.Count == 0 && MainChOrder.Count == 0)
         {
             SubOrder(EnemyCharacters, EnemyOrder);
@@ -189,53 +192,8 @@ public class BattleSistem : MonoBehaviour
             //order.Clear();
 
         }
-        
-        void SubOrder(Dictionary<int, Character> c, Queue<Character> q)
-        {
 
-            foreach (KeyValuePair<int, Character> mains in c)
-            {
-
-                order.AddFirst(mains.Value.GetSpeed());
-
-            }
-
-            int[] a = new int[order.Count];
-
-            order.CopyTo(a, 0);
-
-            Array.Sort(a);
-
-            Array.Reverse(a);
-
-            int reserSpeed = -1;
-
-            foreach (int n in a)
-            {
-
-                if (reserSpeed != n)
-                {
-
-                    foreach (KeyValuePair<int, Character> mains in c)
-                    {
-                        if (mains.Value.GetSpeed() == n)
-                        {
-                            reserSpeed = n;
-
-                            q.Enqueue(mains.Value);
-
-
-                        }
-
-                    }
-
-                }
-
-            }
-
-            order.Clear();
-
-        }
+        print("main; " + MainChOrder.Count + "\n" + "Enemy: " + EnemyOrder.Count);
 
         if (EnemyOrder.Count == 0)
         {
@@ -246,7 +204,7 @@ public class BattleSistem : MonoBehaviour
         }
         else if (MainChOrder.Count == 0)
         {
-            
+            print("hola");
             state = BattleState.ENEMYTURN;
 
             StartCoroutine(EnemyTurn(EnemyOrder.Peek()));
@@ -272,6 +230,53 @@ public class BattleSistem : MonoBehaviour
             }
 
         }
+
+    }
+
+    void SubOrder(Dictionary<int, Character> c, Queue<Character> q)
+    {
+
+        foreach (KeyValuePair<int, Character> mains in c)
+        {
+
+            order.AddFirst(mains.Value.GetSpeed());
+
+        }
+
+        int[] a = new int[order.Count];
+
+        order.CopyTo(a, 0);
+
+        Array.Sort(a);
+
+        Array.Reverse(a);
+
+        int reserSpeed = -1;
+
+        foreach (int n in a)
+        {
+
+            if (reserSpeed != n)
+            {
+
+                foreach (KeyValuePair<int, Character> mains in c)
+                {
+                    if (mains.Value.GetSpeed() == n)
+                    {
+                        reserSpeed = n;
+
+                        q.Enqueue(mains.Value);
+
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        order.Clear();
 
     }
 
@@ -324,34 +329,14 @@ public class BattleSistem : MonoBehaviour
 
         MainCharacters.TryGetValue(rng, out Character it);
 
-        me.Attack(rng,it);
+        me.Attack(it);
 
-        CheckLive(rng, it);//active at the end of enemy animation
+        this.it = it;
+        i = rng;
+
+        CheckLive("Main");//active at the end of enemy animation
 
         //if (it.GetHP() <= 0)
-        //{
-
-        //    MainCharacters.Remove(rng);
-
-        //}
-
-        //if (MainCharacters == null)
-        //{
-
-        //    state = BattleState.LOST;
-
-        //    EndBattle();
-
-        //}
-
-        //else
-        //{
-
-        //    state = BattleState.ORDER;
-
-        //    Order();
-
-        //}
 
     }
 
@@ -370,53 +355,41 @@ public class BattleSistem : MonoBehaviour
                  
         EnemyCharacters.TryGetValue(i, out Character it);
 
-        me.Attack(i,it);
+        this.it = it;
+        this.i = i;
 
         MainChOrder.Dequeue();
 
         enemySelectCanvas.SetActive(false);
 
-        //if (it.GetHP() <= 0) 
-        //{
-
-        //    EnemyCharacters.Remove(i);
-
-
-        //}
-
-        //if (EnemyCharacters == null)
-        //{
-
-        //    state = BattleState.WON;
-
-        //    EndBattle();
-
-        //}
-        //else 
-        //{
-
-        //    state = BattleState.ORDER;
-
-        //    Order();
-
-        //}
-
+        me.Attack(it);
+  
     }
 
-    public void CheckLive(int i, Character it)
+    public void CheckLive(string rival)
     {
        
         if (it.GetHP() <= 0)
         {
-
-            MainCharacters.Remove(i);
-
+            if(rival == "Main")
+                MainCharacters.Remove(i);
+            else
+                EnemyCharacters.Remove(i);
         }
 
+        
         if (MainCharacters == null)
         {
 
             state = BattleState.LOST;
+
+            EndBattle();
+
+        }
+        else if (EnemyCharacters == null)
+        {
+
+            state = BattleState.WON;
 
             EndBattle();
 
@@ -446,7 +419,7 @@ public class BattleSistem : MonoBehaviour
         if (state == BattleState.LOST)
         {
 
-            print("gperdiste");
+            print("perdiste");
 
         }
 

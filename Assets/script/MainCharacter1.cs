@@ -2,112 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainCharacter1 : Character
+public class MainCharacter1 : MainCharacter
 {
     [SerializeField]
-    private Vector3 centerOfPunch;
+    private Transform centerOfPunch;
     [SerializeField]
     private float radius;
     [SerializeField]
     private LayerMask enemyMask;
-    [SerializeField]
-    private Vector3 distanceToEnemy;
-
-    [SerializeField]
-    private float atackTime;
-    private float currentatAckTime;
-
-    private Vector3 initialPosition;
-
-    private float cooldDownDodge;
-    private bool canAtack;
-
-    int i;
-    Character it;
-
-    [SerializeField]
-    private Animator animator;
-
-    protected override void Start()
+            
+    protected override void Update()
     {
-        base.Start();
-        initialPosition = transform.position;
-    }
+        base.Update();
 
-    private void Update()
-    {
-        
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && canAttack)
         {
             print("entro");
-            animator.SetBool("Coso", true);
-
+            animator.SetBool("attack", true);
+            canAttack = false;
+            
         }
         
-        
-
-        if (Input.GetKeyDown(KeyCode.Escape) && cooldDownDodge <= 0/* y puede esquivar*/)
-        {
-
-            //esquivar
-
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape) && canAtack)
-        {
-
-            ComfirmAtack();
-
-        }
-
-        if (canAtack)
-        {
-
-            currentatAckTime += Time.deltaTime;
-
-            if(currentatAckTime >= atackTime)
-            {
-
-                canAtack = false;
-                currentatAckTime = 0;
-
-            }
-
-        }
-
-    }
-
-    public override void Attack(int i,Character it)
-    {
-        this.it = it;
-        this.i = i;
-
-        transform.position = it.transform.position - distanceToEnemy;
-
-        canAtack= true;
-
-        print(it.GetHP());
-
-        transform.position = initialPosition;
-
     }
 
     void ComfirmAtack()
     {
 
-        canAtack = false;
+        Collider[] enemy = Physics.OverlapSphere(centerOfPunch.position, radius, enemyMask);
+        
+        foreach(Collider _enemy in enemy)
+        {
+            
+            _enemy.GetComponent<EnemyCharacter>().TakeDamage(power);
+            print(_enemy.GetComponent<EnemyCharacter>().GetHP());
+        }
 
-        Collider[] enemy = Physics.OverlapSphere(centerOfPunch, radius, enemyMask);
+        canMove = true;
+        animator.SetBool("move", canMove);
+        animator.SetBool("attack", canAttack);
 
-        enemy[1].GetComponent<EnemyCharacter>().TakeDamage(power);
-
-    }
-
-    void FinishAnimationAtack()
-    {
-
-        BattleSistem.Instance.CheckLive(i, it);
+        end = initialPosition;
+        start = transform.position;
 
     }
     
-
 }
