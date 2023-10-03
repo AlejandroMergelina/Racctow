@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6620867727251650674}
   - component: {fileID: 2042629175965960196}
   - component: {fileID: 145715866760571605}
+  - component: {fileID: 5980912724291682627}
   m_Layer: 3
   m_Name: Cylinder
   m_TagString: Untagged
@@ -134,3 +135,30 @@ MonoBehaviour:
   power: 10
   defense: 10
   speed: 1
+  centerOfPunch: {fileID: 0}
+  radius: 0
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 0
+  distanceToEnemy: {x: 0, y: 0, z: 0}
+  animator: {fileID: 0}
+--- !u!95 &5980912724291682627
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333685945146296740}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4374e4a22e2ec7046b2f553f9433ab5d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0

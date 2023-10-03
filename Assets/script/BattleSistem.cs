@@ -105,92 +105,10 @@ public class BattleSistem : MonoBehaviour
         
         if (EnemyOrder.Count == 0 && MainChOrder.Count == 0)
         {
+
             SubOrder(EnemyCharacters, EnemyOrder);
             SubOrder(MainCharacters, MainChOrder);
             
-            //foreach (KeyValuePair<int, Character> enemigos in EnemyCharacters)
-            //{
-
-            //    order.AddFirst(enemigos.Value.GetSpeed());
-
-            //}
-
-
-            //int[] a = new int[order.Count];
-
-            //order.CopyTo(a, 0);
-
-            //Array.Sort(a);
-
-            //Array.Reverse(a);
-
-            //int reserSpeed = -1;
-
-            //foreach (int n in a)
-            //{
-
-            //    if (reserSpeed != n)
-            //    {
-
-            //        foreach (KeyValuePair<int, Character> enemigos in EnemyCharacters)
-            //        {
-            //            if (enemigos.Value.GetSpeed() == n)
-            //            {
-
-            //                EnemyOrder.Enqueue(enemigos.Value);
-
-            //            }
-
-            //        }
-
-            //    }
-
-            //}
-
-            //order.Clear();
-            
-            //foreach (KeyValuePair<int, Character> mains in MainCharacters)
-            //{
-
-            //    order.AddFirst(mains.Value.GetSpeed());
-
-            //}
-
-            //a = new int[order.Count];
-
-            //order.CopyTo(a, 0);
-
-            //Array.Sort(a);
-
-            //Array.Reverse(a);
-
-            //reserSpeed = -1;
-
-            //foreach (int n in a)
-            //{
-                
-            //    if(reserSpeed != n)
-            //    {
-
-            //        foreach (KeyValuePair<int, Character> mains in MainCharacters)
-            //        {
-            //            if (mains.Value.GetSpeed() == n)
-            //            {
-            //                reserSpeed = n;
-
-            //                MainChOrder.Enqueue(mains.Value);
-
-
-            //            }
-
-            //        }
-
-            //    }
-
-            //}
-
-            //order.Clear();
-
         }
 
         print("main; " + MainChOrder.Count + "\n" + "Enemy: " + EnemyOrder.Count);

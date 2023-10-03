@@ -11,7 +11,7 @@ public class MainCharacter : Character
     protected Vector3 start, end;
 
     private float cooldDownDodge;
-    protected bool canAttack, canMove;
+    protected bool canAttack, canMove,canDodge;
     //private bool goToEnemy;
 
     [SerializeField]
@@ -25,7 +25,7 @@ public class MainCharacter : Character
 
     protected virtual void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && cooldDownDodge <= 0/* y puede esquivar*/)
+        if (Input.GetKeyDown(KeyCode.Escape) && cooldDownDodge <= 0 && canDodge)
         {
 
             //esquivar
