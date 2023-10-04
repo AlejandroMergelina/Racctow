@@ -85,7 +85,7 @@ public class BattleSistem : MonoBehaviour
             
 
             GameObject clon = Instantiate(mainCharactersPrefab[i], mainCharactersStation[i].position, mainCharactersStation[i].rotation);
-            Character clonInf = clon.GetComponent<Character>();
+            Character clonInf = clon.GetComponentInChildren<Character>();
             MainCharacters.Add(i,clonInf);
 
             

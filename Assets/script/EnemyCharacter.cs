@@ -24,11 +24,11 @@ public class EnemyCharacter : Character
 
     public override void Attack(Character it)
     {
-        end = it.transform.position - distanceToEnemy;
+        /*end = it.transform.position - distanceToEnemy;
         start = initialPosition;
 
         canMove = true;
-        animator.SetBool("move", canMove);
+        animator.SetBool("move", canMove);*/
 
     }
 
