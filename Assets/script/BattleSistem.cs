@@ -85,7 +85,7 @@ public class BattleSistem : MonoBehaviour
             
 
             GameObject clon = Instantiate(mainCharactersPrefab[i], mainCharactersStation[i].position, mainCharactersStation[i].rotation);
-            Character clonInf = clon.GetComponentInChildren<Character>();
+            Character clonInf = clon.GetComponent<Character>();
             MainCharacters.Add(i,clonInf);
 
             
@@ -111,7 +111,7 @@ public class BattleSistem : MonoBehaviour
             
         }
 
-        print("main; " + MainChOrder.Count + "\n" + "Enemy: " + EnemyOrder.Count);
+        //print("main; " + MainChOrder.Count + "\n" + "Enemy: " + EnemyOrder.Count);
 
         if (EnemyOrder.Count == 0)
         {
@@ -122,7 +122,7 @@ public class BattleSistem : MonoBehaviour
         }
         else if (MainChOrder.Count == 0)
         {
-            print("hola");
+            //print("hola");
             state = BattleState.ENEMYTURN;
 
             StartCoroutine(EnemyTurn(EnemyOrder.Peek()));
@@ -252,7 +252,7 @@ public class BattleSistem : MonoBehaviour
         this.it = it;
         i = rng;
 
-        CheckLive("Main");//active at the end of enemy animation
+        //CheckLive("Main");//active at the end of enemy animation
 
         //if (it.GetHP() <= 0)
 

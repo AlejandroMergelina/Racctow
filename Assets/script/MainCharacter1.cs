@@ -25,6 +25,7 @@ public class MainCharacter1 : MainCharacter
         
     }
 
+    //Ejecutado desde evento de animación.
     void ComfirmAtack()
     {
 

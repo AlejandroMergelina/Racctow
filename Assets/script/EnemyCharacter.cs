@@ -22,13 +22,31 @@ public class EnemyCharacter : Character
     [SerializeField]
     Animator animator;
 
+    protected override void Start()
+    {
+        base.Start();
+        initialPosition = transform.position;
+    }
+
+    private void Update()
+    {
+
+        if (canMove)
+        {
+
+            Move(start, end);
+
+        }
+
+    }
+
     public override void Attack(Character it)
     {
-        /*end = it.transform.position - distanceToEnemy;
+        end = it.transform.position - distanceToEnemy;
         start = initialPosition;
 
         canMove = true;
-        animator.SetBool("move", canMove);*/
+        animator.SetBool("move", canMove);
 
     }
 
@@ -63,7 +81,7 @@ public class EnemyCharacter : Character
     {
 
         Collider[] enemy = Physics.OverlapSphere(centerOfPunch.position, radius, enemyMask);
-
+        print("hola");
         foreach (Collider _enemy in enemy)
         {
 
@@ -73,7 +91,6 @@ public class EnemyCharacter : Character
 
         canMove = true;
         animator.SetBool("move", canMove);
-        animator.SetBool("attack", false);
 
         end = initialPosition;
         start = transform.position;
