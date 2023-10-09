@@ -16,6 +16,8 @@ public class UIInventoryItem : MonoBehaviour
     [SerializeField]
     private Image borderImagen;
 
+    public event Action<UIInventoryItem> OnItemClicked, OnItemDroppedOn,OnTtemEndDrag, OnItemEndDrag, OnRightMouseBtnClick;
 
-
+    private bool emty = true;
+    
 }
