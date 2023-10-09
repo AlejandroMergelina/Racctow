@@ -10,26 +10,52 @@ public class MainCharacter : Character
     private Vector3 targetPosition;
     protected Vector3 start, end;
 
-    private float cooldDownDodge;
-    protected bool canAttack, canMove,canDodge;
+    [SerializeField]
+    protected LayerMask enemyMask;
+    [SerializeField]
+    protected Transform counterattack;
+    [SerializeField]
+    protected float counterattackRadius;
+    [SerializeField]
+    protected float cooldDownDodge;
+    private float currentCooldDownDodge;
+    protected bool canAttack, canMove, canDodge;
     //private bool goToEnemy;
 
     [SerializeField]
     protected Animator animator;
 
+    private Collider colr;
+
+    [SerializeField]
+    private KeyCode k;
+    public void SetCanDodge(bool canDodge)
+    {
+
+        this.canDodge = canDodge;
+
+    }
+
     protected override void Start()
     {
         base.Start();
         initialPosition = transform.position;
+        colr = GetComponent<BoxCollider>();
     }
 
     protected virtual void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && cooldDownDodge <= 0 && canDodge)
+
+        if (currentCooldDownDodge > 0)
         {
 
-            //esquivar
+            currentCooldDownDodge -= Time.deltaTime;
 
+        }
+
+        if (Input.GetKeyDown(k) && currentCooldDownDodge <= 0 && canDodge)
+        {
+            animator.SetTrigger("dodge");
         }
 
         if (canMove)
@@ -96,6 +122,38 @@ public class MainCharacter : Character
 
         end = initialPosition;
         start = transform.position;
+
+    }
+
+    protected override void FinishAnimationAtack()
+    {
+
+        BattleSistem.Instance.CheckLive("Enemy");
+
+    }
+
+    protected void StartDodge()
+    {
+
+        colr.enabled = false;
+        currentCooldDownDodge = cooldDownDodge;
+
+    }
+
+    protected void FinishDodge()
+    {
+
+        colr.enabled = true;
+
+
+        Collider[] enemy = Physics.OverlapSphere(counterattack.position, counterattackRadius, enemyMask);
+
+        foreach (Collider _enemy in enemy)
+        {
+
+            _enemy.GetComponent<EnemyCharacter>().TakeDamage(power);
+            print(_enemy.GetComponent<EnemyCharacter>().GetHP());
+        }
 
     }
 }

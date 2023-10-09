@@ -32,8 +32,8 @@ public class BattleSistem : MonoBehaviour
     private Queue<Character> EnemyOrder = new Queue<Character>();
     private Queue<Character> MainChOrder = new Queue<Character>();
 
-    private Dictionary<int, Character> MainCharacters = new Dictionary<int, Character>();
-    private Dictionary<int, Character> EnemyCharacters = new Dictionary<int, Character>();
+    private Dictionary<int, MainCharacter> MainCharacters = new Dictionary<int, MainCharacter>();
+    private Dictionary<int, EnemyCharacter> EnemyCharacters = new Dictionary<int, EnemyCharacter>();
 
     [SerializeField]
     int tusTurnos, turnosEnemigo;
@@ -73,7 +73,7 @@ public class BattleSistem : MonoBehaviour
         {
 
             GameObject clon = Instantiate(enemyCharactersPrefab[i], enemyCharactersStation[i].position, enemyCharactersStation[i].rotation);
-            Character clonInf = clon.GetComponent<Character>();
+            EnemyCharacter clonInf = clon.GetComponent<EnemyCharacter>();
             EnemyCharacters.Add(i,clonInf);
 
             
@@ -85,7 +85,7 @@ public class BattleSistem : MonoBehaviour
             
 
             GameObject clon = Instantiate(mainCharactersPrefab[i], mainCharactersStation[i].position, mainCharactersStation[i].rotation);
-            Character clonInf = clon.GetComponent<Character>();
+            MainCharacter clonInf = clon.GetComponent<MainCharacter>();
             MainCharacters.Add(i,clonInf);
 
             
@@ -105,9 +105,27 @@ public class BattleSistem : MonoBehaviour
         
         if (EnemyOrder.Count == 0 && MainChOrder.Count == 0)
         {
+            Dictionary<int, Character> HelpDiccionary = new Dictionary<int, Character>();
 
-            SubOrder(EnemyCharacters, EnemyOrder);
-            SubOrder(MainCharacters, MainChOrder);
+            foreach (KeyValuePair<int, EnemyCharacter> main in EnemyCharacters)
+            {
+
+                HelpDiccionary.Add(main.Key, main.Value);
+
+            }
+
+            SubOrder(HelpDiccionary, EnemyOrder);
+
+            HelpDiccionary.Clear();
+
+            foreach(KeyValuePair<int, MainCharacter> main in MainCharacters)
+            {
+
+                HelpDiccionary.Add(main.Key, main.Value);
+
+            }
+
+            SubOrder(HelpDiccionary, MainChOrder);
             
         }
 
@@ -221,6 +239,7 @@ public class BattleSistem : MonoBehaviour
 
     IEnumerator EnemyTurn(Character me)
     {
+        
         EnemyOrder.Dequeue();
         turnosEnemigo++;
 
@@ -228,24 +247,31 @@ public class BattleSistem : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
+        foreach(KeyValuePair<int, MainCharacter> main in MainCharacters)
+        {
+
+            main.Value.SetCanDodge(true);
+
+        }
+        
         int rng;
         do
         {
 
-            rng = UnityEngine.Random.Range(0, MainCharacters.Count);
+            rng = UnityEngine.Random.Range(0, mainCharactersPrefab.Length);
             //print("comrpueba el numero random es = " + rng);
-
+            //print("el rng existe" + MainCharacters.ContainsKey(rng));
             //if (MainCharacters.ContainsKey(rng) == true)
             //    print("contaiss ");
 
             //if (MainCharacters != null)
             //    print("maincha" );
 
-        } while (MainCharacters.ContainsKey(rng) == false && MainCharacters == null);
+        } while (MainCharacters.ContainsKey(rng) == false && MainCharacters.Count != 0);
 
         //print("el numero random es = " + rng);
 
-        MainCharacters.TryGetValue(rng, out Character it);
+        MainCharacters.TryGetValue(rng, out MainCharacter it);
 
         me.Attack(it);
 
@@ -271,7 +297,7 @@ public class BattleSistem : MonoBehaviour
 
         Character me = MainChOrder.Peek();
                  
-        EnemyCharacters.TryGetValue(i, out Character it);
+        EnemyCharacters.TryGetValue(i, out EnemyCharacter it);
 
         this.it = it;
         this.i = i;
@@ -286,17 +312,54 @@ public class BattleSistem : MonoBehaviour
 
     public void CheckLive(string rival)
     {
-       
+        Dictionary<int, Character> HelpDiccionary = new Dictionary<int, Character>();
+        if(rival == "Main")
+        {
+
+            foreach (KeyValuePair<int, MainCharacter> main in MainCharacters)
+            {
+
+                main.Value.SetCanDodge(true);
+
+            }
+
+        }
+        
+
+        foreach (KeyValuePair<int, MainCharacter> main in MainCharacters)
+        {
+
+            main.Value.SetCanDodge(false);
+
+        }
+
         if (it.GetHP() <= 0)
         {
-            if(rival == "Main")
+            
+            if (rival == "Main")
+            {
+                
                 MainCharacters.Remove(i);
+                
+                
+                foreach (KeyValuePair<int, MainCharacter> main in MainCharacters)
+                {
+                    
+                    HelpDiccionary.Add(main.Key, main.Value);
+
+                }
+                MainChOrder.Clear();
+
+                SubOrder(HelpDiccionary, MainChOrder);
+                
+            }
+                
             else
                 EnemyCharacters.Remove(i);
         }
-
         
-        if (MainCharacters == null)
+        
+        if (MainCharacters.Count == 0)
         {
 
             state = BattleState.LOST;
@@ -304,7 +367,7 @@ public class BattleSistem : MonoBehaviour
             EndBattle();
 
         }
-        else if (EnemyCharacters == null)
+        else if (EnemyCharacters.Count == 0)
         {
 
             state = BattleState.WON;

@@ -115,11 +115,6 @@ public abstract class Character : MonoBehaviour
 
     }
 
-    protected void FinishAnimationAtack()
-    {
-
-        BattleSistem.Instance.CheckLive("Enemy");
-
-    }
+    protected abstract void FinishAnimationAtack();
 
 }

@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 356119129644805158}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -60,7 +60,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1333685945146296740}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.874316, y: 2.86, z: 7.179269}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -148,14 +148,14 @@ MonoBehaviour:
   maxHP: 100
   currentHP: 0
   power: 10
-  defense: 10
+  defense: 1
   speed: 2
   centerOfPunch: {fileID: 5316175592630291706}
   radius: 1
   enemyMask:
     serializedVersion: 2
     m_Bits: 64
-  distanceToEnemy: {x: 0, y: 0, z: 0}
+  distanceToEnemy: {x: -1, y: 0, z: 0}
   animator: {fileID: 5980912724291682627}
 --- !u!95 &5980912724291682627
 Animator:

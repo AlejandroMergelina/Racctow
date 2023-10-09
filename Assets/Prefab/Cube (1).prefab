@@ -119,12 +119,16 @@ MonoBehaviour:
   defense: 1
   speed: 1
   distanceToEnemy: {x: 1, y: 0, z: 0}
-  animator: {fileID: 8842864350518490726}
-  centerOfPunch: {fileID: 6856828725387485851}
-  radius: 1
   enemyMask:
     serializedVersion: 2
     m_Bits: 8
+  counterattack: {fileID: 6856828725387485851}
+  counterattackRadius: 1
+  cooldDownDodge: 1
+  animator: {fileID: 8842864350518490726}
+  k: 101
+  centerOfPunch: {fileID: 6856828725387485851}
+  radius: 1
 --- !u!95 &8842864350518490726
 Animator:
   serializedVersion: 5

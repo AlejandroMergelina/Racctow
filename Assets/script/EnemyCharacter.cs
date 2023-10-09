@@ -42,8 +42,11 @@ public class EnemyCharacter : Character
 
     public override void Attack(Character it)
     {
+
+        print("hola");
         end = it.transform.position - distanceToEnemy;
         start = initialPosition;
+
 
         canMove = true;
         animator.SetBool("move", canMove);
@@ -81,12 +84,12 @@ public class EnemyCharacter : Character
     {
 
         Collider[] enemy = Physics.OverlapSphere(centerOfPunch.position, radius, enemyMask);
-        print("hola");
+        
         foreach (Collider _enemy in enemy)
         {
-
-            _enemy.GetComponent<EnemyCharacter>().TakeDamage(power);
-            print(_enemy.GetComponent<EnemyCharacter>().GetHP());
+            
+            _enemy.GetComponent<MainCharacter>().TakeDamage(power);
+            print(_enemy.GetComponent<MainCharacter>().GetHP());
         }
 
         canMove = true;
@@ -94,6 +97,16 @@ public class EnemyCharacter : Character
 
         end = initialPosition;
         start = transform.position;
+        
+    }
+
+    protected override void FinishAnimationAtack()
+    {
+
+        BattleSistem.Instance.CheckLive("Main");
+
 
     }
+
+    
 }

@@ -8,8 +8,7 @@ public class MainCharacter1 : MainCharacter
     private Transform centerOfPunch;
     [SerializeField]
     private float radius;
-    [SerializeField]
-    private LayerMask enemyMask;
+
             
     protected override void Update()
     {
