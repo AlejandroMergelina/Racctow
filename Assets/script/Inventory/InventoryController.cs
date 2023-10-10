@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InventoryController : MonoBehaviour
 {
+    [SerializeField]
     private UIInventoryPage inventoryUI;
 
     private int inventorySize = 10;
@@ -28,8 +29,16 @@ public class InventoryController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.I))
         {
+            if(inventoryUI.isActiveAndEnabled == false)
+            {
+                inventoryUI.Show();
+            }
+            else
+            {
 
+                inventoryUI.Hide();
 
+            }
         }
     }
 }
