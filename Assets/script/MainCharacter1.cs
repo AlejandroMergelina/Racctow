@@ -9,18 +9,37 @@ public class MainCharacter1 : MainCharacter
     [SerializeField]
     private float radius;
 
-            
-    protected override void Update()
-    {
-        base.Update();
+    //[SerializeField] 
+    //private InputManager inputManager;
 
-        if (Input.GetKeyDown(KeyCode.E) && canAttack)
+
+    private void OnEnable()
+    {
+        inputManager.OnAttackAction += MainCharacterAttack;
+    }
+
+    private void MainCharacterAttack()
+    {
+        if (canAttack)
         {
             print("entro");
             animator.SetBool("attack", true);
             canAttack = false;
-            
+
         }
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        //if (Input.GetKeyDown(KeyCode.E) && canAttack)
+        //{
+        //    print("entro");
+        //    animator.SetBool("attack", true);
+        //    canAttack = false;
+            
+        //}
         
     }
 

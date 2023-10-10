@@ -24,6 +24,9 @@ public class UIInventoryPage : MonoBehaviour
     private Sprite image;
     public Sprite Image { get => image; set => image = value; }
     [SerializeField]
+    private Sprite image2;
+    public Sprite Image2 { get => image; set => image = value; }
+    [SerializeField]
     private int quantity;
     public int Quantity { get => quantity; set => quantity = value; }
     [SerializeField]
@@ -32,6 +35,8 @@ public class UIInventoryPage : MonoBehaviour
     private string titel;
     public string Titel { get => titel; set => titel = value; }
     public string Description { get => description; set => description = value; }
+
+    private int currentlyDraggedItemIndex = -1;
 
     private void Awake()
     {
@@ -61,32 +66,47 @@ public class UIInventoryPage : MonoBehaviour
 
     }
 
-    private void HandleShowItemActions(UIInventoryItem obj)
+    private void HandleShowItemActions(UIInventoryItem InventoryItemUI)
     {
 
     }
 
-    private void HandleEndDrag(UIInventoryItem obj)
+    private void HandleEndDrag(UIInventoryItem InventoryItemUI)
     {
 
         moseFollower.Toogle(false);
 
     }
 
-    private void HandleSwap(UIInventoryItem obj)
+    private void HandleSwap(UIInventoryItem InventoryItemUI)
     {
+        int index = listOfUIItems.IndexOf(InventoryItemUI);
+        if (index == -1)
+        {
+            moseFollower.Toogle(false);
+            currentlyDraggedItemIndex = -1;
+            return;
+
+        }
+
+        //Operador ternario. (if-else en una línea)
+        listOfUIItems[currentlyDraggedItemIndex].SetData(index == 0? image : image2, quantity);
 
     }
 
-    private void HandleBeginDrag(UIInventoryItem obj)
+    private void HandleBeginDrag(UIInventoryItem InventoryItemUI)
     {
+        int index = listOfUIItems.IndexOf(InventoryItemUI);
+        if (index == -1)
+            return;
+        currentlyDraggedItemIndex = index;
 
         moseFollower.Toogle(true);
-        moseFollower.SetData(image, quantity);
+        moseFollower.SetData(index == 0? image : image2, quantity);
         
     }
 
-    private void HandleItemSelection(UIInventoryItem obj)
+    private void HandleItemSelection(UIInventoryItem InventoryItemUI)
     {
 
         itemDescription.SetDescription(image, titel, description);

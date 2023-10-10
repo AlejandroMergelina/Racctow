@@ -29,6 +29,23 @@ public class MainCharacter : Character
 
     [SerializeField]
     private KeyCode k;
+
+    [SerializeField]
+    protected InputManager inputManager;
+
+    private void OnEnable()
+    {
+        inputManager.OnDodgeAction += OnDodge;
+    }
+
+    private void OnDodge()
+    {
+        if (currentCooldDownDodge <= 0 && canDodge)
+        {
+            animator.SetTrigger("dodge");
+        }
+    }
+
     public void SetCanDodge(bool canDodge)
     {
 
@@ -53,10 +70,10 @@ public class MainCharacter : Character
 
         }
 
-        if (Input.GetKeyDown(k) && currentCooldDownDodge <= 0 && canDodge)
-        {
-            animator.SetTrigger("dodge");
-        }
+        //if (Input.GetKeyDown(k) && currentCooldDownDodge <= 0 && canDodge)
+        //{
+        //    animator.SetTrigger("dodge");
+        //}
 
         if (canMove)
         {
