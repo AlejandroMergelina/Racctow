@@ -9,8 +9,8 @@ public class InputManager : ScriptableObject
 {
     Controles controles;
 
-    public event Action OnAttackAction;
-    public event Action OnDodgeAction;
+    public event Action OnActionP1Action;
+    public event Action OnActionP2Action;
 
     private void OnEnable()
     {
@@ -20,14 +20,17 @@ public class InputManager : ScriptableObject
         controles.Gameplay.Enable();
 
         //Suscripciones a eventos.
-        controles.Gameplay.Action.started += OnAction;
-        
+        controles.Gameplay.ActionP1.started += OnActionP1;
+        controles.Gameplay.ActionP2.started += OnActionP2;
     }
 
- 
-
-    private void OnAction(InputAction.CallbackContext obj)
+    private void OnActionP2(InputAction.CallbackContext obj)
     {
-        OnAttackAction?.Invoke();
+        OnActionP2Action?.Invoke();
+    }
+
+    private void OnActionP1(InputAction.CallbackContext obj)
+    {
+        OnActionP1Action?.Invoke();
     }
 }

@@ -10,6 +10,7 @@ public class MoseFollower : MonoBehaviour
     [SerializeField]
     private UIInventoryItem item;
 
+
     public void Awake()
     {
 

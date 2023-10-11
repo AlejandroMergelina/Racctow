@@ -28,15 +28,8 @@ public class MainCharacter : Character
     private Collider colr;
 
     [SerializeField]
-    private KeyCode k;
-
-    [SerializeField]
     protected InputManager inputManager;
-
-    private void OnEnable()
-    {
-        inputManager.OnDodgeAction += OnAction;
-    }
+       
 
     protected virtual void OnAction()
     {

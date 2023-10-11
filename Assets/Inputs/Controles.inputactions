@@ -6,9 +6,18 @@
             "id": "aa2a0b10-5e1b-4e18-a7e4-a69d58ccaa32",
             "actions": [
                 {
-                    "name": "Action",
+                    "name": "ActionP1",
                     "type": "Button",
                     "id": "7affe9d5-5a6f-449e-a843-ba1c4ead3db3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ActionP2",
+                    "type": "Button",
+                    "id": "285eecab-1213-45e8-a475-ab2aca2eb724",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -23,7 +32,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Action",
+                    "action": "ActionP1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dde404e4-34ef-4e0d-94cc-fc8358b0d2d2",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActionP2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

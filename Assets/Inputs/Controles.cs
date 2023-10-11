@@ -28,9 +28,18 @@ public partial class @Controles : IInputActionCollection2, IDisposable
             ""id"": ""aa2a0b10-5e1b-4e18-a7e4-a69d58ccaa32"",
             ""actions"": [
                 {
-                    ""name"": ""Action"",
+                    ""name"": ""ActionP1"",
                     ""type"": ""Button"",
                     ""id"": ""7affe9d5-5a6f-449e-a843-ba1c4ead3db3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ActionP2"",
+                    ""type"": ""Button"",
+                    ""id"": ""285eecab-1213-45e8-a475-ab2aca2eb724"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -45,7 +54,18 @@ public partial class @Controles : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Action"",
+                    ""action"": ""ActionP1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dde404e4-34ef-4e0d-94cc-fc8358b0d2d2"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ActionP2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -84,7 +104,8 @@ public partial class @Controles : IInputActionCollection2, IDisposable
 }");
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-        m_Gameplay_Action = m_Gameplay.FindAction("Action", throwIfNotFound: true);
+        m_Gameplay_ActionP1 = m_Gameplay.FindAction("ActionP1", throwIfNotFound: true);
+        m_Gameplay_ActionP2 = m_Gameplay.FindAction("ActionP2", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Newaction = m_Menu.FindAction("New action", throwIfNotFound: true);
@@ -147,12 +168,14 @@ public partial class @Controles : IInputActionCollection2, IDisposable
     // Gameplay
     private readonly InputActionMap m_Gameplay;
     private IGameplayActions m_GameplayActionsCallbackInterface;
-    private readonly InputAction m_Gameplay_Action;
+    private readonly InputAction m_Gameplay_ActionP1;
+    private readonly InputAction m_Gameplay_ActionP2;
     public struct GameplayActions
     {
         private @Controles m_Wrapper;
         public GameplayActions(@Controles wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Action => m_Wrapper.m_Gameplay_Action;
+        public InputAction @ActionP1 => m_Wrapper.m_Gameplay_ActionP1;
+        public InputAction @ActionP2 => m_Wrapper.m_Gameplay_ActionP2;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -162,16 +185,22 @@ public partial class @Controles : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_GameplayActionsCallbackInterface != null)
             {
-                @Action.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAction;
-                @Action.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAction;
-                @Action.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAction;
+                @ActionP1.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnActionP1;
+                @ActionP1.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnActionP1;
+                @ActionP1.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnActionP1;
+                @ActionP2.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnActionP2;
+                @ActionP2.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnActionP2;
+                @ActionP2.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnActionP2;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Action.started += instance.OnAction;
-                @Action.performed += instance.OnAction;
-                @Action.canceled += instance.OnAction;
+                @ActionP1.started += instance.OnActionP1;
+                @ActionP1.performed += instance.OnActionP1;
+                @ActionP1.canceled += instance.OnActionP1;
+                @ActionP2.started += instance.OnActionP2;
+                @ActionP2.performed += instance.OnActionP2;
+                @ActionP2.canceled += instance.OnActionP2;
             }
         }
     }
@@ -211,7 +240,8 @@ public partial class @Controles : IInputActionCollection2, IDisposable
     public MenuActions @Menu => new MenuActions(this);
     public interface IGameplayActions
     {
-        void OnAction(InputAction.CallbackContext context);
+        void OnActionP1(InputAction.CallbackContext context);
+        void OnActionP2(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {

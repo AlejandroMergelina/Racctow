@@ -15,7 +15,7 @@ public class MainCharacter1 : MainCharacter
 
     private void OnEnable()
     {
-        inputManager.OnAttackAction += OnAction;
+        inputManager.OnActionP1Action += OnAction;
     }
 
     protected override void OnAction()

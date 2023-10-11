@@ -24,7 +24,7 @@ public class UIInventoryPage : MonoBehaviour
 
     public event Action<int> OnDescriptionRequested, OnItemActionRequested, OnStartDragging;
 
-    public event Action<int, int> OnSapItems;
+    public event Action<int, int> OnSwapItems;
 
     private void Awake()
     {
@@ -82,15 +82,17 @@ public class UIInventoryPage : MonoBehaviour
         int index = listOfUIItems.IndexOf(InventoryItemUI);
         if (index == -1)
         {
-            moseFollower.Toogle(false);
-            currentlyDraggedItemIndex = -1;
+
             return;
 
         }
 
-        //Operador ternario. (if-else en una línea)
-        //listOfUIItems[currentlyDraggedItemIndex].SetData(index == 0? image : image2, quantity);
-        //listOfUIItems[index].SetData(currentlyDraggedItemIndex == 0? image : image2, quantity);
+        OnSwapItems?.Invoke(currentlyDraggedItemIndex, index);
+
+    }
+
+    private void ReaetDraggtedItem()
+    {
         moseFollower.Toogle(false);
         currentlyDraggedItemIndex = -1;
     }
@@ -102,16 +104,17 @@ public class UIInventoryPage : MonoBehaviour
             return;
         currentlyDraggedItemIndex = index;
 
-        moseFollower.Toogle(true);
-        //moseFollower.SetData(index == 0? image : image2, quantity);
-        
+        OnStartDragging?.Invoke(index);
+
     }
 
     private void HandleItemSelection(UIInventoryItem InventoryItemUI)
     {
 
-        //itemDescription.SetDescription(image, titel, description);
-        listOfUIItems[0].Selected();
+        int index = listOfUIItems.IndexOf(InventoryItemUI);
+        if(index == -1)
+            return;
+        OnDescriptionRequested?.Invoke(index);
 
     }
 
@@ -119,17 +122,29 @@ public class UIInventoryPage : MonoBehaviour
     {
 
         gameObject.SetActive(true);
+        ResetSelection();
+
+    }
+
+    private void ResetSelection()
+    {
         itemDescription.ResetDescription();
+        DeselectAllItems();
+    }
 
-        //listOfUIItems[0].SetData(image, quantity);
-        //listOfUIItems[1].SetData(image2, quantity);
-
+    private void DeselectAllItems()
+    {
+        foreach (UIInventoryItem item in listOfUIItems)
+        {
+            item.Deselect();
+        }
     }
 
     public void Hide()
     {
 
         gameObject.SetActive(false);
+        ResetSelection();
 
     }
 
