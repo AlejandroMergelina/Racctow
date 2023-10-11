@@ -20,23 +20,11 @@ public class UIInventoryPage : MonoBehaviour
 
     private List<UIInventoryItem> listOfUIItems = new List<UIInventoryItem>();
 
-    [SerializeField]
-    private Sprite image;
-    public Sprite Image { get => image; set => image = value; }
-    [SerializeField]
-    private Sprite image2;
-    public Sprite Image2 { get => image; set => image = value; }
-    [SerializeField]
-    private int quantity;
-    public int Quantity { get => quantity; set => quantity = value; }
-    [SerializeField]
-    private string description;
-    [SerializeField]
-    private string titel;
-    public string Titel { get => titel; set => titel = value; }
-    public string Description { get => description; set => description = value; }
-
     private int currentlyDraggedItemIndex = -1;
+
+    public event Action<int> OnDescriptionRequested, OnItemActionRequested, OnStartDragging;
+
+    public event Action<int, int> OnSapItems;
 
     private void Awake()
     {
@@ -66,6 +54,17 @@ public class UIInventoryPage : MonoBehaviour
 
     }
 
+    public void UpdateData(int itemIndex,Sprite itemImage, int itemQuantity)
+    {
+
+        if(listOfUIItems.Count > itemIndex)
+        {
+
+            listOfUIItems[itemIndex].SetData(itemImage, itemQuantity);
+        }
+
+    }
+
     private void HandleShowItemActions(UIInventoryItem InventoryItemUI)
     {
 
@@ -90,8 +89,10 @@ public class UIInventoryPage : MonoBehaviour
         }
 
         //Operador ternario. (if-else en una línea)
-        listOfUIItems[currentlyDraggedItemIndex].SetData(index == 0? image : image2, quantity);
-
+        //listOfUIItems[currentlyDraggedItemIndex].SetData(index == 0? image : image2, quantity);
+        //listOfUIItems[index].SetData(currentlyDraggedItemIndex == 0? image : image2, quantity);
+        moseFollower.Toogle(false);
+        currentlyDraggedItemIndex = -1;
     }
 
     private void HandleBeginDrag(UIInventoryItem InventoryItemUI)
@@ -102,14 +103,14 @@ public class UIInventoryPage : MonoBehaviour
         currentlyDraggedItemIndex = index;
 
         moseFollower.Toogle(true);
-        moseFollower.SetData(index == 0? image : image2, quantity);
+        //moseFollower.SetData(index == 0? image : image2, quantity);
         
     }
 
     private void HandleItemSelection(UIInventoryItem InventoryItemUI)
     {
 
-        itemDescription.SetDescription(image, titel, description);
+        //itemDescription.SetDescription(image, titel, description);
         listOfUIItems[0].Selected();
 
     }
@@ -120,7 +121,8 @@ public class UIInventoryPage : MonoBehaviour
         gameObject.SetActive(true);
         itemDescription.ResetDescription();
 
-        listOfUIItems[0].SetData(image, quantity);
+        //listOfUIItems[0].SetData(image, quantity);
+        //listOfUIItems[1].SetData(image2, quantity);
 
     }
 

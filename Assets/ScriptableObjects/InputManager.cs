@@ -20,16 +20,13 @@ public class InputManager : ScriptableObject
         controles.Gameplay.Enable();
 
         //Suscripciones a eventos.
-        controles.Gameplay.Attack.started += OnAttack;
-        controles.Gameplay.Dodge.started += OnDodge;
+        controles.Gameplay.Action.started += OnAction;
+        
     }
 
-    private void OnDodge(InputAction.CallbackContext obj)
-    {
-        OnDodgeAction?.Invoke();
-    }
+ 
 
-    private void OnAttack(InputAction.CallbackContext obj)
+    private void OnAction(InputAction.CallbackContext obj)
     {
         OnAttackAction?.Invoke();
     }

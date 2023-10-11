@@ -35,14 +35,15 @@ public class MainCharacter : Character
 
     private void OnEnable()
     {
-        inputManager.OnDodgeAction += OnDodge;
+        inputManager.OnDodgeAction += OnAction;
     }
 
-    private void OnDodge()
+    protected virtual void OnAction()
     {
         if (currentCooldDownDodge <= 0 && canDodge)
         {
             animator.SetTrigger("dodge");
+            return;
         }
     }
 

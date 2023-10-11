@@ -6,18 +6,9 @@
             "id": "aa2a0b10-5e1b-4e18-a7e4-a69d58ccaa32",
             "actions": [
                 {
-                    "name": "Attack",
+                    "name": "Action",
                     "type": "Button",
                     "id": "7affe9d5-5a6f-449e-a843-ba1c4ead3db3",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Dodge",
-                    "type": "Button",
-                    "id": "dfe83385-8321-4886-bebd-5234a8b6f49f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -32,18 +23,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "187e7b82-cc40-4004-9a07-ab707effb507",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Dodge",
+                    "action": "Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

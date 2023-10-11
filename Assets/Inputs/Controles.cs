@@ -28,18 +28,9 @@ public partial class @Controles : IInputActionCollection2, IDisposable
             ""id"": ""aa2a0b10-5e1b-4e18-a7e4-a69d58ccaa32"",
             ""actions"": [
                 {
-                    ""name"": ""Attack"",
+                    ""name"": ""Action"",
                     ""type"": ""Button"",
                     ""id"": ""7affe9d5-5a6f-449e-a843-ba1c4ead3db3"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Dodge"",
-                    ""type"": ""Button"",
-                    ""id"": ""dfe83385-8321-4886-bebd-5234a8b6f49f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -54,18 +45,7 @@ public partial class @Controles : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Attack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""187e7b82-cc40-4004-9a07-ab707effb507"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Dodge"",
+                    ""action"": ""Action"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -104,8 +84,7 @@ public partial class @Controles : IInputActionCollection2, IDisposable
 }");
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-        m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
-        m_Gameplay_Dodge = m_Gameplay.FindAction("Dodge", throwIfNotFound: true);
+        m_Gameplay_Action = m_Gameplay.FindAction("Action", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Newaction = m_Menu.FindAction("New action", throwIfNotFound: true);
@@ -168,14 +147,12 @@ public partial class @Controles : IInputActionCollection2, IDisposable
     // Gameplay
     private readonly InputActionMap m_Gameplay;
     private IGameplayActions m_GameplayActionsCallbackInterface;
-    private readonly InputAction m_Gameplay_Attack;
-    private readonly InputAction m_Gameplay_Dodge;
+    private readonly InputAction m_Gameplay_Action;
     public struct GameplayActions
     {
         private @Controles m_Wrapper;
         public GameplayActions(@Controles wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Attack => m_Wrapper.m_Gameplay_Attack;
-        public InputAction @Dodge => m_Wrapper.m_Gameplay_Dodge;
+        public InputAction @Action => m_Wrapper.m_Gameplay_Action;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -185,22 +162,16 @@ public partial class @Controles : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_GameplayActionsCallbackInterface != null)
             {
-                @Attack.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAttack;
-                @Attack.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAttack;
-                @Attack.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAttack;
-                @Dodge.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDodge;
-                @Dodge.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDodge;
-                @Dodge.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDodge;
+                @Action.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAction;
+                @Action.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAction;
+                @Action.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAction;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Attack.started += instance.OnAttack;
-                @Attack.performed += instance.OnAttack;
-                @Attack.canceled += instance.OnAttack;
-                @Dodge.started += instance.OnDodge;
-                @Dodge.performed += instance.OnDodge;
-                @Dodge.canceled += instance.OnDodge;
+                @Action.started += instance.OnAction;
+                @Action.performed += instance.OnAction;
+                @Action.canceled += instance.OnAction;
             }
         }
     }
@@ -240,8 +211,7 @@ public partial class @Controles : IInputActionCollection2, IDisposable
     public MenuActions @Menu => new MenuActions(this);
     public interface IGameplayActions
     {
-        void OnAttack(InputAction.CallbackContext context);
-        void OnDodge(InputAction.CallbackContext context);
+        void OnAction(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {

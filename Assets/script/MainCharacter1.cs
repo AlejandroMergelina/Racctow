@@ -15,11 +15,13 @@ public class MainCharacter1 : MainCharacter
 
     private void OnEnable()
     {
-        inputManager.OnAttackAction += MainCharacterAttack;
+        inputManager.OnAttackAction += OnAction;
     }
 
-    private void MainCharacterAttack()
+    protected override void OnAction()
     {
+        base.OnAction();
+
         if (canAttack)
         {
             print("entro");
