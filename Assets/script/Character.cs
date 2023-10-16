@@ -60,10 +60,12 @@ public abstract class Character : MonoBehaviour
         return currentHP;
 
     }
-    public void SetHP(int currentHP)
+    public void HealHP(int val)
     {
-
-        this.currentHP = currentHP;
+        if (maxHP > currentHP + val)
+            currentHP += val;
+        else if (maxHP <= currentHP + val)
+            currentHP = maxHP;
 
     }
 

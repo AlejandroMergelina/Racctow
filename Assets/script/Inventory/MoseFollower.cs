@@ -1,3 +1,4 @@
+using Inventory.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class MoseFollower : MonoBehaviour
 
     [SerializeField]
     private Canvas canvas;
+
     [SerializeField]
     private UIInventoryItem item;
 
@@ -15,7 +17,7 @@ public class MoseFollower : MonoBehaviour
     {
 
         canvas = transform.root.GetComponent<Canvas>();
-
+        item = GetComponentInChildren<UIInventoryItem>();
     }
     public void SetData(Sprite sprite, int quantity)
     {
