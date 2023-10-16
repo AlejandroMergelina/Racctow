@@ -75,6 +75,7 @@ namespace Inventory
                 
                 inventoryUI.ShowItemAction(itemIndex);
                 inventoryUI.AddAction(itemAction.ActionName, () => PerformAction(itemIndex));
+                //llama a la funcion AddAction del UIInventoryPage le pasa por parametro un string con el texto del boton y la Action utilizando la funzion PerformAction
 
             }
 
@@ -94,6 +95,7 @@ namespace Inventory
             inventoryUI.ResetSelection();
         }
 
+        //primero resta en 1 del total de ese item porque lo consume lugo llama al PerformAction del personaje que se le pasa por parametro y ejecuta los StatsModifier
         public void PerformAction(int itemIndex)
         {
 

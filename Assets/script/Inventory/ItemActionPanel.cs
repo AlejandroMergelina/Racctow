@@ -10,7 +10,7 @@ namespace Inventory.UI
     {
         [SerializeField]
         private GameObject buttonPrefab;
-
+        //se crea el boton para la accion
         public void AddButton(string name, Action onClickAction)
         {
 
