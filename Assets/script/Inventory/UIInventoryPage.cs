@@ -24,7 +24,7 @@ namespace Inventory.UI
 
         private int currentlyDraggedItemIndex = -1;
 
-        public event Action<int> OnDescriptionRequested, OnItemActionRequested, OnStartDragging;
+        public event Action<int> OnDescriptionRequested, OnItemActionRequested, OnStartDragging;//estan obligados a tener el parametro de entrada int
 
         public event Action<int, int> OnSwapItems;
 
@@ -39,22 +39,21 @@ namespace Inventory.UI
             itemDescription.ResetDescription();
 
         }
-
+ 
         public void InitializeInventoryUI(int inventorysize)
         {
-
+            //Con un bucle crea las instancias de los objetos/espacis del inventario
             for (int i = 0; i < inventorysize; i++)
             {
 
                 UIInventoryItem uiItem = Instantiate(itemPrefab, Vector3.zero, Quaternion.identity);
-                uiItem.transform.SetParent(contentPanel);
-                listOfUIItems.Add(uiItem);
-                uiItem.OnItemClicked += HandleItemSelection;
+                uiItem.transform.SetParent(contentPanel);//le hace hijo al panel de unity que contiene el espacio del inventario
+                listOfUIItems.Add(uiItem);//el objeto creado es almacenado en la lista uiItem para allmacenar todos los objetos
+                uiItem.OnItemClicked += HandleItemSelection;//suscribe la funcion HandleItemSelection de la clase actual a la funcion OnItemClicked del objeto prviamente creado
                 uiItem.OnItemBeingDrag += HandleBeginDrag;
                 uiItem.OnItemDroppedOn += HandleSwap;
                 uiItem.OnItemEndDrag += HandleEndDrag;
                 uiItem.OnRightMouseBtnClick += HandleShowItemActions;
-
             }
 
         }

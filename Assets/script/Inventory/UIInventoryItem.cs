@@ -62,7 +62,7 @@ namespace Inventory.UI
             borderImagen.enabled = true;
 
         }
-
+        //se activan en el event triger
         public void OnPointerClick(BaseEventData data)
         {
             
@@ -71,39 +71,39 @@ namespace Inventory.UI
             if (pointerData.button == PointerEventData.InputButton.Right)
             {
                 
-                OnRightMouseBtnClick?.Invoke(this);
-                
+                OnRightMouseBtnClick?.Invoke(this);//lanza la llamada para los subcriptores
+
             }
             else
             {
 
-                OnItemClicked?.Invoke(this);
+                OnItemClicked?.Invoke(this);//lanza la llamada para los subcriptores
 
             }
 
         }
-
+        //se activan en el event triger
         public void OnEndDrag()
         {
 
-            OnItemEndDrag?.Invoke(this);
+            OnItemEndDrag?.Invoke(this);//lanza la llamada para los subcriptores
 
         }
-
+        //se activan en el event triger
         public void OnBegingDrag()
         {
 
             if (empty)
                 return;
 
-            OnItemBeingDrag?.Invoke(this);
+            OnItemBeingDrag?.Invoke(this);//lanza la llamada para los subcriptores
 
         }
-
+        //se activan en el event triger
         public void OnDrop()
         {
 
-            OnItemDroppedOn?.Invoke(this);
+            OnItemDroppedOn?.Invoke(this);//lanza la llamada para los subcriptores
 
         }
 

@@ -190,18 +190,18 @@ namespace Inventory.Model
         public bool IsEmpty { get => isEmpty; }
        
 
-        public InventoryItem ChangeQuantity(int newQuuantity)
+        public InventoryItem ChangeQuantity(int newQuuantity)//funcion que debuelbe una variable del tipo de la clase
         {
             return new InventoryItem
             {
-                item = this.item,
+                item = item,//para mantener el mismo item y que no varie
                 quantity = newQuuantity,
                 itemState = new List<ItemParameter>(itemState)
             };
 
         }
 
-        public static InventoryItem GetEmptyItem() => new InventoryItem()
+        public static InventoryItem GetEmptyItem() => new InventoryItem()//hace lo mismo que lo de antes pero simplifica codigo
         {
 
             item = null,

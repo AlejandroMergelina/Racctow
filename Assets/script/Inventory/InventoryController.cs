@@ -17,7 +17,7 @@ namespace Inventory
         private InventorySO inventoryData;
 
         [SerializeField]
-        private List<InventoryItem> initialItems = new List<InventoryItem>();
+        private List<InventoryItem> initialItems = new List<InventoryItem>();//lista de structs InventoryItem
 
         private void Start()
         {
@@ -28,13 +28,13 @@ namespace Inventory
         private void PrepareInventoryData()
         {
             inventoryData.Initialize();
-            inventoryData.OnInventoryUpdated += UpdateIventoryUI;
+            inventoryData.OnInventoryUpdated += UpdateIventoryUI;//sucribe
             foreach (InventoryItem item in initialItems)
             {
 
                 if (item.IsEmpty)
                     continue;
-                inventoryData.AddItem(item);
+                inventoryData.AddItem(item);//llama a la funcion de la instscis de la clase UIInventoryPage mete los items en el invetario
 
             }
         }
@@ -54,11 +54,11 @@ namespace Inventory
 
         private void PrepareUI()
         {
-            inventoryUI.InitializeInventoryUI(inventoryData.Size);
-            inventoryUI.OnDescriptionRequested += HandleDescriptionRequest;
-            inventoryUI.OnSwapItems += HandleSawmpItem;
-            inventoryUI.OnStartDragging += HandleDragging;
-            inventoryUI.OnItemActionRequested += HandleItemActionRequest;
+            inventoryUI.InitializeInventoryUI(inventoryData.Size);//llama y le pasa el tamaño del inventario segun el scripteable objet de la clase InvetorySO
+            inventoryUI.OnDescriptionRequested += HandleDescriptionRequest;//suscrive a la funcion OnDescriptionRequested del UIInventoryPage
+            inventoryUI.OnSwapItems += HandleSawmpItem;//suscrive
+            inventoryUI.OnStartDragging += HandleDragging;//suscrive
+            inventoryUI.OnItemActionRequested += HandleItemActionRequest;//suscrive
         }
 
         private void HandleItemActionRequest(int itemIndex)
