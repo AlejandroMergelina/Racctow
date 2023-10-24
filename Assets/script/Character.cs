@@ -1,122 +1,105 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Character : MonoBehaviour
 {
-    [SerializeField]
-    protected string _name;
-
-    [SerializeField]
-    protected int maxHP;
-    [SerializeField]
-    protected int currentHP;
-    [SerializeField]
-    protected int power;
-    [SerializeField]
-    protected int defense;
-    [SerializeField]
-    protected int speed;
 
     protected bool stoon;
+
+    [SerializeField]
+    protected CharacterSO characterData;
 
 
     protected virtual void Start()
     {
 
-        currentHP = maxHP;
+        characterData.CurrentHP = characterData.MaxHP;
 
     }
 
-    public string GetName()
-    {
-
-        return _name;
-
-    }
-    public void SetName(string name)
-    {
-
-        _name = name;
-
-    }
-
-    public int GetMaxHP()
-    {
-
-        return maxHP;
-
-    }
-    public void SetMaxHP(int maxHP)
-    {
-
-        this.maxHP = maxHP;
-
-    }
-
-    public int GetHP()
-    {
-
-        return currentHP;
-
-    }
     public void HealHP(int val)
     {
-        if (maxHP > currentHP + val)
-            currentHP += val;
-        else if (maxHP <= currentHP + val)
-            currentHP = maxHP;
-
-    }
-
-    public int GetPower()
-    {
-
-        return power;
-
-    }
-    public void SetPower(int power)
-    {
-
-        this.power = power;
-
-    }
-
-    public int GetDefense()
-    {
-
-        return defense;
-
-    }
-    public void SetDefense(int defense)
-    {
-
-        this.defense = defense;
-
-    }
-
-    public int GetSpeed()
-    {
-
-        return speed;
-
-    }
-    public void Setspeed(int speed)
-    {
-
-        this.speed = speed;
+        characterData.HealHP(val);
 
     }
 
     public abstract void Attack(Character it);
 
+
+
     public void TakeDamage(int dmg)
     {
 
-        currentHP -= dmg;
+        characterData.CurrentHP -= dmg;
 
     }
 
     protected abstract void FinishAnimationAtack();
+    
+    public string GetName()
+    {
+        return characterData.Name;
+    }
+
+    public int GetMaxHP()
+    {
+        return characterData.MaxHP;
+    }
+
+
+
+    public int GetHP()
+    {
+
+        return characterData.CurrentHP;
+
+    }
+
+
+
+    public int GetPower()
+    {
+
+        return characterData.Power;
+
+    }
+    public void SetPower(int power)
+    {
+        characterData.Power = power;
+    }
+
+
+
+    public int GetDefense()
+    {
+
+        return characterData.Defense;
+
+    }
+    public void SetDefense(int defense)
+    {
+
+        characterData.Defense = defense;
+
+    }
+
+
+
+    public int GetSpeed()
+    {
+
+        return characterData.Speed;
+
+    }
+    public void Setspeed(int speed)
+    {
+
+        characterData.Speed = speed;
+
+    }
+
+    
 
 }

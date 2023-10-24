@@ -14,7 +14,7 @@ namespace Inventory.Model
 
         public string ActionName => "Consume";
 
-        public bool PerformAction(GameObject character, List<ItemParameter> itemState = null)
+        public bool PerformAction(CharacterSO character, List<ItemParameter> itemState = null)
         {
             foreach(ModifierData data in modifiersDatas)
             {
@@ -37,7 +37,7 @@ namespace Inventory.Model
     {
         public string ActionName { get;}
 
-        bool PerformAction(GameObject character, List<ItemParameter> itemState);
+        bool PerformAction(CharacterSO character, List<ItemParameter> itemState);
     }
 
     [Serializable]

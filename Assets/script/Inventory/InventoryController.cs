@@ -19,6 +19,9 @@ namespace Inventory
         [SerializeField]
         private List<InventoryItem> initialItems = new List<InventoryItem>();//lista de structs InventoryItem
 
+        [SerializeField]
+        CharacterSO[] characters;
+
         private void Start()
         {
             PrepareUI();
@@ -74,7 +77,7 @@ namespace Inventory
 
                 
                 inventoryUI.ShowItemAction(itemIndex);
-                inventoryUI.AddAction(itemAction.ActionName, () => PerformAction(itemIndex));
+                inventoryUI.AddAction(itemAction.ActionName, () => PerformElection(itemIndex, itemAction));
                 //llama a la funcion AddAction del UIInventoryPage le pasa por parametro un string con el texto del boton y la Action utilizando la funzion PerformAction
 
             }
@@ -95,8 +98,20 @@ namespace Inventory
             inventoryUI.ResetSelection();
         }
 
+        public void PerformElection(int itemIndex, IItemAction itemAction)
+        {
+
+            foreach (CharacterSO character in characters)
+            {
+
+                inventoryUI.AddAction(itemAction.ActionName, () => PerformAction(itemIndex, character)); 
+
+            }
+
+        }
+
         //primero resta en 1 del total de ese item porque lo consume lugo llama al PerformAction del personaje que se le pasa por parametro y ejecuta los StatsModifier
-        public void PerformAction(int itemIndex)
+        public void PerformAction(int itemIndex, CharacterSO character)
         {
 
 
@@ -116,7 +131,7 @@ namespace Inventory
             if (itemAction != null)
             {
 
-                itemAction.PerformAction(gameObject/*aqui ira el jugador seleccionado*/, inventoryItem.ItemState);
+                itemAction.PerformAction(character/*aqui ira el jugador seleccionado*/, inventoryItem.ItemState);
                 if (inventoryData.GetItemAt(itemIndex).IsEmpty)
                     inventoryUI.ResetSelection();
 

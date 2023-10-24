@@ -112,12 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542a90cfbbe2349498f468ff65a71cd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: 
-  maxHP: 10
-  currentHP: 0
-  power: 1
-  defense: 1
-  speed: 1
+  characterData: {fileID: 11400000, guid: eb49a90c64130b5418379bedee9da537, type: 2}
   distanceToEnemy: {x: 1, y: 0, z: 0}
   enemyMask:
     serializedVersion: 2
@@ -126,10 +121,9 @@ MonoBehaviour:
   counterattackRadius: 1
   cooldDownDodge: 1
   animator: {fileID: 8842864350518490726}
-  k: 101
+  inputManager: {fileID: 11400000, guid: 93d86641cda0e1d4492b2d6deb264733, type: 2}
   centerOfPunch: {fileID: 6856828725387485851}
   radius: 1
-  inputManager: {fileID: 11400000, guid: 93d86641cda0e1d4492b2d6deb264733, type: 2}
 --- !u!95 &8842864350518490726
 Animator:
   serializedVersion: 5

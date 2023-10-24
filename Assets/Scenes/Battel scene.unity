@@ -1818,7 +1818,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1815245926}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 463873fd8c74bf34aa83f5713107bddf, type: 3}
   m_Name: 
@@ -1831,9 +1831,8 @@ MonoBehaviour:
   - {fileID: 467558592}
   mainCharactersPrefab:
   - {fileID: 8477475312655489751, guid: b421976be2e49be4296331342cf466c8, type: 3}
-  - {fileID: 8477475312655489751, guid: b421976be2e49be4296331342cf466c8, type: 3}
+  - {fileID: 3011071852260738345, guid: f2bcdaf25fd64ad4f804082778e50763, type: 3}
   enemyCharactersPrefab:
-  - {fileID: 1333685945146296740, guid: 865a2652deeb7a546ada20cebcdbd854, type: 3}
   - {fileID: 1333685945146296740, guid: 865a2652deeb7a546ada20cebcdbd854, type: 3}
   mainCharactersStation:
   - {fileID: 8702285395827586829, guid: 738cbf86483331b4cabf011b87a48acf, type: 3}
@@ -1865,6 +1864,7 @@ MonoBehaviour:
   - quantity: 2
     item: {fileID: 11400000, guid: 5c2f129d5331b1441bbfe34dfcf8a8c2, type: 2}
     itemState: []
+  characters: []
 --- !u!114 &1815245932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1889,17 +1889,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1815245926}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 542a90cfbbe2349498f468ff65a71cd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: 
-  maxHP: 10
-  currentHP: 0
-  power: 0
-  defense: 0
-  speed: 1
+  characterData: {fileID: 0}
   distanceToEnemy: {x: 0, y: 0, z: 0}
   enemyMask:
     serializedVersion: 2
@@ -1919,7 +1914,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1815245926}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 0}
   m_CullingMode: 0
@@ -1946,8 +1941,7 @@ MonoBehaviour:
   weapon: {fileID: 0}
   inventoryData: {fileID: 11400000, guid: 70f76089b524f72439a449d8215068ab, type: 2}
   parametersToModify:
-  - itemParameter: {fileID: 11400000, guid: 7866b80f1139d3940ada17fbcd3cfe60, type: 2}
-    values: -10
+  - {itemParameter: {fileID: 11400000, guid: 7866b80f1139d3940ada17fbcd3cfe60, type: 2}, values: -10}
   itemCurrentState: []
 --- !u!1 &1842842977
 GameObject:

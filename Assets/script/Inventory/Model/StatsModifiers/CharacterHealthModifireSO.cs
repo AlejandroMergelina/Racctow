@@ -5,11 +5,10 @@ using UnityEngine;
 [CreateAssetMenu]
 public class CharacterHealthModifireSO : CharacterStatModifierSO
 {
-    public override void AffectCharacter(GameObject character, float val)
+    public override void AffectCharacter(CharacterSO character, float val)
     {
         
-        Character ch = character.GetComponent<Character>();
-        if(ch != null)
-            ch.HealHP((int)val);
+        if(character != null)
+            character.HealHP((int)val);
     }
 }

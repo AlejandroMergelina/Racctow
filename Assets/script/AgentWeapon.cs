@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AgentWeapon : MonoBehaviour
+public class AgentWeaponSO : ScriptableObject
 {
     [SerializeField]
     private EquippableItemSO weapon;
