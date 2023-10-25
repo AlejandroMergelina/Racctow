@@ -1864,7 +1864,10 @@ MonoBehaviour:
   - quantity: 2
     item: {fileID: 11400000, guid: 5c2f129d5331b1441bbfe34dfcf8a8c2, type: 2}
     itemState: []
-  characters: []
+  characters:
+  - {fileID: 11400000, guid: eb49a90c64130b5418379bedee9da537, type: 2}
+  - {fileID: 11400000, guid: 99166d6b83712674fbf33dccf05e3b31, type: 2}
+  battleSistem: {fileID: 1815245930}
 --- !u!114 &1815245932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1938,11 +1941,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9690ac0b6f6984945b81a0358bda2b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 0}
-  inventoryData: {fileID: 11400000, guid: 70f76089b524f72439a449d8215068ab, type: 2}
-  parametersToModify:
-  - {itemParameter: {fileID: 11400000, guid: 7866b80f1139d3940ada17fbcd3cfe60, type: 2}, values: -10}
-  itemCurrentState: []
 --- !u!1 &1842842977
 GameObject:
   m_ObjectHideFlags: 0

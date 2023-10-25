@@ -332,7 +332,7 @@ public class BattleSistem : MonoBehaviour
             main.Value.SetCanDodge(false);
 
         }
-
+        //SOLUCIONAR EL IT
         if (it.GetHP() <= 0)
         {
             

@@ -180,6 +180,12 @@ namespace Inventory.UI
             actionPanel.AddButton(actionName, performAction);
 
         }
+        public void RemoveAction()
+        {
+
+            actionPanel.RemoveOldButtons();
+
+        }
 
         public void ShowItemAction(int itemIndex)
         {

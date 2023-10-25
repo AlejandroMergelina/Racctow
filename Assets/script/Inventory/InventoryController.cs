@@ -22,6 +22,9 @@ namespace Inventory
         [SerializeField]
         CharacterSO[] characters;
 
+        [SerializeField]
+        private BattleSistem battleSistem;
+
         private void Start()
         {
             PrepareUI();
@@ -100,11 +103,11 @@ namespace Inventory
 
         public void PerformElection(int itemIndex, IItemAction itemAction)
         {
-
+            inventoryUI.RemoveAction();
             foreach (CharacterSO character in characters)
             {
 
-                inventoryUI.AddAction(itemAction.ActionName, () => PerformAction(itemIndex, character)); 
+                inventoryUI.AddAction(character.Name, () => PerformAction(itemIndex, character)); 
 
             }
 
@@ -134,7 +137,7 @@ namespace Inventory
                 itemAction.PerformAction(character/*aqui ira el jugador seleccionado*/, inventoryItem.ItemState);
                 if (inventoryData.GetItemAt(itemIndex).IsEmpty)
                     inventoryUI.ResetSelection();
-
+                battleSistem.CheckLive("All");
             }
 
 
