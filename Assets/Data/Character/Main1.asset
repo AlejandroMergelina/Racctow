@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: main1
   maxHP: 10
-  currentHP: 10
-  power: 10
+  currentHP: 0
+  power: 1
   defense: 10
   speed: 1

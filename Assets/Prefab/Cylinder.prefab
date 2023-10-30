@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae5d24813e0c3bf49ad82c924f6a38c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterData: {fileID: 11400000, guid: eb49a90c64130b5418379bedee9da537, type: 2}
+  characterData: {fileID: 11400000, guid: 5977bf3038cffbc46b2c3b14d13b3b7e, type: 2}
   centerOfPunch: {fileID: 5316175592630291706}
   radius: 1
   enemyMask:

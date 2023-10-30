@@ -28,6 +28,10 @@ public class CharacterSO : ScriptableObject
     [SerializeField]
     private int speed;
     public int Speed { get => speed; set => speed = value;}
+    
+    [SerializeField]
+    private int iD;
+    public int ID { get => iD; set => iD = value; }
 
     public void HealHP(int val)
     {

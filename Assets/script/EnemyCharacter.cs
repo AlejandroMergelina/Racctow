@@ -40,11 +40,11 @@ public class EnemyCharacter : Character
 
     }
 
-    public override void Attack(Character it)
+    public override void Attack(Character charaterWhoAttacked)
     {
 
         print("hola");
-        end = it.transform.position - distanceToEnemy;
+        end = charaterWhoAttacked.transform.position - distanceToEnemy;
         start = initialPosition;
 
 

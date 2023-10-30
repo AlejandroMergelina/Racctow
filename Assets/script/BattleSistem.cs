@@ -12,6 +12,8 @@ public class BattleSistem : MonoBehaviour
     private GameObject enemySelectCanvas;
     [SerializeField]
     private GameObject optionCanvas;
+    public GameObject OptionCanvas { get => optionCanvas; set => optionCanvas = value; }
+
     [SerializeField]
     private GameObject[] selectEnemyButtons;
 
@@ -31,6 +33,7 @@ public class BattleSistem : MonoBehaviour
 
     private Queue<Character> EnemyOrder = new Queue<Character>();
     private Queue<Character> MainChOrder = new Queue<Character>();
+    public Queue<Character> MainChOrder1 { get => MainChOrder; set => MainChOrder = value; }
 
     private Dictionary<int, MainCharacter> MainCharacters = new Dictionary<int, MainCharacter>();
     private Dictionary<int, EnemyCharacter> EnemyCharacters = new Dictionary<int, EnemyCharacter>();
@@ -40,8 +43,8 @@ public class BattleSistem : MonoBehaviour
 
     public static BattleSistem Instance;
 
-    private int i;
-    private Character it;
+    //private int i;
+    //private Character it;
 
     public void Start()
     {
@@ -75,7 +78,7 @@ public class BattleSistem : MonoBehaviour
             GameObject clon = Instantiate(enemyCharactersPrefab[i], enemyCharactersStation[i].position, enemyCharactersStation[i].rotation);
             EnemyCharacter clonInf = clon.GetComponent<EnemyCharacter>();
             EnemyCharacters.Add(i,clonInf);
-
+            clonInf.SetID(i);
             
 
         }
@@ -87,8 +90,9 @@ public class BattleSistem : MonoBehaviour
             GameObject clon = Instantiate(mainCharactersPrefab[i], mainCharactersStation[i].position, mainCharactersStation[i].rotation);
             MainCharacter clonInf = clon.GetComponent<MainCharacter>();
             MainCharacters.Add(i,clonInf);
+            clonInf.SetID(i);
 
-            
+
 
         }
                 
@@ -271,12 +275,12 @@ public class BattleSistem : MonoBehaviour
 
         //print("el numero random es = " + rng);
 
-        MainCharacters.TryGetValue(rng, out MainCharacter it);
+        MainCharacters.TryGetValue(rng, out MainCharacter mainCharacterRandom);
 
-        me.Attack(it);
+        me.Attack(mainCharacterRandom);
 
-        this.it = it;
-        i = rng;
+        //this.it = mainCharacterRandom;
+        //i = rng;
 
         //CheckLive("Main");//active at the end of enemy animation
 
@@ -299,8 +303,8 @@ public class BattleSistem : MonoBehaviour
                  
         EnemyCharacters.TryGetValue(i, out EnemyCharacter it);
 
-        this.it = it;
-        this.i = i;
+        //this.it = it;
+        //this.i = i;
 
         MainChOrder.Dequeue();
 
@@ -332,31 +336,93 @@ public class BattleSistem : MonoBehaviour
             main.Value.SetCanDodge(false);
 
         }
-        //SOLUCIONAR EL IT
-        if (it.GetHP() <= 0)
+
+        foreach(GameObject Prefab in mainCharactersPrefab)
         {
-            
-            if (rival == "Main")
+            MainCharacter livingMainCharacter = Prefab.GetComponent<MainCharacter>();
+
+            if(livingMainCharacter.GetHP() <= 0 && MainCharacters.ContainsKey(livingMainCharacter.GetID()))
             {
-                
-                MainCharacters.Remove(i);
-                
-                
+
+                MainCharacters.Remove(livingMainCharacter.GetID());
+
                 foreach (KeyValuePair<int, MainCharacter> main in MainCharacters)
                 {
-                    
-                    HelpDiccionary.Add(main.Key, main.Value);
+                    if (MainChOrder.Contains(main.Value))
+                        HelpDiccionary.Add(main.Key, main.Value);
 
                 }
                 MainChOrder.Clear();
+                SubOrder(HelpDiccionary, MainChOrder);
+
+            }
+            else if(livingMainCharacter.GetHP()> 0 && MainCharacters.ContainsKey(livingMainCharacter.GetID()) == false)
+            {
+
+                //bugazoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+                MainCharacters.Add(livingMainCharacter.GetID(),livingMainCharacter);
+
+                //foreach (KeyValuePair<int, MainCharacter> main in MainCharacters)
+                //{
+                //    if (MainChOrder.Contains(main.Value))
+                //        HelpDiccionary.Add(main.Key, main.Value);
+
+                //}
+                //MainChOrder.Clear();
+                //SubOrder(HelpDiccionary, MainChOrder);
+
+            }
+
+        }
+
+        foreach(KeyValuePair<int, EnemyCharacter> enemy in EnemyCharacters)
+        {
+
+            if (enemy.Value.GetHP() <= 0)
+            {
+
+                MainCharacters.Remove(enemy.Key);
+
+                foreach (KeyValuePair<int, MainCharacter> main in MainCharacters)
+                {
+                    if (MainChOrder.Contains(main.Value))
+                        HelpDiccionary.Add(main.Key, main.Value);
+
+                }
+                MainChOrder.Clear();
+                SubOrder(HelpDiccionary, MainChOrder);
 
                 SubOrder(HelpDiccionary, MainChOrder);
-                
             }
-                
-            else
-                EnemyCharacters.Remove(i);
+
         }
+
+        
+        //SOLUCIONAR EL IT
+        //if (it.GetHP() <= 0)
+        //{
+            
+        //    if (rival == "Main")
+        //    {
+                
+        //        MainCharacters.Remove(i);
+                
+                
+        //        foreach (KeyValuePair<int, MainCharacter> main in MainCharacters)
+        //        {
+        //            if (MainChOrder.Contains(main.Value))
+        //                HelpDiccionary.Add(main.Key, main.Value);
+
+        //        }
+        //        MainChOrder.Clear();
+
+        //        SubOrder(HelpDiccionary, MainChOrder);
+                
+        //    }
+                
+        //    else
+        //        EnemyCharacters.Remove(i);
+        //}
         
         
         if (MainCharacters.Count == 0)
@@ -378,7 +444,7 @@ public class BattleSistem : MonoBehaviour
 
         else
         {
-
+            
             state = BattleState.ORDER;
 
             Order();

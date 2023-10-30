@@ -106,7 +106,7 @@ namespace Inventory
             inventoryUI.RemoveAction();
             foreach (CharacterSO character in characters)
             {
-
+                
                 inventoryUI.AddAction(character.Name, () => PerformAction(itemIndex, character)); 
 
             }
@@ -137,6 +137,8 @@ namespace Inventory
                 itemAction.PerformAction(character/*aqui ira el jugador seleccionado*/, inventoryItem.ItemState);
                 if (inventoryData.GetItemAt(itemIndex).IsEmpty)
                     inventoryUI.ResetSelection();
+                inventoryUI.Hide();
+                battleSistem.MainChOrder1.Dequeue();
                 battleSistem.CheckLive("All");
             }
 
@@ -220,7 +222,7 @@ namespace Inventory
 
         public void OppeInventoty()
         {
-
+            battleSistem.OptionCanvas.SetActive(false);
             inventoryUI.Show();
             foreach (KeyValuePair<int, InventoryItem> item in inventoryData.GetCurrentIventoryState())
             {

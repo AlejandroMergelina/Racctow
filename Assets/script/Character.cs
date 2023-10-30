@@ -100,6 +100,16 @@ public abstract class Character : MonoBehaviour
 
     }
 
-    
+    public int GetID()
+    {
+
+        return characterData.ID;
+
+    }
+    public void SetID(int iD)
+    {
+        characterData.ID = iD;
+
+    }
 
 }
