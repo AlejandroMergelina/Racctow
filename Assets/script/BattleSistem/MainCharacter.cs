@@ -79,7 +79,7 @@ public class MainCharacter : Character
 
     public override void Attack(Character it)
     {
-        print("hola");
+
         targetPosition = end = it.transform.position - distanceToEnemy;
         start = initialPosition;
 

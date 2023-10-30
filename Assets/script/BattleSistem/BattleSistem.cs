@@ -35,6 +35,7 @@ public class BattleSistem : MonoBehaviour
     private Queue<Character> MainChOrder = new Queue<Character>();
     public Queue<Character> MainChOrder1 { get => MainChOrder; set => MainChOrder = value; }
 
+    private Dictionary<int, MainCharacter> MainCharactersAlive = new Dictionary<int, MainCharacter>();
     private Dictionary<int, MainCharacter> MainCharacters = new Dictionary<int, MainCharacter>();
     private Dictionary<int, EnemyCharacter> EnemyCharacters = new Dictionary<int, EnemyCharacter>();
 
@@ -43,8 +44,6 @@ public class BattleSistem : MonoBehaviour
 
     public static BattleSistem Instance;
 
-    //private int i;
-    //private Character it;
 
     public void Start()
     {
@@ -89,6 +88,7 @@ public class BattleSistem : MonoBehaviour
 
             GameObject clon = Instantiate(mainCharactersPrefab[i], mainCharactersStation[i].position, mainCharactersStation[i].rotation);
             MainCharacter clonInf = clon.GetComponent<MainCharacter>();
+            MainCharactersAlive.Add(i,clonInf);
             MainCharacters.Add(i,clonInf);
             clonInf.SetID(i);
 
@@ -122,7 +122,7 @@ public class BattleSistem : MonoBehaviour
 
             HelpDiccionary.Clear();
 
-            foreach(KeyValuePair<int, MainCharacter> main in MainCharacters)
+            foreach(KeyValuePair<int, MainCharacter> main in MainCharactersAlive)
             {
 
                 HelpDiccionary.Add(main.Key, main.Value);
@@ -133,7 +133,7 @@ public class BattleSistem : MonoBehaviour
             
         }
 
-        //print("main; " + MainChOrder.Count + "\n" + "Enemy: " + EnemyOrder.Count);
+        //print("mainCh; " + MainChOrder.Count + "\n" + "Enemy: " + EnemyOrder.Count);
 
         if (EnemyOrder.Count == 0)
         {
@@ -251,7 +251,7 @@ public class BattleSistem : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        foreach(KeyValuePair<int, MainCharacter> main in MainCharacters)
+        foreach(KeyValuePair<int, MainCharacter> main in MainCharactersAlive)
         {
 
             main.Value.SetCanDodge(true);
@@ -264,18 +264,18 @@ public class BattleSistem : MonoBehaviour
 
             rng = UnityEngine.Random.Range(0, mainCharactersPrefab.Length);
             //print("comrpueba el numero random es = " + rng);
-            //print("el rng existe" + MainCharacters.ContainsKey(rng));
-            //if (MainCharacters.ContainsKey(rng) == true)
+            //print("el rng existe" + MainCharactersAlive.ContainsKey(rng));
+            //if (MainCharactersAlive.ContainsKey(rng) == true)
             //    print("contaiss ");
 
-            //if (MainCharacters != null)
+            //if (MainCharactersAlive != null)
             //    print("maincha" );
 
-        } while (MainCharacters.ContainsKey(rng) == false && MainCharacters.Count != 0);
+        } while (MainCharactersAlive.ContainsKey(rng) == false && MainCharactersAlive.Count != 0);
 
         //print("el numero random es = " + rng);
 
-        MainCharacters.TryGetValue(rng, out MainCharacter mainCharacterRandom);
+        MainCharactersAlive.TryGetValue(rng, out MainCharacter mainCharacterRandom);
 
         me.Attack(mainCharacterRandom);
 
@@ -320,7 +320,7 @@ public class BattleSistem : MonoBehaviour
         if(rival == "Main")
         {
 
-            foreach (KeyValuePair<int, MainCharacter> main in MainCharacters)
+            foreach (KeyValuePair<int, MainCharacter> main in MainCharactersAlive)
             {
 
                 main.Value.SetCanDodge(true);
@@ -330,23 +330,28 @@ public class BattleSistem : MonoBehaviour
         }
         
 
-        foreach (KeyValuePair<int, MainCharacter> main in MainCharacters)
+        foreach (KeyValuePair<int, MainCharacter> main in MainCharactersAlive)
         {
 
             main.Value.SetCanDodge(false);
 
         }
 
-        foreach(GameObject Prefab in mainCharactersPrefab)
+        int count = MainCharacters.Count;
+        //foreach(KeyValuePair<int, MainCharacter> mainCh in MainCharacters)
+        for (int i = 0; i < count; i++)
         {
-            MainCharacter livingMainCharacter = Prefab.GetComponent<MainCharacter>();
+            
+            MainCharacters.TryGetValue(i, out MainCharacter mainCh);
 
-            if(livingMainCharacter.GetHP() <= 0 && MainCharacters.ContainsKey(livingMainCharacter.GetID()))
+            print(mainCh.GetName() + "/" + mainCh.GetHP() + "/" + MainCharactersAlive.ContainsKey(mainCh.GetID()));
+
+            if (mainCh.GetHP() <= 0 && MainCharactersAlive.ContainsKey(mainCh.GetID()))
             {
 
-                MainCharacters.Remove(livingMainCharacter.GetID());
+                MainCharactersAlive.Remove(mainCh.GetID());
 
-                foreach (KeyValuePair<int, MainCharacter> main in MainCharacters)
+                foreach (KeyValuePair<int, MainCharacter> main in MainCharactersAlive)
                 {
                     if (MainChOrder.Contains(main.Value))
                         HelpDiccionary.Add(main.Key, main.Value);
@@ -356,16 +361,16 @@ public class BattleSistem : MonoBehaviour
                 SubOrder(HelpDiccionary, MainChOrder);
 
             }
-            else if(livingMainCharacter.GetHP()> 0 && MainCharacters.ContainsKey(livingMainCharacter.GetID()) == false)
+            else if(mainCh.GetHP()> 0 && MainCharactersAlive.ContainsKey(mainCh.GetID()) == false)
             {
-
+                print("intenta revivir");
                 //bugazoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
-                MainCharacters.Add(livingMainCharacter.GetID(),livingMainCharacter);
+                MainCharactersAlive.Add(mainCh.GetID(),mainCh);
 
-                //foreach (KeyValuePair<int, MainCharacter> main in MainCharacters)
+                //foreach (KeyValuePair<int, MainCharacter> main in MainCharactersAlive)
                 //{
-                //    if (MainChOrder.Contains(main.Value))
-                //        HelpDiccionary.Add(main.Key, main.Value);
+                //    if (MainChOrder.Contains(mainCh.Value))
+                //        HelpDiccionary.Add(mainCh.Key, mainCh.Value);
 
                 //}
                 //MainChOrder.Clear();
@@ -381,9 +386,9 @@ public class BattleSistem : MonoBehaviour
             if (enemy.Value.GetHP() <= 0)
             {
 
-                MainCharacters.Remove(enemy.Key);
+                MainCharactersAlive.Remove(enemy.Key);
 
-                foreach (KeyValuePair<int, MainCharacter> main in MainCharacters)
+                foreach (KeyValuePair<int, MainCharacter> main in MainCharactersAlive)
                 {
                     if (MainChOrder.Contains(main.Value))
                         HelpDiccionary.Add(main.Key, main.Value);
@@ -405,13 +410,13 @@ public class BattleSistem : MonoBehaviour
         //    if (rival == "Main")
         //    {
                 
-        //        MainCharacters.Remove(i);
+        //        MainCharactersAlive.Remove(i);
                 
                 
-        //        foreach (KeyValuePair<int, MainCharacter> main in MainCharacters)
+        //        foreach (KeyValuePair<int, MainCharacter> mainCh in MainCharactersAlive)
         //        {
-        //            if (MainChOrder.Contains(main.Value))
-        //                HelpDiccionary.Add(main.Key, main.Value);
+        //            if (MainChOrder.Contains(mainCh.Value))
+        //                HelpDiccionary.Add(mainCh.Key, mainCh.Value);
 
         //        }
         //        MainChOrder.Clear();
@@ -425,7 +430,7 @@ public class BattleSistem : MonoBehaviour
         //}
         
         
-        if (MainCharacters.Count == 0)
+        if (MainCharactersAlive.Count == 0)
         {
 
             state = BattleState.LOST;

@@ -43,7 +43,6 @@ public class EnemyCharacter : Character
     public override void Attack(Character charaterWhoAttacked)
     {
 
-        print("hola");
         end = charaterWhoAttacked.transform.position - distanceToEnemy;
         start = initialPosition;
 
