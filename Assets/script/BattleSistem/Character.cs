@@ -33,6 +33,8 @@ public abstract class Character : MonoBehaviour
     {
 
         characterData.CurrentHP -= dmg;
+        if (characterData.CurrentHP < 0)
+            characterData.CurrentHP = 0;
 
     }
 

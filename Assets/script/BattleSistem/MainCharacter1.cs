@@ -31,19 +31,19 @@ public class MainCharacter1 : MainCharacter
         }
     }
 
-    protected override void Update()
-    {
-        base.Update();
+    //protected override void Update()
+    //{
+    //    base.Update();
 
-        //if (Input.GetKeyDown(KeyCode.E) && canAttack)
-        //{
-        //    print("entro");
-        //    animator.SetBool("attack", true);
-        //    canAttack = false;
+    //    //if (Input.GetKeyDown(KeyCode.E) && canAttack)
+    //    //{
+    //    //    print("entro");
+    //    //    animator.SetBool("attack", true);
+    //    //    canAttack = false;
             
-        //}
+    //    //}
         
-    }
+    //}
 
     //Ejecutado desde evento de animación.
     void ComfirmAtack()

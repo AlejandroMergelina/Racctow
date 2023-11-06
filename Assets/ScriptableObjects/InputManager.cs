@@ -27,6 +27,7 @@ public class InputManager : ScriptableObject
     private void OnActionP2(InputAction.CallbackContext obj)
     {
         OnActionP2Action?.Invoke();
+
     }
 
     private void OnActionP1(InputAction.CallbackContext obj)

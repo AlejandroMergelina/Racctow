@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 1141381414593444833}
   - component: {fileID: 2135529213639589207}
   - component: {fileID: 9222736656373644756}
-  - component: {fileID: 7834174989963551174}
+  - component: {fileID: -3653104472437494945}
   - component: {fileID: 2798803835857545624}
   m_Layer: 6
   m_Name: p2
@@ -96,7 +96,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -131,7 +131,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7834174989963551174
+--- !u!114 &-3653104472437494945
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3011071852260738345}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 542a90cfbbe2349498f468ff65a71cd6, type: 3}
+  m_Script: {fileID: 11500000, guid: ac02a307f0c67f340a8a2d0a99d89327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   characterData: {fileID: 11400000, guid: 99166d6b83712674fbf33dccf05e3b31, type: 2}
@@ -153,8 +153,6 @@ MonoBehaviour:
   cooldDownDodge: 1
   animator: {fileID: 2798803835857545624}
   inputManager: {fileID: 11400000, guid: 93d86641cda0e1d4492b2d6deb264733, type: 2}
-  centerOfPunch: {fileID: 236204103301004645}
-  radius: 1
 --- !u!95 &2798803835857545624
 Animator:
   serializedVersion: 5
