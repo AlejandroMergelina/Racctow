@@ -10,11 +10,13 @@ public class InputManager : ScriptableObject
     Controles controles;
 
     public event Action OnRotateCameraAction;
+    public event Action<Vector2> OnMoveAction;
+
 
     public event Action OnActionP1Action;
     public event Action OnActionP2Action;
 
-    private String[] actionMaps = { "MoveOut", "CombatMode", "Menu" };
+    private string[] actionMaps = { "MoveOut", "CombatMode", "Menu" };
 
     public string[] ActionMaps { get => actionMaps;}
 
@@ -26,12 +28,24 @@ public class InputManager : ScriptableObject
         controles.MoveOut.Enable();
 
         controles.MoveOut.RotateCamera.started += OnRotateCamera;
+        controles.MoveOut.Move.performed += OnMoveFer;
+        controles.MoveOut.Move.canceled += OnCancelledMove;
 
         //Suscripciones a eventos del ActionPnº.
         controles.CombatMode.ActionP1.started += OnActionP1;
         controles.CombatMode.ActionP2.started += OnActionP2;
 
 
+    }
+
+    private void OnCancelledMove(InputAction.CallbackContext obj)
+    {
+        OnMoveAction?.Invoke(Vector2.zero);
+    }
+
+    private void OnMoveFer(InputAction.CallbackContext obj)
+    {
+        OnMoveAction?.Invoke(obj.ReadValue<Vector2>());
     }
 
     private void OnRotateCamera(InputAction.CallbackContext obj)
@@ -50,12 +64,12 @@ public class InputManager : ScriptableObject
         OnActionP1Action?.Invoke();
     }
 
-    public Vector2 GetMoveValue()
-    {
+    //public Vector2 GetMoveValue()
+    //{
+    //    //OnActionP1Action?.Invoke();
+    //    //return controles.MoveOut.Move.ReadValue<Vector2>();
 
-        return controles.MoveOut.Move.ReadValue<Vector2>();
-
-    }
+    //}
 
     public float GetCameraRotateValue()
     {
