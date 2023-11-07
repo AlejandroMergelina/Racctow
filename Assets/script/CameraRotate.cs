@@ -7,21 +7,36 @@ using Cinemachine.PostFX;
 using Cinemachine.Utility;
 using Unity.VisualScripting;
 
-public class Ejemplo : MonoBehaviour
+public class CameraRotate : MonoBehaviour
 {
     [SerializeField]
     private Transform target;
 
+    [SerializeField]
+    private InputManager inputManager;
+
     private bool canRotate = true;
-    void Update()
+
+    private void OnEnable()
+    {
+
+        inputManager.OnRotateCameraAction += RotateCamera;
+
+    }
+
+    private void RotateCamera()
+    {
+        if (canRotate)
+        {
+            StartCoroutine(InterpolarRotacion());
+        }
+    }
+
+    private void Update()
     {
 
 
-        if (Input.GetKeyDown(KeyCode.E) && canRotate)
-        {
-            canRotate= false;
-            StartCoroutine(InterpolarRotacion());
-        }
+        
         //fL.ForceCameraPosition(transform.position, Quaternion.Euler(Vector3.up * 10 * Time.deltaTime));
     }
 
@@ -30,13 +45,16 @@ public class Ejemplo : MonoBehaviour
         transform.position = target.position;
     }
 
+
+
     IEnumerator InterpolarRotacion()
     {
         //Vector3 initialPos = transform.position;
         //Vector3 finalPos = transform.position + new Vector3(1f,0f,0f);
+        canRotate = false;
 
         Quaternion rotacionInicial = transform.rotation;
-        Quaternion rotacionFinal = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + 45, transform.eulerAngles.z);
+        Quaternion rotacionFinal = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + (45 * inputManager.GetCameraRotateValue()), transform.eulerAngles.z);
         float timer = 0;
         float tiempo = 0.5f;
         while (timer < tiempo)

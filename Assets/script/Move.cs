@@ -5,6 +5,9 @@ using UnityEngine;
 public class Move : MonoBehaviour
 {
     [SerializeField]
+    private InputManager inputManager;
+
+    [SerializeField]
     private CharacterController controller;
     [SerializeField]
     private Transform cam;
@@ -17,10 +20,17 @@ public class Move : MonoBehaviour
 
     private float turnSmoothVelocity;
 
+
     void Update()
     {
+        OnMove(inputManager.GetMoveValue());
 
-        Vector3 direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+    }
+
+    private void OnMove(Vector2 input)
+    {
+
+        Vector3 direction = new Vector3(input.x, 0, input.y);
 
         if (direction.magnitude >= 0.1f)
         {
@@ -35,4 +45,5 @@ public class Move : MonoBehaviour
         }
 
     }
+
 }

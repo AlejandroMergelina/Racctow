@@ -364,7 +364,7 @@ public class BattleSistem : MonoBehaviour
             else if(mainCh.GetHP()> 0 && MainCharactersAlive.ContainsKey(mainCh.GetID()) == false)
             {
                 print("intenta revivir");
-                //bugazoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+                
                 MainCharactersAlive.Add(mainCh.GetID(),mainCh);
 
                 //foreach (KeyValuePair<int, MainCharacter> main in MainCharactersAlive)
