@@ -112,15 +112,15 @@ namespace Inventory.UI
         {
 
             int index = listOfUIItems.IndexOf(InventoryItemUI);
-            if (index == -1)
+            if (index != -1)
             {
 
-                return;
+                OnSwapItems?.Invoke(currentlyDraggedItemIndex, index);
+                HandleItemSelection(InventoryItemUI);
 
             }
 
-            OnSwapItems?.Invoke(currentlyDraggedItemIndex, index);
-            HandleItemSelection(InventoryItemUI);
+            
  
         }
 

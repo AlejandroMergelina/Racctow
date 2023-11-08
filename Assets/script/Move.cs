@@ -17,6 +17,17 @@ public class Move : MonoBehaviour
     private float speed;
 
     [SerializeField]
+    private float gravity;
+    private Vector3 velocity;
+
+    [SerializeField]
+    private Collider _collider;
+    [SerializeField]
+    private float groundDistance;
+    [SerializeField]
+    private LayerMask groundMask;
+
+    [SerializeField]
     private float turnSmoothTime;
 
     private float turnSmoothVelocity;
@@ -24,6 +35,8 @@ public class Move : MonoBehaviour
     private Vector3 movementDirection;
 
 
+
+    Vector3 puntoPies;
     private void OnEnable()
     {
         inputManager.OnMoveAction += OnMoveChanged;
@@ -31,7 +44,6 @@ public class Move : MonoBehaviour
 
     private void OnMoveChanged(Vector2 obj)
     {
-        Debug.Log("fsdfds");
         movementDirection = new Vector3(obj.x, 0, obj.y);
     }
 
@@ -44,8 +56,13 @@ public class Move : MonoBehaviour
 
     private void OnMove()
     {
+     
+        float lng = _collider.bounds.extents.y;
+        puntoPies = transform.position - new Vector3(0, lng, 0);
 
-        //Vector3 direction = new Vector3(input.x, 0, input.y);
+        bool isGrounded = Physics.CheckSphere(puntoPies, groundDistance, groundMask);
+
+        //Vector3 direction = new Vector3(movementDirection.x, 0, movementDirection.y);
 
         if (movementDirection.magnitude >= 0.1f)
         {
@@ -59,6 +76,27 @@ public class Move : MonoBehaviour
 
         }
 
+        if (isGrounded)
+        {
+            print("hola");
+            velocity.y = 0;
+
+        }
+            
+        else
+        {
+            velocity.y += gravity * Time.deltaTime;
+
+            controller.Move(velocity * Time.deltaTime);
+
+        }
+
     }
 
+    private void OnDrawGizmos()
+    {
+
+        Gizmos.DrawSphere(puntoPies, groundDistance);
+
+    }
 }
