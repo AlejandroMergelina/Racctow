@@ -942,7 +942,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   main: {fileID: 921226086}
-  finalTarget: {x: 0, y: 0, z: 0}
+  finalTarget: 1.5
   radio: 9
   height: 9
   inputManager: {fileID: 11400000, guid: 93d86641cda0e1d4492b2d6deb264733, type: 2}

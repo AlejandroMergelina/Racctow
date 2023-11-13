@@ -1,6 +1,8 @@
+using Inventory.Model;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CameraOrbit : MonoBehaviour
 {
@@ -9,8 +11,11 @@ public class CameraOrbit : MonoBehaviour
     private Transform main;
 
     [SerializeField]
-    private Vector3 finalTarget;
+    private float finalTarget;
     private Vector3 target;
+    private Vector3 lastDirection;
+    private bool canTraslate;
+    Coroutine call;
 
     [SerializeField]
     private float radio, height;
@@ -22,12 +27,13 @@ public class CameraOrbit : MonoBehaviour
 
     private void OnEnable()
     {
-        inputManager.OnRotateCameraAction += ChageAngel;
+        inputManager.OnRotateCameraAction += ChangeAngle;
+        target = main.forward * finalTarget + main.position;
     }
 
     void LateUpdate()
     {
-        target = main.position;
+        target = main.forward * finalTarget + main.position;
         Orbit();
         LookAtTheTarget();
 
@@ -73,19 +79,19 @@ public class CameraOrbit : MonoBehaviour
         if (Mathf.Sign(c2) >= 0)
         {
 
-            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, Mathf.Rad2Deg * angely, transform.rotation.eulerAngles.z);
+            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, Mathf.Rad2Deg * angely, transform.eulerAngles.z);
 
         }
         else if (Mathf.Sign(c2) < 0 && Mathf.Sign(c1) >= 0)
         {
 
-            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, 180 - Mathf.Rad2Deg * angely, transform.rotation.eulerAngles.z);
+            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, 180 - Mathf.Rad2Deg * angely, transform.eulerAngles.z);
 
         }
         else
         {
 
-            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, -180 - Mathf.Rad2Deg * angely, transform.rotation.eulerAngles.z);
+            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, -180 - Mathf.Rad2Deg * angely, transform.eulerAngles.z);
 
         }
 
@@ -96,7 +102,7 @@ public class CameraOrbit : MonoBehaviour
         float angely = Mathf.Acos(c1 / (Mathf.Sqrt(Mathf.Pow(c1, 2) + Mathf.Pow(c2, 2))));
 
         print(Mathf.Rad2Deg * angely + "/" + c1 + "/" + c2);
-        transform.rotation = Quaternion.Euler(Mathf.Rad2Deg * angely, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+        transform.rotation = Quaternion.Euler(Mathf.Rad2Deg * angely, transform.eulerAngles.y, transform.eulerAngles.z);
 
         //if (Mathf.Sign(c2) >= 0)
         //{
@@ -133,17 +139,18 @@ public class CameraOrbit : MonoBehaviour
 
     }
 
-    private void ChageAngel()
+    private void ChangeAngle()
     {
         print("hola");
         if (canRotate)
         {
-            if (angle >= 360 || angle <= -360)
-            {
+            //if (angle >= 360 || angle <= -360)
+            //{
 
-                angle = 0;
+            //    angle = 0;
 
-            }
+            //}
+            angle %= 360;
             StartCoroutine(InterpolarRotacion());
         }
 
@@ -177,8 +184,59 @@ public class CameraOrbit : MonoBehaviour
     private void MoveSpring()
     {
 
+        Vector3 direction = target - main.transform.position;
+        float resultado = Vector3.Dot(direction, transform.forward);
+        //Si resultado da positivo los dos vectores están apuntando a dir. similares.
+        //1-: Ifualwa
+        //-1: Opuestas
+        //0: Perpendicular
+
+        if ( call != null)
+        {
+
+            call = StartCoroutine(PositionInterpolate(direction));
+
+        }
+        else
+        {
+            StopCoroutine(call);
+            call = StartCoroutine(PositionInterpolate(direction));
+
+        }
+
+
         
 
     }
-    
+
+    IEnumerator PositionInterpolate(Vector3 finalDirection)
+    {
+
+        float timer = 0;
+        float tiempo = 0.5f;
+        while (timer < tiempo)
+        {
+
+            Vector3 curretPosition = Vector3.Lerp(lastDirection, finalDirection, timer / tiempo);
+
+            target = curretPosition;
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(main.forward * finalTarget + main.position, 0.2f);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(target, 0.2f);
+    }
+
+    private void OnDisable()
+    {
+        inputManager.OnRotateCameraAction -= ChangeAngle;
+    }
+
 }
