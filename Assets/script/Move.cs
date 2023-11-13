@@ -40,6 +40,8 @@ public class Move : MonoBehaviour
     private void OnEnable()
     {
         inputManager.OnMoveAction += OnMoveChanged;
+        groundDistance = _collider.bounds.extents.x;
+        print(groundDistance);
     }
 
     private void OnMoveChanged(Vector2 obj)
@@ -60,7 +62,15 @@ public class Move : MonoBehaviour
         float lng = _collider.bounds.extents.y;
         puntoPies = transform.position - new Vector3(0, lng, 0);
 
+        
+
         bool isGrounded = Physics.CheckSphere(puntoPies, groundDistance, groundMask);
+        if (isGrounded && velocity.y < 0)
+        {
+            
+            velocity.y = -2;
+
+        }
 
         //Vector3 direction = new Vector3(movementDirection.x, 0, movementDirection.y);
 
@@ -76,21 +86,12 @@ public class Move : MonoBehaviour
 
         }
 
-        if (isGrounded)
-        {
-            print("hola");
-            velocity.y = 0;
+        
 
-        }
-            
-        else
-        {
-            velocity.y += gravity * Time.deltaTime;
 
-            controller.Move(velocity * Time.deltaTime);
+        velocity.y += gravity * Time.deltaTime;
 
-        }
-
+        controller.Move(velocity * Time.deltaTime);
     }
 
     private void OnDrawGizmos()
