@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,10 +34,12 @@ public class Move : MonoBehaviour
     private float turnSmoothVelocity;
 
     private Vector3 movementDirection;
+    private Vector3 lastDirection;
 
-
+    public event Action OnDirectionChanged;
 
     Vector3 puntoPies;
+
     private void OnEnable()
     {
         inputManager.OnMoveAction += OnMoveChanged;
@@ -47,13 +50,17 @@ public class Move : MonoBehaviour
     private void OnMoveChanged(Vector2 obj)
     {
         movementDirection = new Vector3(obj.x, 0, obj.y);
+        if(Vector3.Dot(movementDirection, lastDirection) <= 0.5f)
+        {
+            OnDirectionChanged?.Invoke();
+            lastDirection = movementDirection;
+        }
     }
 
     void Update()
     {
         //OnMove(inputManager.GetMoveValue());
         OnMove();
-
     }
 
     private void OnMove()

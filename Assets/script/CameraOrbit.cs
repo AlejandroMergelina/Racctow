@@ -1,6 +1,8 @@
 using Inventory.Model;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,12 +10,12 @@ public class CameraOrbit : MonoBehaviour
 {
 
     [SerializeField]
-    private Transform main;
+    private Move main;
 
     [SerializeField]
     private float finalTarget;
     private Vector3 target;
-    private Vector3 lastDirection;
+    private Vector3 lastPoint;
     private bool canTraslate;
     Coroutine call;
 
@@ -25,18 +27,60 @@ public class CameraOrbit : MonoBehaviour
     private float angle;
     private bool canRotate = true;
 
+
+    bool inProcess = false;
     private void OnEnable()
     {
         inputManager.OnRotateCameraAction += ChangeAngle;
-        target = main.forward * finalTarget + main.position;
+        inputManager.OnMoveAction += OnCharacterMove;
+        main.OnDirectionChanged += OnDirectionChanged;
+        lastPoint = target = main.transform.forward * finalTarget + main.transform.position;
+    }
+
+    private void OnDirectionChanged()
+    {
+        if(!inProcess)
+        {
+            Debug.Log("Cambio de dirección brusca");
+            StartCoroutine(PositionInterpolate());
+        }
+    }
+
+    private void OnCharacterMove(Vector2 obj)
+    {
+        
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            print("hola");
+            MoveSpring();
+
+        }
     }
 
     void LateUpdate()
     {
-        target = main.forward * finalTarget + main.position;
+        //target = main.forward * finalTarget + main.position;
         Orbit();
         LookAtTheTarget();
+        //MoveSpring();
+        //Debug.Log(main.GetComponent<Move>().LastDirection);
+        //if(Vector3.Dot(main.GetComponent<Move>().MovementDirection, main.GetComponent<Move>().LastDirection) <= 0.5f && main.GetComponent<Move>().LastDirection != Vector3.zero)
+        //{
+        //    if(!once)
+        //    {
 
+        //        StartCoroutine(PositionInterpolate());
+        //        once = true;
+        //    }
+        //}
+        //else
+        //{
+            target = main.transform.forward * finalTarget + main.transform.position;
+        //}
     }
 
     private void LookAtTheTarget()
@@ -101,7 +145,7 @@ public class CameraOrbit : MonoBehaviour
 
         float angely = Mathf.Acos(c1 / (Mathf.Sqrt(Mathf.Pow(c1, 2) + Mathf.Pow(c2, 2))));
 
-        print(Mathf.Rad2Deg * angely + "/" + c1 + "/" + c2);
+        //print(Mathf.Rad2Deg * angely + "/" + c1 + "/" + c2);
         transform.rotation = Quaternion.Euler(Mathf.Rad2Deg * angely, transform.eulerAngles.y, transform.eulerAngles.z);
 
         //if (Mathf.Sign(c2) >= 0)
@@ -184,52 +228,75 @@ public class CameraOrbit : MonoBehaviour
     private void MoveSpring()
     {
 
-        Vector3 direction = target - main.transform.position;
-        float resultado = Vector3.Dot(direction, transform.forward);
+
+        //Vector3 direction = (target - main.transform.position).normalized;
+
+        //float resultado = Vector3.Dot(direction, main.forward);
+        //print(resultado + "/" + direction + "/"+ main.transform.forward);
+        ////Vector3 finalPosition = main.forward * finalTarget + main.position;
+        //call = StartCoroutine(PositionInterpolate());
         //Si resultado da positivo los dos vectores están apuntando a dir. similares.
         //1-: Ifualwa
         //-1: Opuestas
         //0: Perpendicular
+        //if (resultado <= 0.5f)
+        //{
+            
+        //    if (call != null)
+        //    {
 
-        if ( call != null)
-        {
+        //        call = StartCoroutine(PositionInterpolate(finalPosition));
 
-            call = StartCoroutine(PositionInterpolate(direction));
+        //    }
+        //    //else
+        //    //{
+        //    //    StopCoroutine(call);
+        //    //    call = StartCoroutine(PositionInterpolate(finalPosition));
 
-        }
-        else
-        {
-            StopCoroutine(call);
-            call = StartCoroutine(PositionInterpolate(direction));
+        //    //}
 
-        }
+        //}
+        //else if(resultado > 0.5f && call == null)
+        //{
 
+        //    lastPoint = target = main.forward * finalTarget + main.position;
 
+        //}
         
+
+
+
 
     }
 
-    IEnumerator PositionInterpolate(Vector3 finalDirection)
+    IEnumerator PositionInterpolate()
     {
-
+        print("Hola!");
+        lastPoint = main.transform.forward * finalTarget + main.transform.position;
+        inProcess = true;
         float timer = 0;
         float tiempo = 0.5f;
+        Vector3 finalPosition = Vector3.zero;
         while (timer < tiempo)
         {
-
-            Vector3 curretPosition = Vector3.Lerp(lastDirection, finalDirection, timer / tiempo);
-
+            finalPosition = main.transform.forward * finalTarget + main.transform.position;
+            Vector3 curretPosition = Vector3.Lerp(lastPoint, finalPosition, timer / tiempo);
+            
             target = curretPosition;
+            //lastPoint= curretPosition;
             timer += Time.deltaTime;
             yield return null;
         }
+        inProcess= false;
+        lastPoint = finalPosition;
+        call = null;
 
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(main.forward * finalTarget + main.position, 0.2f);
+        Gizmos.DrawSphere(main.transform.forward * finalTarget + main.transform.position, 0.2f);
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(target, 0.2f);
     }
