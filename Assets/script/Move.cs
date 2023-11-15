@@ -55,6 +55,12 @@ public class Move : MonoBehaviour
             OnDirectionChanged?.Invoke();
             lastDirection = movementDirection;
         }
+        else
+        {
+
+            lastDirection= movementDirection;
+
+        }
     }
 
     void Update()
