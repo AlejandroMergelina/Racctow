@@ -39,6 +39,8 @@ public class Move : MonoBehaviour
     public event Action OnDirectionChanged;
 
     Vector3 puntoPies;
+    //private bool prueba;
+    private float pruebatIMER;
 
     private void OnEnable()
     {
@@ -50,25 +52,36 @@ public class Move : MonoBehaviour
     private void OnMoveChanged(Vector2 obj)
     {
         movementDirection = new Vector3(obj.x, 0, obj.y);
-        if(Vector3.Dot(movementDirection, lastDirection) <= 0.5f)
+        Debug.Log(Vector3.Dot(movementDirection, lastDirection));
+        if(Vector3.Dot(movementDirection, lastDirection) <= 0.75f)
         {
+            pruebatIMER = 0;
             OnDirectionChanged?.Invoke();
-            lastDirection = movementDirection;
         }
-        else
-        {
-
-            lastDirection= movementDirection;
-
-        }
+        //lastDirection= movementDirection;
     }
 
     void Update()
     {
         //OnMove(inputManager.GetMoveValue());
         OnMove();
+        UpdateTimers();
+
     }
 
+    private void UpdateTimers()
+    {
+        
+        pruebatIMER += Time.deltaTime;
+        if(pruebatIMER >= 0.5f)
+        {
+
+            lastDirection = movementDirection;
+            pruebatIMER = 0;
+            //prueba = false;
+        }
+        
+    }
     private void OnMove()
     {
      

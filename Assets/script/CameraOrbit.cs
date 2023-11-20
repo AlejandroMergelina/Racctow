@@ -29,6 +29,7 @@ public class CameraOrbit : MonoBehaviour
 
 
     bool inProcess = false;
+    Coroutine call2;
     private void OnEnable()
     {
         inputManager.OnRotateCameraAction += ChangeAngle;
@@ -218,7 +219,7 @@ public class CameraOrbit : MonoBehaviour
             
             angle = rotacionActual;
             timer += Time.deltaTime;
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
         
         angle = rotacionFinal;
@@ -282,10 +283,10 @@ public class CameraOrbit : MonoBehaviour
             finalPosition = main.transform.forward * finalTarget + main.transform.position;
             Vector3 curretPosition = Vector3.Lerp(lastPoint, finalPosition, timer / tiempo);
             
-            target = curretPosition;
+            target = curretPosition ;
             //lastPoint= curretPosition;
             timer += Time.deltaTime;
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
         inProcess= false;
         lastPoint = finalPosition;
