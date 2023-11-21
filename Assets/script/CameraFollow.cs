@@ -8,12 +8,27 @@ public class CameraFollow : MonoBehaviour
     [SerializeField]
     private CharacterController target;
     [SerializeField]
-    private Vector3 focusAreaSize;
-
-    [SerializeField]
     private float verticalOffset;
+    [SerializeField]
+    private float lookAheadDstX;
+    [SerializeField]
+    private float loockSmoothTimeX;
+    [SerializeField]
+    private float verticalSmoothTime;
+    [SerializeField]
+    private Vector3 focusAreaSize;
+    [SerializeField]
+    private GameObject player;
 
     private FocusArea focusArea;
+
+    private float currentLookAheadX;
+    private float targetLookAheadX;
+    private float lookAheadDirX;
+    private float smoothLoockVelocityX;
+    private float smoothVelocityY;
+
+    private bool lookAheadStopped;
 
     private void Start()
     {
@@ -29,6 +44,35 @@ public class CameraFollow : MonoBehaviour
         focusArea.Update(target.bounds);
         Vector3 focusPosition = focusArea.Center + Vector3.forward * verticalOffset;
 
+        if(focusArea.Velocity.x != 0)
+        {
+
+            lookAheadDirX = Mathf.Sign(focusArea.Velocity.x);
+            if(Mathf.Sign(player.transform.forward.x) == Mathf.Sign(focusArea.Velocity.x) && player.transform.forward.x!= 0)
+            {
+                lookAheadStopped= false;
+                targetLookAheadX = lookAheadDirX * lookAheadDstX;
+
+            }
+            else
+            {
+                if(lookAheadStopped)
+                {
+                    lookAheadStopped = true;
+                    targetLookAheadX = currentLookAheadX + (lookAheadDirX * lookAheadDstX - currentLookAheadX) / 4f;
+
+                }
+                
+
+            }
+        }
+
+        
+        currentLookAheadX = Mathf.SmoothDamp(currentLookAheadX, targetLookAheadX, ref smoothLoockVelocityX, loockSmoothTimeX);
+
+
+        focusPosition.y = Mathf.SmoothDamp(transform.position.y, focusPosition.y, ref smoothVelocityY, verticalSmoothTime);
+        focusPosition += Vector3.right * currentLookAheadX;
         transform.position = focusPosition + Vector3.up * 10;
 
     }
@@ -48,7 +92,7 @@ public class CameraFollow : MonoBehaviour
         public Vector3 Center { get => center; set => center = value; }
         [SerializeField]
         private Vector3 velocity;
-        public Vector3 Velicity { get => velocity; set => velocity = value; }
+        public Vector3 Velocity { get => velocity; set => velocity = value; }
 
         private float left, right;
         private float top, bottom;

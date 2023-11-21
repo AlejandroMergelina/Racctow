@@ -1055,7 +1055,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 921226087}
+  verticalOffset: 0
+  lookAheadDstX: 4
+  loockSmoothTimeX: 0.2
+  verticalSmoothTime: 0.2
   focusAreaSize: {x: 4, y: 0.1, z: 4}
+  player: {fileID: 0}
 --- !u!1 &1137888673
 GameObject:
   m_ObjectHideFlags: 0
