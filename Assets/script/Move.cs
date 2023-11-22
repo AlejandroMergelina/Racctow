@@ -34,13 +34,16 @@ public class Move : MonoBehaviour
     private float turnSmoothVelocity;
 
     private Vector3 movementDirection;
-    private Vector3 lastDirection;
+    public Vector3 MovementDirection { get => movementDirection;}
+    //private Vector3 lastDirection;
 
     public event Action OnDirectionChanged;
 
     Vector3 puntoPies;
+
+
     //private bool prueba;
-    private float pruebatIMER;
+    //private float pruebatIMER;
 
     private void OnEnable()
     {
@@ -52,12 +55,12 @@ public class Move : MonoBehaviour
     private void OnMoveChanged(Vector2 obj)
     {
         movementDirection = new Vector3(obj.x, 0, obj.y);
-        Debug.Log(Vector3.Dot(movementDirection, lastDirection));
-        if(Vector3.Dot(movementDirection, lastDirection) <= 0.75f)
-        {
-            pruebatIMER = 0;
-            OnDirectionChanged?.Invoke();
-        }
+        //Debug.Log(Vector3.Dot(movementDirection, lastDirection));
+        //if (Vector3.Dot(movementDirection, lastDirection) <= 0.75f)
+        //{
+        //    pruebatIMER = 0;
+        //    OnDirectionChanged?.Invoke();
+        //}
         //lastDirection= movementDirection;
     }
 
@@ -65,23 +68,23 @@ public class Move : MonoBehaviour
     {
         //OnMove(inputManager.GetMoveValue());
         OnMove();
-        UpdateTimers();
+        //UpdateTimers();
 
     }
 
-    private void UpdateTimers()
-    {
+    //private void UpdateTimers()
+    //{
         
-        pruebatIMER += Time.deltaTime;
-        if(pruebatIMER >= 0.5f)
-        {
+    //    pruebatIMER += Time.deltaTime;
+    //    if(pruebatIMER >= 0.5f)
+    //    {
 
-            lastDirection = movementDirection;
-            pruebatIMER = 0;
-            //prueba = false;
-        }
+    //        lastDirection = movementDirection;
+    //        pruebatIMER = 0;
+    //        //prueba = false;
+    //    }
         
-    }
+    //}
     private void OnMove()
     {
      

@@ -64,7 +64,7 @@ public class CameraOrbit : MonoBehaviour
 
     void LateUpdate()
     {
-        //target = main.forward * finalTarget + main.position;
+        //controller = main.forward * finalTarget + main.position;
         Orbit();
         LookAtTheTarget();
         //MoveSpring();
@@ -230,7 +230,7 @@ public class CameraOrbit : MonoBehaviour
     {
 
 
-        //Vector3 direction = (target - main.transform.position).normalized;
+        //Vector3 direction = (controller - main.transform.position).normalized;
 
         //float resultado = Vector3.Dot(direction, main.forward);
         //print(resultado + "/" + direction + "/"+ main.transform.forward);
@@ -260,7 +260,7 @@ public class CameraOrbit : MonoBehaviour
         //else if(resultado > 0.5f && call == null)
         //{
 
-        //    lastPoint = target = main.forward * finalTarget + main.position;
+        //    lastPoint = controller = main.forward * finalTarget + main.position;
 
         //}
         

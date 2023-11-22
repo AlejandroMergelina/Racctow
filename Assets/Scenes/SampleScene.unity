@@ -1054,13 +1054,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e12127a54e8981443bfe9425ae27eeac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 921226087}
+  radio: 9
+  height: 9
+  inputManager: {fileID: 11400000, guid: 93d86641cda0e1d4492b2d6deb264733, type: 2}
+  controller: {fileID: 921226087}
   verticalOffset: 0
-  lookAheadDstX: 4
-  loockSmoothTimeX: 0.2
-  verticalSmoothTime: 0.2
-  focusAreaSize: {x: 4, y: 0.1, z: 4}
-  player: {fileID: 0}
+  lookAheadDstX: 1
+  lookAheadDstZ: 1
+  loockSmoothTimeX: 0.5
+  loockSmoothTimeZ: 0.5
+  focusAreaSize: {x: 1, y: 0.1, z: 1}
+  main: {fileID: 921226088}
 --- !u!1 &1137888673
 GameObject:
   m_ObjectHideFlags: 0

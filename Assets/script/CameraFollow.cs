@@ -4,21 +4,35 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
+    //camera orbit
+    private Vector3 target;
 
     [SerializeField]
-    private CharacterController target;
+    private float radio, height;
+
+    [SerializeField]
+    private InputManager inputManager;
+    private float angle;
+    private bool canRotate = true;
+
+    //camera follow
+
+    [SerializeField]
+    private CharacterController controller;
     [SerializeField]
     private float verticalOffset;
     [SerializeField]
     private float lookAheadDstX;
     [SerializeField]
+    private float lookAheadDstZ;
+    [SerializeField]
     private float loockSmoothTimeX;
     [SerializeField]
-    private float verticalSmoothTime;
+    private float loockSmoothTimeZ;
     [SerializeField]
     private Vector3 focusAreaSize;
     [SerializeField]
-    private GameObject player;
+    private Move main;
 
     private FocusArea focusArea;
 
@@ -26,55 +40,92 @@ public class CameraFollow : MonoBehaviour
     private float targetLookAheadX;
     private float lookAheadDirX;
     private float smoothLoockVelocityX;
-    private float smoothVelocityY;
 
-    private bool lookAheadStopped;
+    private float currentLookAheadZ;
+    private float targetLookAheadZ;
+    private float lookAheadDirZ;
+    private float smoothLoockVelocityZ;
+
+    private bool lookAheadStoppedX;
+    private bool lookAheadStoppedZ;
+
+    private void OnEnable()
+    {
+        inputManager.OnRotateCameraAction += ChangeAngle;
+    }
 
     private void Start()
     {
 
-        focusArea = new FocusArea(target.bounds, focusAreaSize);
+        focusArea = new FocusArea(controller.bounds, focusAreaSize);
 
 
     }
 
     private void LateUpdate()
     {
-
-        focusArea.Update(target.bounds);
+        
+        focusArea.Update(controller.bounds);
         Vector3 focusPosition = focusArea.Center + Vector3.forward * verticalOffset;
-
-        if(focusArea.Velocity.x != 0)
+        print("input: " + main.MovementDirection.x);
+        if (focusArea.Velocity.x != 0)
         {
 
             lookAheadDirX = Mathf.Sign(focusArea.Velocity.x);
-            if(Mathf.Sign(player.transform.forward.x) == Mathf.Sign(focusArea.Velocity.x) && player.transform.forward.x!= 0)
+            
+            if (Mathf.Sign(main.MovementDirection.x) == Mathf.Sign(focusArea.Velocity.x) && main.MovementDirection.x!= 0)
             {
-                lookAheadStopped= false;
+                lookAheadStoppedX= false;
                 targetLookAheadX = lookAheadDirX * lookAheadDstX;
-
-            }
-            else
-            {
-                if(lookAheadStopped)
-                {
-                    lookAheadStopped = true;
-                    targetLookAheadX = currentLookAheadX + (lookAheadDirX * lookAheadDstX - currentLookAheadX) / 4f;
-
-                }
                 
-
             }
+            
+        }
+        else if (!lookAheadStoppedX)
+        {
+            
+            
+            lookAheadStoppedX = true;
+            targetLookAheadX = currentLookAheadX + (lookAheadDirX * lookAheadDstX - currentLookAheadX) / 4f;
+
+            
+
+
         }
 
-        
+        if (focusArea.Velocity.z != 0)
+        {
+
+            lookAheadDirZ = Mathf.Sign(focusArea.Velocity.z);
+
+            if (Mathf.Sign(main.MovementDirection.z) == Mathf.Sign(focusArea.Velocity.z) && main.MovementDirection.z != 0)
+            {
+                lookAheadStoppedZ = false;
+                targetLookAheadZ = lookAheadDirZ * lookAheadDstZ;
+
+            }
+
+        }
+        else if (!lookAheadStoppedZ)
+        {
+
+
+            lookAheadStoppedZ = true;
+            targetLookAheadZ = currentLookAheadZ + (lookAheadDirZ * lookAheadDstZ - currentLookAheadZ) / 4f;
+
+
+
+
+        }
+
         currentLookAheadX = Mathf.SmoothDamp(currentLookAheadX, targetLookAheadX, ref smoothLoockVelocityX, loockSmoothTimeX);
+        currentLookAheadZ = Mathf.SmoothDamp(currentLookAheadZ, targetLookAheadZ, ref smoothLoockVelocityZ, loockSmoothTimeZ);
 
-
-        focusPosition.y = Mathf.SmoothDamp(transform.position.y, focusPosition.y, ref smoothVelocityY, verticalSmoothTime);
+        focusPosition += Vector3.forward * currentLookAheadZ;
         focusPosition += Vector3.right * currentLookAheadX;
-        transform.position = focusPosition + Vector3.up * 10;
-
+        target = focusPosition;
+        Orbit();
+        LookAtTheTarget();
     }
 
     private void OnDrawGizmos()
@@ -82,6 +133,8 @@ public class CameraFollow : MonoBehaviour
 
         Gizmos.color = new Color(1, 0, 0, .5f);
         Gizmos.DrawCube(focusArea.Center, focusAreaSize);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(target, 0.2f);
 
     }
 
@@ -149,6 +202,103 @@ public class CameraFollow : MonoBehaviour
 
         }
 
+    }
+
+    // camera orbit
+
+    private void LookAtTheTarget()
+    {
+
+        Vector3 direction = (target - transform.position).normalized;
+
+        CalculateAndSetAngleY(direction.x, direction.z);
+
+        CalculateAndSetAngleX(Mathf.Sqrt(Mathf.Pow(direction.x, 2) + Mathf.Pow(direction.z, 2)), -direction.y);
+
+    }
+
+    private void CalculateAndSetAngleY(float c1, float c2)
+    {
+
+        float angely = Mathf.Asin(c1 / (Mathf.Sqrt(Mathf.Pow(c1, 2) + Mathf.Pow(c2, 2))));
+
+        if (Mathf.Sign(c2) >= 0)
+        {
+
+            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, Mathf.Rad2Deg * angely, transform.eulerAngles.z);
+
+        }
+        else if (Mathf.Sign(c2) < 0 && Mathf.Sign(c1) >= 0)
+        {
+
+            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, 180 - Mathf.Rad2Deg * angely, transform.eulerAngles.z);
+
+        }
+        else
+        {
+
+            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, -180 - Mathf.Rad2Deg * angely, transform.eulerAngles.z);
+
+        }
+
+    }
+    private void CalculateAndSetAngleX(float c1, float c2)
+    {
+
+        float angely = Mathf.Acos(c1 / (Mathf.Sqrt(Mathf.Pow(c1, 2) + Mathf.Pow(c2, 2))));
+
+        transform.rotation = Quaternion.Euler(Mathf.Rad2Deg * angely, transform.eulerAngles.y, transform.eulerAngles.z);
+
+    }
+
+
+    private void Orbit()
+    {
+
+        Vector3 currentLocalPosition = new Vector3();
+
+        currentLocalPosition.x = radio * Mathf.Sin(angle * Mathf.Deg2Rad);
+        currentLocalPosition.z = radio * Mathf.Cos(angle * Mathf.Deg2Rad);
+        currentLocalPosition.y = height;
+
+        transform.position = target + currentLocalPosition;
+
+    }
+
+    private void ChangeAngle()
+    {
+        print("hola");
+        if (canRotate)
+        {
+            angle %= 360;
+            StartCoroutine(InterpolarRotacion());
+        }
+
+    }
+
+    IEnumerator InterpolarRotacion()
+    {
+
+        canRotate = false;
+
+
+
+        float rotacionInicial = angle;
+        float rotacionFinal = angle + (45 * inputManager.GetCameraRotateValue());
+        float timer = 0;
+        float tiempo = 0.5f;
+        while (timer < tiempo)
+        {
+
+            float rotacionActual = Mathf.Lerp(rotacionInicial, rotacionFinal, timer / tiempo);
+
+            angle = rotacionActual;
+            timer += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        angle = rotacionFinal;
+        canRotate = true;
     }
 
 }
