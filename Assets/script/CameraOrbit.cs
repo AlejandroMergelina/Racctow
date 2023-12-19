@@ -294,13 +294,13 @@ public class CameraOrbit : MonoBehaviour
 
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(main.transform.forward * finalTarget + main.transform.position, 0.2f);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(target, 0.2f);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawSphere(main.transform.forward * finalTarget + main.transform.position, 0.2f);
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawSphere(target, 0.2f);
+    //}
 
     private void OnDisable()
     {

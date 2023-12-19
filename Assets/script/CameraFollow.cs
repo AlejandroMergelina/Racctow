@@ -64,16 +64,16 @@ public class CameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
-        
         focusArea.Update(controller.bounds);
         Vector3 focusPosition = focusArea.Center + Vector3.forward * verticalOffset;
-        print("input: " + main.MovementDirection.x);
+        print("input: " + focusArea.Velocity + " / "+ main.transform.forward);
+        Vector3 currentInputDirection = main.transform.rotation * main.MovementDirection;
         if (focusArea.Velocity.x != 0)
         {
 
             lookAheadDirX = Mathf.Sign(focusArea.Velocity.x);
             
-            if (Mathf.Sign(main.MovementDirection.x) == Mathf.Sign(focusArea.Velocity.x) && main.MovementDirection.x!= 0)
+            if (Mathf.Sign(main.transform.forward.x) == Mathf.Sign(focusArea.Velocity.x) && currentInputDirection.x!= 0)
             {
                 lookAheadStoppedX= false;
                 targetLookAheadX = lookAheadDirX * lookAheadDstX;
@@ -98,7 +98,7 @@ public class CameraFollow : MonoBehaviour
 
             lookAheadDirZ = Mathf.Sign(focusArea.Velocity.z);
 
-            if (Mathf.Sign(main.MovementDirection.z) == Mathf.Sign(focusArea.Velocity.z) && main.MovementDirection.z != 0)
+            if (Mathf.Sign(main.transform.forward.z) == Mathf.Sign(focusArea.Velocity.z) && currentInputDirection.z != 0)
             {
                 lookAheadStoppedZ = false;
                 targetLookAheadZ = lookAheadDirZ * lookAheadDstZ;
