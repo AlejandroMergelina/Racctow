@@ -93,7 +93,7 @@ public class MainCharacter : Character
 
         Vector3 direction = end - start;
 
-        transform.position += direction.normalized * Time.deltaTime;
+        transform.position += direction.normalized * Time.deltaTime * 3;
 
         if (transform.position.x >= end.x && Mathf.Sign(direction.x) == 1)
         {

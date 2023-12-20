@@ -1914,7 +1914,7 @@ MonoBehaviour:
   - {fileID: 467558592}
   mainCharactersPrefab:
   - {fileID: 8477475312655489751, guid: b421976be2e49be4296331342cf466c8, type: 3}
-  - {fileID: 3011071852260738345, guid: f2bcdaf25fd64ad4f804082778e50763, type: 3}
+  - {fileID: 8477475312655489751, guid: 481290aa94ab5d243ab311475b17f1ba, type: 3}
   enemyCharactersPrefab:
   - {fileID: 1333685945146296740, guid: 865a2652deeb7a546ada20cebcdbd854, type: 3}
   mainCharactersStation:
