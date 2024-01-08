@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace Prueva
 {
@@ -56,6 +57,7 @@ namespace Prueva
         private bool lookAheadStoppedX;
         private bool lookAheadStoppedZ;
 
+        public Vector3 borrar;
         private void OnEnable()
         {
             inputManager.OnRotateCameraAction += ChangeAngle;
@@ -71,17 +73,20 @@ namespace Prueva
 
         private void LateUpdate()
         {
+
             focusArea.Update(mainTransform, this);
+            borrar = focusArea.Velocity;
             Vector3 focusPosition = focusArea.Center + Vector3.forward * verticalOffset;
-            //print("input: " + focusArea.Velocity + " / " + main.transform.forward);
+            //print(focusArea.Velocity);
             Vector3 currentInputDirection = main.transform.rotation * main.MovementDirection;
             if (focusArea.Velocity.x != 0)
             {
 
                 lookAheadDirX = Mathf.Sign(focusArea.Velocity.x);
-
+                //print(Mathf.Sign(main.transform.forward.x) +"/"+ Mathf.Sign(focusArea.Velocity.x));
                 if (Mathf.Sign(main.transform.forward.x) == Mathf.Sign(focusArea.Velocity.x) && currentInputDirection.x != 0)
                 {
+
                     lookAheadStoppedX = false;
                     targetLookAheadX = lookAheadDirX * lookAheadDstX;
 
@@ -109,7 +114,7 @@ namespace Prueva
                 {
                     lookAheadStoppedZ = false;
                     targetLookAheadZ = lookAheadDirZ * lookAheadDstZ;
-
+                   
                 }
 
             }
@@ -125,13 +130,18 @@ namespace Prueva
 
             }
 
+
+
+            //print(lookAheadDirX + "/" + lookAheadDirZ);
             currentLookAheadX = Mathf.SmoothDamp(currentLookAheadX, targetLookAheadX, ref smoothLoockVelocityX, loockSmoothTimeX);
             currentLookAheadZ = Mathf.SmoothDamp(currentLookAheadZ, targetLookAheadZ, ref smoothLoockVelocityZ, loockSmoothTimeZ);
+
+            //print(new Vector3(targetLookAheadX, 0, targetLookAheadZ));
 
             focusPosition += Vector3.forward * currentLookAheadZ;
             focusPosition += Vector3.right * currentLookAheadX;
             target = focusPosition;
-            transform.position = Orbit(target, angle, height);
+            transform.position = Orbit(target, angle, height,radio);
             LookAtTheTarget();
         }
 
@@ -142,8 +152,15 @@ namespace Prueva
             Gizmos.DrawLine(focusArea.Corners[1], focusArea.Corners[2]);
             Gizmos.DrawLine(focusArea.Corners[2], focusArea.Corners[3]);
             Gizmos.DrawLine(focusArea.Corners[3], focusArea.Corners[0]);
+            Gizmos.color = Color.white;
+            Gizmos.DrawSphere(focusArea.Corners[0], 0.1f);
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(focusArea.Corners[1], 0.1f);
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(focusArea.Corners[2], 0.1f);
+            Gizmos.color = Color.black;
+            Gizmos.DrawSphere(focusArea.Corners[3], 0.1f);
             //Gizmos.DrawCube(focusArea.Center, focusAreaSize);
-            Gizmos.color = Color.blue;
             //Vector3 shift = Vector3.zero;
             //Vector3 q;
             //focusArea.Distacias(focusArea.Corners[0], focusArea.Corners[1], mainTransform.position, out shift, out q);
@@ -158,6 +175,7 @@ namespace Prueva
             //focusArea.Distacias(focusArea.Corners[3], focusArea.Corners[0], mainTransform.position, out shift, out q);
             //print(mainTransform.position + " / " + q);
             //Gizmos.DrawLine(q, mainTransform.position);
+            Gizmos.color = Color.blue;
             Gizmos.DrawSphere(target, 0.2f);
 
         }
@@ -173,8 +191,11 @@ namespace Prueva
             private Vector3[] corners;
             public Vector3[] Corners { get => corners;}
 
-            private float currentAngle;
-            public float CornersAngle { get => currentAngle; set => currentAngle = value; }
+            private float[] cornersAngle;
+            public float[] CornersAngle { get => cornersAngle; set => cornersAngle = value; }
+
+            //private float currentAngle;
+            //public float CornersAngle { get => currentAngle; set => currentAngle = value; }
 
             [SerializeField]
             private Vector3 velocity;
@@ -204,41 +225,59 @@ namespace Prueva
                 corners[1] = new Vector3(right, 0, bottom);
                 corners[2] = new Vector3(left, 0, bottom);
                 corners[3] = new Vector3(left, 0, top);
-
+                cornersAngle = new float[4];
+                cornersAngle[0] = 45;
+                cornersAngle[1] = 135;
+                cornersAngle[2] = 225;
+                cornersAngle[3] = 315;
                 //corners[0] = new vector3(mathf.sqrt(2), 0, 0) + target.position;
                 //corners[1] = new vector3(0, 0, -mathf.sqrt(2)) + target.position;
                 //corners[2] = new vector3(-mathf.sqrt(2), 0, 0) + target.position;
                 //corners[3] = new vector3(0, 0, mathf.sqrt(2)) + target.position;
 
-                currentAngle = 0;
-                
-                
+                //currentAngle = 0;
+
+
             }
 
 
             public void Update(Transform target, CameraFollow2 camera)
             {
-                this.camera = camera;
+                //this.camera = camera;
 
 
-                float shiftAngle = Mathf.Deg2Rad * (camera.angle - currentAngle);
-                //print(shiftAngle + " = " + camera.angle + " - " + currentAngle);
-                for (int i = 0; i < corners.Length; i++)
+                //float shiftAngle = Mathf.Deg2Rad * (-camera.angle + currentAngle);
+                //if(shiftAngle != 0)
+                //{
+                //    //print(0 + " antes for: " + corners[0].x + "/" + corners[0].z);
+                //    for (int i = 0; i < corners.Length; i++)
+                //    {
+
+                //        //corners[i].x = corners[i].x/* + corners[i].x * Mathf.Cos(Mathf.Deg2Rad * shiftAngle) + corners[i].z * Mathf.Sin(Mathf.Deg2Rad * shiftAngle)*/;
+                //        //corners[i].z = corners[i].z/* - corners[i].x * Mathf.Sin(Mathf.Deg2Rad * shiftAngle) + corners[i].z * Mathf.Cos(Mathf.Deg2Rad * shiftAngle)*/;
+                //        //double newX = center.X + (pointToOrbit.X - center.X) * Math.Cos(angleRadians) - (pointToOrbit.Y - center.Y) * Math.Sin(angleRadians);
+                //        //double newY = center.Y + (pointToOrbit.X - center.X) * Math.Sin(angleRadians) + (pointToOrbit.Y - center.Y) * Math.Cos(angleRadians);
+
+                //        float newX = center.x + (corners[i].x - center.x) * Mathf.Cos(shiftAngle) - (corners[i].z - center.z) * Mathf.Sin(shiftAngle);
+                //        float newZ = center.z + (corners[i].x - center.x) * Mathf.Sin(shiftAngle) + (corners[i].z - center.z) * Mathf.Cos(shiftAngle);
+                //        corners[i].x = newX;
+                //        corners[i].z = newZ;
+
+                //    }
+
+                //        //print(0 + "despues del for: " + corners[0].x + "/" + corners[0].z);
+                //        //print(shiftAngle + " = " + camera.angle + " - " + currentAngle);
+                //}
+
+
+                //currentAngle = camera.angle;
+
+                for (int i = 0; i < cornersAngle.Length; i++)
                 {
 
-                    //corners[i].x = corners[i].x/* + corners[i].x * Mathf.Cos(Mathf.Deg2Rad * shiftAngle) + corners[i].z * Mathf.Sin(Mathf.Deg2Rad * shiftAngle)*/;
-                    //corners[i].z = corners[i].z/* - corners[i].x * Mathf.Sin(Mathf.Deg2Rad * shiftAngle) + corners[i].z * Mathf.Cos(Mathf.Deg2Rad * shiftAngle)*/;
-                    //double newX = center.X + (pointToOrbit.X - center.X) * Math.Cos(angleRadians) - (pointToOrbit.Y - center.Y) * Math.Sin(angleRadians);
-                    //double newY = center.Y + (pointToOrbit.X - center.X) * Math.Sin(angleRadians) + (pointToOrbit.Y - center.Y) * Math.Cos(angleRadians);
+                    corners[i] = camera.Orbit(center, cornersAngle[i], 0, Mathf.Sqrt(Mathf.Pow(left,2)+ Mathf.Pow(left, 2)));
 
-                    float newX = center.x + (corners[i].x - center.x) * Mathf.Cos(shiftAngle) - (corners[i].z - center.z) * Mathf.Sin(shiftAngle);
-                    float newY = center.z + (corners[i].x - center.x) * Mathf.Sin(shiftAngle) + (corners[i].z - center.z) * Mathf.Cos(shiftAngle);
-                    corners[i].x = newX;
-                    corners[i].z = newY;
-                    print(newX + "/" + newY);
                 }
-
-                currentAngle = camera.angle;
 
                 float shiftX = 0;
                 float shiftZ = 0;
@@ -248,14 +287,14 @@ namespace Prueva
                 
                 float HorizontalDistances = HorizontalDistanceLeft + HorizontalDistanceRight;
 
-                if( HorizontalDistances > size.x * 1.0001f)//solve the rounding error
+                if( HorizontalDistances > size.x * 1.001f)//solve the rounding error
                 {
 
                     if(HorizontalDistanceRight < HorizontalDistanceLeft)
                     {
 
                         Vector3 directorVector = (corners[3] - corners[0]).normalized * HorizontalDistanceRight;
-
+                        print(directorVector + "x");
                         shiftX = directorVector.x;
                         shiftZ = directorVector.z;
 
@@ -264,6 +303,7 @@ namespace Prueva
                     {
 
                         Vector3 directorVector = (corners[0] - corners[3]).normalized * HorizontalDistanceLeft;
+                        print(directorVector + "x");
                         shiftX = directorVector.x;
                         shiftZ = directorVector.z;
 
@@ -276,15 +316,15 @@ namespace Prueva
                 float VerticalDistancesBottom = Distacias(corners[1], corners[2], target.position);
 
                 float VerticalDistances = VerticalDistancesTop + VerticalDistancesBottom;
-
-                if (VerticalDistances >size.z * 1.0001f)//solve the rounding error
+                
+                if (VerticalDistances >size.z * 1.001f)//solve the rounding error
                 {
 
                     if (VerticalDistancesTop < VerticalDistancesBottom)
                     {
 
                         Vector3 directorVector = (corners[3] - corners[2]).normalized * VerticalDistancesTop;
-
+                        print(directorVector + "z");
                         shiftX += directorVector.x;
                         shiftZ += directorVector.z;
 
@@ -293,6 +333,7 @@ namespace Prueva
                     {
 
                         Vector3 directorVector = (corners[2] - corners[3]).normalized * VerticalDistancesBottom;
+                        print(directorVector + "z");
                         shiftX += directorVector.x;
                         shiftZ += directorVector.z;
 
@@ -334,13 +375,24 @@ namespace Prueva
                 //bottom += shiftZ;
                 //center = new Vector3((left + right) / 2, 0, (top + bottom) / 2);
 
+                //print(shiftX + "/" + shiftZ);
+
                 corners[0] += new Vector3(shiftX, 0, shiftZ);
                 corners[1] += new Vector3(shiftX, 0, shiftZ);
                 corners[2] += new Vector3(shiftX, 0, shiftZ);
                 corners[3] += new Vector3(shiftX, 0, shiftZ);
+
+                //foreach (Vector3 corner in corners)
+                //{
+
+                //    print(corner);
+
+                //}
+
                 center = (corners[0] - corners[2]) / 2 + corners[2];
 
-                velocity = new Vector3(shiftX, 0, shiftZ);
+                velocity = new Vector3(shiftX , 0, shiftZ );
+                //print("Alf2 x" + shiftX + " z" + shiftZ + " v" + velocity);
 
             }
             
@@ -351,8 +403,6 @@ namespace Prueva
                 //float b = -1;
                 //float c = (corner1.z - a * corner1.x )* (corner2.x - corner1.x);
                 ///*Vector3*/ q = Vector3.zero;
-                //q.x = main.x - (a * (a * main.x + b * main.z + c)) / (a * a + b * b);
-                //q.z = main.z -(b * (a * main.x + b * main.z + c)) / (a * a + b * b);
                 //print(q.x);
                 ////Vector3 Uc = Vector3.zero;
                 ////Vector3 U = new Vector3(main.x - (-c), 0, main.x);
@@ -385,6 +435,8 @@ namespace Prueva
                     c = (((corner2.z - corner1.z) / (corner2.x - corner1.x)) * (-corner1.x)) + corner1.z;
 
                 }
+                //q.x = main.x - (a * (a * main.x + b * main.z + c)) / (a * a + b * b);
+                //q.z = main.z -(b * (a * main.x + b * main.z + c)) / (a * a + b * b);
 
                 //print(a + " / " + b + " / " + c);
 
@@ -443,7 +495,7 @@ namespace Prueva
         }
 
 
-        private Vector3 Orbit(Vector3 target, float angle, float height)
+        private Vector3 Orbit(Vector3 target, float angle, float height, float radio)
         {
 
             Vector3 currentLocalPosition = new Vector3();
@@ -460,10 +512,15 @@ namespace Prueva
         {
             if (canRotate)
             {
-                print("hola");
+                //print("hola");
                 angle %= 360;
                 StartCoroutine(InterpolarRotacion());
+                for (int i = 0; i < focusArea.CornersAngle.Length; i++)
+                {
 
+                    StartCoroutine(InterpolarRotacionCorners(i));
+
+                }
             }
 
         }
@@ -490,6 +547,31 @@ namespace Prueva
             }
 
             angle = rotacionFinal;
+            canRotate = true;
+        }
+
+        IEnumerator InterpolarRotacionCorners(int i)
+        {
+
+            canRotate = false;
+
+
+
+            float rotacionInicial = focusArea.CornersAngle[i];
+            float rotacionFinal = focusArea.CornersAngle[i] + 45 * inputManager.GetCameraRotateValue();
+            float timer = 0;
+            float tiempo = 0.5f;
+            while (timer < tiempo)
+            {
+
+                float rotacionActual = Mathf.Lerp(rotacionInicial, rotacionFinal, timer / tiempo);
+
+                focusArea.CornersAngle[i] = rotacionActual;
+                timer += Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            }
+
+            focusArea.CornersAngle[i] = rotacionFinal;
             canRotate = true;
         }
 

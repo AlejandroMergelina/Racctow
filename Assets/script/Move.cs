@@ -49,7 +49,7 @@ public class Move : MonoBehaviour
     {
         inputManager.OnMoveAction += OnMoveChanged;
         groundDistance = _collider.bounds.extents.x;
-        print(groundDistance);
+        //print(groundDistance);
     }
 
     private void OnMoveChanged(Vector2 obj)

@@ -287,9 +287,9 @@ namespace Fiable
 
 
             float rotacionInicial = angle;
-            float rotacionFinal = angle + 45 * inputManager.GetCameraRotateValue();
+            float rotacionFinal = angle + 90 * inputManager.GetCameraRotateValue();
             float timer = 0;
-            float tiempo = 0.5f;
+            float tiempo = 1f;
             while (timer < tiempo)
             {
 
