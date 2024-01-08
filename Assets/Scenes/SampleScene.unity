@@ -951,6 +951,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1048,6 +1049,32 @@ MonoBehaviour:
   loockSmoothTimeZ: 0.5
   focusAreaSize: {x: 2, y: 0.1, z: 2}
   main: {fileID: 921226088}
+--- !u!114 &963194231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14dcc1da7f4cf674a8d960823c827c9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radio: 9
+  height: 9
+  inputManager: {fileID: 11400000, guid: 93d86641cda0e1d4492b2d6deb264733, type: 2}
+  angle: 0
+  controller: {fileID: 921226087}
+  mainTransform: {fileID: 921226086}
+  verticalOffset: 0
+  lookAheadDstX: 1
+  lookAheadDstZ: 1
+  loockSmoothTimeX: 0.5
+  loockSmoothTimeZ: 0.5
+  focusAreaSize: {x: 1, y: 0, z: 1}
+  main: {fileID: 921226088}
+  borrar: {x: 0, y: 0, z: 0}
 --- !u!1 &1137888673
 GameObject:
   m_ObjectHideFlags: 0

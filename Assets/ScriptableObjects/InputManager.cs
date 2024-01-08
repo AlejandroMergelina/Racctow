@@ -11,6 +11,7 @@ public class InputManager : ScriptableObject
 
     public event Action OnRotateCameraAction;
     public event Action<Vector2> OnMoveAction;
+    public event Action OnInteractAction;
 
 
     public event Action OnActionP1Action;
@@ -30,12 +31,18 @@ public class InputManager : ScriptableObject
         controles.MoveOut.RotateCamera.started += OnRotateCamera;
         controles.MoveOut.Move.performed += OnMoveFer;
         controles.MoveOut.Move.canceled += OnCancelledMove;
+        controles.MoveOut.Inreract.started += OnInteract;
 
         //Suscripciones a eventos del ActionPnº.
         controles.CombatMode.ActionP1.started += OnActionP1;
         controles.CombatMode.ActionP2.started += OnActionP2;
 
 
+    }
+
+    private void OnInteract(InputAction.CallbackContext obj)
+    {
+        OnInteractAction?.Invoke();
     }
 
     private void OnCancelledMove(InputAction.CallbackContext obj)

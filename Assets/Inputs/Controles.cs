@@ -44,6 +44,15 @@ public partial class @Controles : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inreract"",
+                    ""type"": ""Button"",
+                    ""id"": ""316efe9d-15fd-42c4-bdbe-5d78e30e8750"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -178,6 +187,17 @@ public partial class @Controles : IInputActionCollection2, IDisposable
                     ""action"": ""RotateCamera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5ffaa75f-31ec-42bc-b9ae-2b191250701e"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inreract"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -287,6 +307,7 @@ public partial class @Controles : IInputActionCollection2, IDisposable
         m_MoveOut = asset.FindActionMap("MoveOut", throwIfNotFound: true);
         m_MoveOut_Move = m_MoveOut.FindAction("Move", throwIfNotFound: true);
         m_MoveOut_RotateCamera = m_MoveOut.FindAction("RotateCamera", throwIfNotFound: true);
+        m_MoveOut_Inreract = m_MoveOut.FindAction("Inreract", throwIfNotFound: true);
         // CombatMode
         m_CombatMode = asset.FindActionMap("CombatMode", throwIfNotFound: true);
         m_CombatMode_ActionP1 = m_CombatMode.FindAction("ActionP1", throwIfNotFound: true);
@@ -355,12 +376,14 @@ public partial class @Controles : IInputActionCollection2, IDisposable
     private IMoveOutActions m_MoveOutActionsCallbackInterface;
     private readonly InputAction m_MoveOut_Move;
     private readonly InputAction m_MoveOut_RotateCamera;
+    private readonly InputAction m_MoveOut_Inreract;
     public struct MoveOutActions
     {
         private @Controles m_Wrapper;
         public MoveOutActions(@Controles wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_MoveOut_Move;
         public InputAction @RotateCamera => m_Wrapper.m_MoveOut_RotateCamera;
+        public InputAction @Inreract => m_Wrapper.m_MoveOut_Inreract;
         public InputActionMap Get() { return m_Wrapper.m_MoveOut; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -376,6 +399,9 @@ public partial class @Controles : IInputActionCollection2, IDisposable
                 @RotateCamera.started -= m_Wrapper.m_MoveOutActionsCallbackInterface.OnRotateCamera;
                 @RotateCamera.performed -= m_Wrapper.m_MoveOutActionsCallbackInterface.OnRotateCamera;
                 @RotateCamera.canceled -= m_Wrapper.m_MoveOutActionsCallbackInterface.OnRotateCamera;
+                @Inreract.started -= m_Wrapper.m_MoveOutActionsCallbackInterface.OnInreract;
+                @Inreract.performed -= m_Wrapper.m_MoveOutActionsCallbackInterface.OnInreract;
+                @Inreract.canceled -= m_Wrapper.m_MoveOutActionsCallbackInterface.OnInreract;
             }
             m_Wrapper.m_MoveOutActionsCallbackInterface = instance;
             if (instance != null)
@@ -386,6 +412,9 @@ public partial class @Controles : IInputActionCollection2, IDisposable
                 @RotateCamera.started += instance.OnRotateCamera;
                 @RotateCamera.performed += instance.OnRotateCamera;
                 @RotateCamera.canceled += instance.OnRotateCamera;
+                @Inreract.started += instance.OnInreract;
+                @Inreract.performed += instance.OnInreract;
+                @Inreract.canceled += instance.OnInreract;
             }
         }
     }
@@ -486,6 +515,7 @@ public partial class @Controles : IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnRotateCamera(InputAction.CallbackContext context);
+        void OnInreract(InputAction.CallbackContext context);
     }
     public interface ICombatModeActions
     {
