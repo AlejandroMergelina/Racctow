@@ -145,40 +145,40 @@ namespace Prueva
             LookAtTheTarget();
         }
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = new Color(1, 0, 0, 1);
-            Gizmos.DrawLine(focusArea.Corners[0], focusArea.Corners[1]);
-            Gizmos.DrawLine(focusArea.Corners[1], focusArea.Corners[2]);
-            Gizmos.DrawLine(focusArea.Corners[2], focusArea.Corners[3]);
-            Gizmos.DrawLine(focusArea.Corners[3], focusArea.Corners[0]);
-            Gizmos.color = Color.white;
-            Gizmos.DrawSphere(focusArea.Corners[0], 0.1f);
-            Gizmos.color = Color.red;
-            Gizmos.DrawSphere(focusArea.Corners[1], 0.1f);
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(focusArea.Corners[2], 0.1f);
-            Gizmos.color = Color.black;
-            Gizmos.DrawSphere(focusArea.Corners[3], 0.1f);
-            //Gizmos.DrawCube(focusArea.Center, focusAreaSize);
-            //Vector3 shift = Vector3.zero;
-            //Vector3 q;
-            //focusArea.Distacias(focusArea.Corners[0], focusArea.Corners[1], mainTransform.position, out shift, out q);
-            //print(mainTransform.position + " / " + q);
-            //Gizmos.DrawLine(q, mainTransform.position);
-            //focusArea.Distacias(focusArea.Corners[1], focusArea.Corners[2], mainTransform.position, out shift, out q);
-            //print(mainTransform.position + " / " + q);
-            //Gizmos.DrawLine(q, mainTransform.position);
-            //focusArea.Distacias(focusArea.Corners[2], focusArea.Corners[3], mainTransform.position, out shift, out q);
-            //print(mainTransform.position + " / " + q);
-            //Gizmos.DrawLine(q, mainTransform.position);
-            //focusArea.Distacias(focusArea.Corners[3], focusArea.Corners[0], mainTransform.position, out shift, out q);
-            //print(mainTransform.position + " / " + q);
-            //Gizmos.DrawLine(q, mainTransform.position);
-            Gizmos.color = Color.blue;
-            Gizmos.DrawSphere(target, 0.2f);
+        //private void OnDrawGizmos()
+        //{
+        //    Gizmos.color = new Color(1, 0, 0, 1);
+        //    Gizmos.DrawLine(focusArea.Corners[0], focusArea.Corners[1]);
+        //    Gizmos.DrawLine(focusArea.Corners[1], focusArea.Corners[2]);
+        //    Gizmos.DrawLine(focusArea.Corners[2], focusArea.Corners[3]);
+        //    Gizmos.DrawLine(focusArea.Corners[3], focusArea.Corners[0]);
+        //    Gizmos.color = Color.white;
+        //    Gizmos.DrawSphere(focusArea.Corners[0], 0.1f);
+        //    Gizmos.color = Color.red;
+        //    Gizmos.DrawSphere(focusArea.Corners[1], 0.1f);
+        //    Gizmos.color = Color.yellow;
+        //    Gizmos.DrawSphere(focusArea.Corners[2], 0.1f);
+        //    Gizmos.color = Color.black;
+        //    Gizmos.DrawSphere(focusArea.Corners[3], 0.1f);
+        //    //Gizmos.DrawCube(focusArea.Center, focusAreaSize);
+        //    //Vector3 shift = Vector3.zero;
+        //    //Vector3 q;
+        //    //focusArea.Distacias(focusArea.Corners[0], focusArea.Corners[1], mainTransform.position, out shift, out q);
+        //    //print(mainTransform.position + " / " + q);
+        //    //Gizmos.DrawLine(q, mainTransform.position);
+        //    //focusArea.Distacias(focusArea.Corners[1], focusArea.Corners[2], mainTransform.position, out shift, out q);
+        //    //print(mainTransform.position + " / " + q);
+        //    //Gizmos.DrawLine(q, mainTransform.position);
+        //    //focusArea.Distacias(focusArea.Corners[2], focusArea.Corners[3], mainTransform.position, out shift, out q);
+        //    //print(mainTransform.position + " / " + q);
+        //    //Gizmos.DrawLine(q, mainTransform.position);
+        //    //focusArea.Distacias(focusArea.Corners[3], focusArea.Corners[0], mainTransform.position, out shift, out q);
+        //    //print(mainTransform.position + " / " + q);
+        //    //Gizmos.DrawLine(q, mainTransform.position);
+        //    Gizmos.color = Color.blue;
+        //    Gizmos.DrawSphere(target, 0.2f);
 
-        }
+        //}
 
         struct FocusArea
         {

@@ -69,7 +69,7 @@ namespace Fiable
         {
             focusArea.Update(controller.bounds);
             Vector3 focusPosition = focusArea.Center + Vector3.forward * verticalOffset;
-            print("input: " + focusArea.Velocity + " / " + main.transform.forward);
+            //print("input: " + focusArea.Velocity + " / " + main.transform.forward);
             Vector3 currentInputDirection = main.transform.rotation * main.MovementDirection;
             if (focusArea.Velocity.x != 0)
             {
@@ -270,7 +270,7 @@ namespace Fiable
 
         private void ChangeAngle()
         {
-            print("hola");
+            //print("hola");
             if (canRotate)
             {
                 angle %= 360;
