@@ -47,7 +47,6 @@ public class BattleSistem : MonoBehaviour
 
     public void Start()
     {
-
         state = BattleState.START;
 
         StartCoroutine(SetupBattle());

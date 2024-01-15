@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-enum actionMaps { moveOut, CombatMode, Menu }
+public enum actionMaps { moveOut, CombatMode, Menu }
 
 [CreateAssetMenu(menuName = "InputManager")]
 public class InputManager : ScriptableObject
 {
-    Controles controles;
+    Controles controls;
 
     public event Action OnRotateCameraAction;
     public event Action<Vector2> OnMoveAction;
@@ -19,25 +19,22 @@ public class InputManager : ScriptableObject
     public event Action OnActionP1Action;
     public event Action OnActionP2Action;
 
-    private string[] actionMaps = { "MoveOut", "CombatMode", "Menu" };
-
-    public string[] ActionMaps { get => actionMaps;}
 
     private void OnEnable()
     {
         //Constructor.
-        controles = new Controles();
+        controls = new Controles();
 
-        controles.MoveOut.Enable();
+        controls.MoveOut.Enable();
 
-        controles.MoveOut.RotateCamera.started += OnRotateCamera;
-        controles.MoveOut.Move.performed += OnMoveFer;
-        controles.MoveOut.Move.canceled += OnCancelledMove;
-        controles.MoveOut.Inreract.started += OnInteract;
+        controls.MoveOut.RotateCamera.started += OnRotateCamera;
+        controls.MoveOut.Move.performed += OnMoveFer;
+        controls.MoveOut.Move.canceled += OnCancelledMove;
+        controls.MoveOut.Inreract.started += OnInteract;
 
         //Suscripciones a eventos del ActionPnº.
-        controles.CombatMode.ActionP1.started += OnActionP1;
-        controles.CombatMode.ActionP2.started += OnActionP2;
+        controls.CombatMode.ActionP1.started += OnActionP1;
+        controls.CombatMode.ActionP2.started += OnActionP2;
 
 
     }
@@ -76,33 +73,74 @@ public class InputManager : ScriptableObject
     //public Vector2 GetMoveValue()
     //{
     //    //OnActionP1Action?.Invoke();
-    //    //return controles.MoveOut.Move.ReadValue<Vector2>();
+    //    //return controls.MoveOut.Move.ReadValue<Vector2>();
 
     //}
 
     public float GetCameraRotateValue()
     {
 
-        return controles.MoveOut.RotateCamera.ReadValue<float>();
+        return controls.MoveOut.RotateCamera.ReadValue<float>();
 
     }
 
-    public void SwichActionMap(string ActionMap)
+    public void SwichActionMap(actionMaps actionMap,bool enable)
     {
-        if (ActionMap == this.ActionMaps[0])
-            controles.MoveOut.Enable();
-        else
-            controles.MoveOut.Disable();
+        if (actionMap == actionMaps.moveOut)
+        {
 
-        if (ActionMap == this.ActionMaps[1])
-            controles.CombatMode.Enable();
-        else
-            controles.CombatMode.Disable();
+            if(enable)
+            {
 
-        if (ActionMap == this.ActionMaps[2])
-            controles.Menu.Enable();
-        else
-            controles.Menu.Disable();
+                controls.MoveOut.Enable();
+
+            }
+            else
+            {
+
+                controls.MoveOut.Disable();
+            }
+
+        }
+
+
+
+        else if (actionMap == actionMaps.CombatMode)
+        {
+
+            if (enable)
+            {
+
+                controls.CombatMode.Enable();
+
+            }
+            else
+            {
+
+                controls.CombatMode.Disable();
+            }
+
+        }
+
+
+        else if (actionMap == actionMaps.Menu)
+        {
+
+            if (enable)
+            {
+
+                controls.Menu.Enable();
+
+            }
+            else
+            {
+
+                controls.Menu.Disable();
+            }
+
+        }
+
+
     }
-
 }
+

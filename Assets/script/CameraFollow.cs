@@ -274,6 +274,7 @@ namespace Fiable
             if (canRotate)
             {
                 angle %= 360;
+
                 StartCoroutine(InterpolarRotacion());
             }
 
@@ -302,6 +303,7 @@ namespace Fiable
 
             angle = rotacionFinal;
             canRotate = true;
+            
         }
 
     }
