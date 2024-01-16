@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+[CreateAssetMenu(fileName = "Game Manager")]
 public class GameManager : ScriptableObject
 {
 

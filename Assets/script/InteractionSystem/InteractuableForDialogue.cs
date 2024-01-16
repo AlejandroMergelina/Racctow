@@ -28,7 +28,7 @@ public class InteractuableForDialogue : Interactuable
         dialogueText.text = dialogue.CurrentDialogue;
 
         buttonContinue.onClick.AddListener(() => Next());
-
+        Time.timeScale = 0f;
     }
 
     public void Next()
@@ -38,6 +38,7 @@ public class InteractuableForDialogue : Interactuable
         {
             dialogueGO.SetActive(false);
             dialogue.ResetDialogue();
+            Time.timeScale = 1f;
         }
         else
         {

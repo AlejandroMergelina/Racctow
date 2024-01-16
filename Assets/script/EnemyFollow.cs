@@ -9,6 +9,8 @@ public class EnemyFollow : MonoBehaviour
     private NavMeshAgent agent;
     [SerializeField]
     private Transform target;
+    [SerializeField]
+    private GameManager gameManager;
 
     bool follow;
 
@@ -35,6 +37,19 @@ public class EnemyFollow : MonoBehaviour
     {
 
         follow = false;
+
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+        if (collision.gameObject.CompareTag("Player"))
+        {
+
+            gameManager.ChangeCamera();
+
+        }
+        
 
     }
 
