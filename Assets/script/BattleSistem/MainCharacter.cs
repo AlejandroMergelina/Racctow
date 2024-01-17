@@ -31,13 +31,21 @@ public class MainCharacter : Character
     protected InputManager inputManager;
        
 
-    protected virtual void OnAction()
+    protected void OnAction()
     {
-        if (currentCooldDownDodge <= 0 && canDodge)
+
+        animator.SetBool("attack", true);
+    }
+
+    protected void OnDoge()
+    {
+
+        if (currentCooldDownDodge <= 0)
         {
             animator.SetTrigger("dodge");
             return;
         }
+
     }
 
     public void SetCanDodge(bool canDodge)
@@ -57,7 +65,7 @@ public class MainCharacter : Character
     protected virtual void Update()
     {
 
-        if (currentCooldDownDodge > 0)
+        if (currentCooldDownDodge >= 0)
         {
 
             currentCooldDownDodge -= Time.deltaTime;

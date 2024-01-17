@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class InteractuableForDialogue : Interactuable
+public class InteractuableForDialogue : MonoBehaviour, Interactuable
 {
 
     [SerializeField]
@@ -21,7 +21,7 @@ public class InteractuableForDialogue : Interactuable
     [SerializeField]
     private Button buttonContinue;
 
-    public override void Interaction()
+    public void Interaction()
     {
         //inputManager.
         dialogueGO.SetActive(true);

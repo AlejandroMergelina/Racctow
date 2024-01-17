@@ -276,6 +276,54 @@ public partial class @Controles : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Doge"",
+            ""id"": ""83403a3e-737a-427a-b1f0-8d80a5cf7dfa"",
+            ""actions"": [
+                {
+                    ""name"": ""Main1doge"",
+                    ""type"": ""Button"",
+                    ""id"": ""bb91d276-6aff-40b0-8dc4-839af1c42627"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Main2doge"",
+                    ""type"": ""Button"",
+                    ""id"": ""60870bfe-4d19-4597-bab4-7537b4cf274c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""87d20778-fcca-4191-8115-730d61633da7"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Main1doge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""93f10dfa-379f-4e26-a2b1-9ddfdc8953ee"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Main2doge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -315,6 +363,10 @@ public partial class @Controles : IInputActionCollection2, IDisposable
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Newaction = m_Menu.FindAction("New action", throwIfNotFound: true);
+        // Doge
+        m_Doge = asset.FindActionMap("Doge", throwIfNotFound: true);
+        m_Doge_Main1doge = m_Doge.FindAction("Main1doge", throwIfNotFound: true);
+        m_Doge_Main2doge = m_Doge.FindAction("Main2doge", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -493,6 +545,47 @@ public partial class @Controles : IInputActionCollection2, IDisposable
         }
     }
     public MenuActions @Menu => new MenuActions(this);
+
+    // Doge
+    private readonly InputActionMap m_Doge;
+    private IDogeActions m_DogeActionsCallbackInterface;
+    private readonly InputAction m_Doge_Main1doge;
+    private readonly InputAction m_Doge_Main2doge;
+    public struct DogeActions
+    {
+        private @Controles m_Wrapper;
+        public DogeActions(@Controles wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Main1doge => m_Wrapper.m_Doge_Main1doge;
+        public InputAction @Main2doge => m_Wrapper.m_Doge_Main2doge;
+        public InputActionMap Get() { return m_Wrapper.m_Doge; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DogeActions set) { return set.Get(); }
+        public void SetCallbacks(IDogeActions instance)
+        {
+            if (m_Wrapper.m_DogeActionsCallbackInterface != null)
+            {
+                @Main1doge.started -= m_Wrapper.m_DogeActionsCallbackInterface.OnMain1doge;
+                @Main1doge.performed -= m_Wrapper.m_DogeActionsCallbackInterface.OnMain1doge;
+                @Main1doge.canceled -= m_Wrapper.m_DogeActionsCallbackInterface.OnMain1doge;
+                @Main2doge.started -= m_Wrapper.m_DogeActionsCallbackInterface.OnMain2doge;
+                @Main2doge.performed -= m_Wrapper.m_DogeActionsCallbackInterface.OnMain2doge;
+                @Main2doge.canceled -= m_Wrapper.m_DogeActionsCallbackInterface.OnMain2doge;
+            }
+            m_Wrapper.m_DogeActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Main1doge.started += instance.OnMain1doge;
+                @Main1doge.performed += instance.OnMain1doge;
+                @Main1doge.canceled += instance.OnMain1doge;
+                @Main2doge.started += instance.OnMain2doge;
+                @Main2doge.performed += instance.OnMain2doge;
+                @Main2doge.canceled += instance.OnMain2doge;
+            }
+        }
+    }
+    public DogeActions @Doge => new DogeActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -525,5 +618,10 @@ public partial class @Controles : IInputActionCollection2, IDisposable
     public interface IMenuActions
     {
         void OnNewaction(InputAction.CallbackContext context);
+    }
+    public interface IDogeActions
+    {
+        void OnMain1doge(InputAction.CallbackContext context);
+        void OnMain2doge(InputAction.CallbackContext context);
     }
 }

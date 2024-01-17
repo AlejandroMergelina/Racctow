@@ -9,6 +9,9 @@ public enum BattleState { START,ORDER, PLAYERTURN, ENEMYTURN, WON, LOST }
 public class BattleSistem : MonoBehaviour
 {
     [SerializeField]
+    private InputManager inputManager;
+
+    [SerializeField]
     private GameObject enemySelectCanvas;
     [SerializeField]
     private GameObject optionCanvas;
@@ -221,6 +224,8 @@ public class BattleSistem : MonoBehaviour
 
     void PlayerTurn()
     {
+        inputManager.SwichActionMap(ActionMaps.Doge, false);
+        inputManager.SwichActionMap(ActionMaps.CombatMode, true);
         tusTurnos++;
 
         optionCanvas.SetActive(true);
@@ -250,13 +255,16 @@ public class BattleSistem : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        foreach(KeyValuePair<int, MainCharacter> main in MainCharactersAlive)
-        {
+        //foreach(KeyValuePair<int, MainCharacter> main in MainCharactersAlive)
+        //{
 
-            main.Value.SetCanDodge(true);
+        //    main.Value.SetCanDodge(true);
 
-        }
-        
+        //}
+
+        inputManager.SwichActionMap(ActionMaps.Doge, true);
+        inputManager.SwichActionMap(ActionMaps.CombatMode, false);
+
         int rng;
         do
         {

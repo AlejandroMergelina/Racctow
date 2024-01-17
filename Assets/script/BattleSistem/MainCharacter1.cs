@@ -16,19 +16,7 @@ public class MainCharacter1 : MainCharacter
     private void OnEnable()
     {
         inputManager.OnActionP1Action += OnAction;
-    }
-
-    protected override void OnAction()
-    {
-        base.OnAction();
-
-        if (canAttack)
-        {
-            print("entro");
-            animator.SetBool("attack", true);
-            canAttack = false;
-
-        }
+        inputManager.OnDogeMain1Action += OnDoge;
     }
 
     //protected override void Update()

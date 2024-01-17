@@ -12,7 +12,7 @@ public class EnemyFollow : MonoBehaviour
     [SerializeField]
     private GameManager gameManager;
 
-    bool follow;
+    bool follow = false;
 
     private void Update()
     {
@@ -29,28 +29,27 @@ public class EnemyFollow : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
-        follow= true;
-
-    }
-    private void OnTriggerExit(Collider other)
-    {
-
-        follow = false;
-
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
 
-            gameManager.ChangeCamera();
+            follow = true;
 
         }
         
 
     }
+    private void OnTriggerExit(Collider other)
+    {
+
+        if (other.CompareTag("Player"))
+        {
+
+            follow = false;
+
+        }
+
+    }
+
+   
 
 }

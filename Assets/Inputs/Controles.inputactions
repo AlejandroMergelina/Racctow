@@ -254,6 +254,54 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Doge",
+            "id": "83403a3e-737a-427a-b1f0-8d80a5cf7dfa",
+            "actions": [
+                {
+                    "name": "Main1doge",
+                    "type": "Button",
+                    "id": "bb91d276-6aff-40b0-8dc4-839af1c42627",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Main2doge",
+                    "type": "Button",
+                    "id": "60870bfe-4d19-4597-bab4-7537b4cf274c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "87d20778-fcca-4191-8115-730d61633da7",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Main1doge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "93f10dfa-379f-4e26-a2b1-9ddfdc8953ee",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Main2doge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

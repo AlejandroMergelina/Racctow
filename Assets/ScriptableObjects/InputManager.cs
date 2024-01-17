@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public enum actionMaps { moveOut, CombatMode, Menu }
+public enum ActionMaps { moveOut, CombatMode, Menu , Doge}
 
 [CreateAssetMenu(menuName = "InputManager")]
 public class InputManager : ScriptableObject
@@ -18,6 +18,9 @@ public class InputManager : ScriptableObject
 
     public event Action OnActionP1Action;
     public event Action OnActionP2Action;
+
+    public event Action OnDogeMain1Action;
+    public event Action OnDogeMain2Action;
 
 
     private void OnEnable()
@@ -36,6 +39,15 @@ public class InputManager : ScriptableObject
         controls.CombatMode.ActionP1.started += OnActionP1;
         controls.CombatMode.ActionP2.started += OnActionP2;
 
+        controls.Doge.Main1doge.started += OnDogeMain1;
+
+
+    }
+
+    private void OnDogeMain1(InputAction.CallbackContext obj)
+    {
+
+        OnDogeMain1Action?.Invoke();
 
     }
 
@@ -84,9 +96,9 @@ public class InputManager : ScriptableObject
 
     }
 
-    public void SwichActionMap(actionMaps actionMap,bool enable)
+    public void SwichActionMap(ActionMaps actionMap,bool enable)
     {
-        if (actionMap == actionMaps.moveOut)
+        if (actionMap == ActionMaps.moveOut)
         {
 
             if(enable)
@@ -105,7 +117,7 @@ public class InputManager : ScriptableObject
 
 
 
-        else if (actionMap == actionMaps.CombatMode)
+        else if (actionMap == ActionMaps.CombatMode)
         {
 
             if (enable)
@@ -123,7 +135,7 @@ public class InputManager : ScriptableObject
         }
 
 
-        else if (actionMap == actionMaps.Menu)
+        else if (actionMap == ActionMaps.Menu)
         {
 
             if (enable)
@@ -136,6 +148,24 @@ public class InputManager : ScriptableObject
             {
 
                 controls.Menu.Disable();
+            }
+
+        }
+
+        else if(actionMap == ActionMaps.Doge)
+        {
+
+
+            if (enable)
+            {
+
+                controls.Doge.Enable();
+
+            }
+            else
+            {
+
+                controls.Doge.Disable();
             }
 
         }

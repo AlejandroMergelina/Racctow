@@ -1906,6 +1906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 463873fd8c74bf34aa83f5713107bddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputManager: {fileID: 11400000, guid: 93d86641cda0e1d4492b2d6deb264733, type: 2}
   enemySelectCanvas: {fileID: 811494815}
   optionCanvas: {fileID: 697404728}
   selectEnemyButtons:
