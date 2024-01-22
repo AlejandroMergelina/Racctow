@@ -25,6 +25,8 @@ public abstract class Character : MonoBehaviour
 
     }
 
+
+    //([{(2 * Nv. / 5 + 2) * Ataque* Poder / Defensa} / 50]+2)
     public abstract void Attack(Character it);
 
 
