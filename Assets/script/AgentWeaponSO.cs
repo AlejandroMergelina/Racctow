@@ -15,15 +15,15 @@ public class AgentWeaponSO : ScriptableObject
     [SerializeField]
     private List<ItemParameter> parametersToModify, itemCurrentState;
 
-    public event Action<ItemParameter> OnSetWeapon;
+    public event Action<List<ModifierData>> OnRemuveWeapon;
     public void SetWeapon(EquippableItemSO weaponItemSO, List<ItemParameter> itemState)
     {
-
+        
         if(weapon != null)
         {
 
             inventoryData.AddItem(weapon, 1, itemCurrentState);
-
+            OnRemuveWeapon?.Invoke(weapon.ModifiersDatas);
         }
 
         weapon = weaponItemSO;

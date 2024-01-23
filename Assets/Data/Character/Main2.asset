@@ -22,4 +22,4 @@ MonoBehaviour:
   speed:
     baseValue: 1
   iD: 1
-  agentWeapon: {fileID: 0}
+  agentWeapon: {fileID: 11400000, guid: 8d279d0bd07f2754480d0e37109deaea, type: 2}

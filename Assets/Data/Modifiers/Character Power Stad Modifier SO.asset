@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1938ba4fd529d52469197ae5cd5c1fb6, type: 3}
   m_Name: Character Power Stad Modifier SO
   m_EditorClassIdentifier: 
+  stad2Change: 1
