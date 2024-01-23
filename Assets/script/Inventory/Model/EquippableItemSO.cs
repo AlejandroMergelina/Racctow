@@ -11,13 +11,21 @@ namespace Inventory.Model
 
         public bool PerformAction(CharacterSO character, List<ItemParameter> itemState = null)
         {
-            //AgentWeaponSO weaponSystem = character.GetComponent<AgentWeaponSO>();
-            //if(weaponSystem != null)
-            //{
+            AgentWeaponSO weaponSystem = character.AgentWeapon;
+            if (weaponSystem != null)
+            {
 
-            //    weaponSystem.SetWeapon(this, itemState == null ? DefaultParameterList: itemState);
-            //    return true;
-            //}
+                weaponSystem.SetWeapon(this, itemState == null ? DefaultParameterList : itemState);
+
+                foreach (ModifierData data in modifiersDatas)
+                {
+
+                    data.StatModifier.AffectCharacter(character, data.Value);
+
+                }
+
+                return true;
+            }
             return false;
         }
     }

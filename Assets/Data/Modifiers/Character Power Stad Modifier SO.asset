@@ -9,17 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02dcc4dcc3b170044aca63450e0e58f9, type: 3}
-  m_Name: Enemy1
+  m_Script: {fileID: 11500000, guid: 1938ba4fd529d52469197ae5cd5c1fb6, type: 3}
+  m_Name: Character Power Stad Modifier SO
   m_EditorClassIdentifier: 
-  _name: 
-  maxHP: 10
-  currentHP: 10
-  power:
-    baseValue: 1
-  defense:
-    baseValue: 1
-  speed:
-    baseValue: 1
-  iD: 0
-  agentWeapon: {fileID: 0}

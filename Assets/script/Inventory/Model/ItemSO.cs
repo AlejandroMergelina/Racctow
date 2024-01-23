@@ -37,6 +37,9 @@ namespace Inventory.Model
         public List<ItemParameter> DefaultParameterList { get => defaultParameterList; set => defaultParameterList = value; }
 
 
+        [SerializeField]
+        protected List<ModifierData> modifiersDatas = new List<ModifierData>();
+
     }
 
     [Serializable]

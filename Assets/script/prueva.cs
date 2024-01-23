@@ -23,7 +23,7 @@ public class prueva : MonoBehaviour
         foreach(Character c in objectList)
         {
 
-            print(c.GetSpeed());
+            print(c.CharacterData.Speed.GetValue());
 
         }
 
@@ -63,7 +63,7 @@ public class prueva : MonoBehaviour
 
         while (leftIndex < leftSize && rightIndex < rightSize)
         {
-            if (leftTemp[leftIndex].GetSpeed() >= rightTemp[rightIndex].GetSpeed())
+            if (leftTemp[leftIndex].CharacterData.Speed.GetValue() >= rightTemp[rightIndex].CharacterData.Speed.GetValue())
             {
                 list[mergedIndex] = leftTemp[leftIndex];
                 leftIndex++;

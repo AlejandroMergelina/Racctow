@@ -12,12 +12,12 @@ public class Stad
 
     private List<int> modifiers = new List<int>();
 
-    public int GetValue(int modifier)
+    public int GetValue()
     {
         int finalValeu = baseValue;
         modifiers.ForEach(x => finalValeu += x);
 
-        return baseValue;
+        return finalValeu;
     }
 
     public void AddModifier(int modifier)

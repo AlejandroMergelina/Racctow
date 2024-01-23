@@ -10,7 +10,7 @@ public abstract class Character : MonoBehaviour
 
     [SerializeField]
     protected CharacterSO characterData;
-
+    public CharacterSO CharacterData { get => characterData; set => characterData = value; }
 
     protected virtual void Start()
     {
@@ -61,48 +61,6 @@ public abstract class Character : MonoBehaviour
 
     }
 
-
-
-    public int GetPower()
-    {
-
-        return characterData.Power;
-
-    }
-    public void SetPower(int power)
-    {
-        characterData.Power = power;
-    }
-
-
-
-    public int GetDefense()
-    {
-
-        return characterData.Defense;
-
-    }
-    public void SetDefense(int defense)
-    {
-
-        characterData.Defense = defense;
-
-    }
-
-
-
-    public int GetSpeed()
-    {
-
-        return characterData.Speed;
-
-    }
-    public void Setspeed(int speed)
-    {
-
-        characterData.Speed = speed;
-
-    }
 
     public int GetID()
     {

@@ -155,7 +155,7 @@ public class BattleSistem : MonoBehaviour
         else
         {
             
-            if (EnemyOrder.Peek().GetSpeed() > MainChOrder.Peek().GetSpeed())
+            if (EnemyOrder.Peek().CharacterData.Speed.GetValue() > MainChOrder.Peek().CharacterData.Speed.GetValue())
             {
                 
                 state = BattleState.ENEMYTURN;
@@ -181,7 +181,7 @@ public class BattleSistem : MonoBehaviour
         foreach (KeyValuePair<int, Character> mains in c)
         {
 
-            order.AddFirst(mains.Value.GetSpeed());
+            order.AddFirst(mains.Value.CharacterData.Speed.GetValue());
 
         }
 
@@ -203,7 +203,7 @@ public class BattleSistem : MonoBehaviour
 
                 foreach (KeyValuePair<int, Character> mains in c)
                 {
-                    if (mains.Value.GetSpeed() == n)
+                    if (mains.Value.CharacterData.Speed.GetValue() == n)
                     {
                         reserSpeed = n;
 

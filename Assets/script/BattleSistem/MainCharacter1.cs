@@ -42,7 +42,7 @@ public class MainCharacter1 : MainCharacter
         foreach(Collider _enemy in enemy)
         {
             
-            _enemy.GetComponent<EnemyCharacter>().TakeDamage(GetPower());
+            _enemy.GetComponent<EnemyCharacter>().TakeDamage(CharacterData.Power.GetValue());
             print(_enemy.GetComponent<EnemyCharacter>().GetHP());
         }
 

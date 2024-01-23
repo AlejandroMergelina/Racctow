@@ -9,8 +9,7 @@ namespace Inventory.Model
     public class EdibleItemSO : ItemSO, IDestroyableItem, IItemAction
     {
 
-        [SerializeField]
-        private List<ModifierData> modifiersDatas = new List<ModifierData>();
+        
 
         public string ActionName => "Consume";
 
@@ -47,8 +46,8 @@ namespace Inventory.Model
         private CharacterStatModifierSO statModifier;
         public CharacterStatModifierSO StatModifier { get => statModifier; set => statModifier = value; }
         [SerializeField]
-        private float value;
-        public float Value { get => value; set => this.value = value; }
+        private int value;
+        public int Value { get => value; set => this.value = value; }
     }
 
 }

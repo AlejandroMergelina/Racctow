@@ -18,20 +18,24 @@ public class CharacterSO : ScriptableObject
     public int CurrentHP { get => currentHP;set => currentHP = value; }
 
     [SerializeField]
-    private int power;
-    public int Power { get => power;set => power = value; }
+    private Stad power;
+    public Stad Power { get => power;set => power = value; }
 
     [SerializeField]
-    private int defense;
-    public int Defense { get => defense; set => defense = value;}
+    private Stad defense;
+    public Stad Defense { get => defense; set => defense = value;}
 
     [SerializeField]
-    private int speed;
-    public int Speed { get => speed; set => speed = value;}
+    private Stad speed;
+    public Stad Speed { get => speed; set => speed = value;}
     
     [SerializeField]
     private int iD;
     public int ID { get => iD; set => iD = value; }
+
+    [SerializeField]
+    private AgentWeaponSO agentWeapon;
+    public AgentWeaponSO AgentWeapon { get => agentWeapon; set => agentWeapon = value; }
 
     public void HealHP(int val)
     {

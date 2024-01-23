@@ -2,7 +2,10 @@ using Inventory.Model;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
+
+[CreateAssetMenu(fileName = "New agentWeapont")]
 public class AgentWeaponSO : ScriptableObject
 {
     [SerializeField]
@@ -12,6 +15,7 @@ public class AgentWeaponSO : ScriptableObject
     [SerializeField]
     private List<ItemParameter> parametersToModify, itemCurrentState;
 
+    public event Action<ItemParameter> OnSetWeapon;
     public void SetWeapon(EquippableItemSO weaponItemSO, List<ItemParameter> itemState)
     {
 
