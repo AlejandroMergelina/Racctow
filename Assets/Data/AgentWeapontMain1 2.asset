@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9690ac0b6f6984945b81a0358bda2b1f, type: 3}
   m_Name: AgentWeapontMain1 2
   m_EditorClassIdentifier: 
-  weapon: {fileID: 11400000, guid: 31e3f03533507ea40bb98c37bbe6550e, type: 2}
+  weapon: {fileID: 0}
   inventoryData: {fileID: 11400000, guid: 70f76089b524f72439a449d8215068ab, type: 2}
   parametersToModify: []
   itemCurrentState: []

@@ -9,5 +9,5 @@ public abstract class CharacterStatModifierSO : ScriptableObject
     public Stads Stad2Change { get => stad2Change;}
 
     public abstract void AffectCharacter(CharacterSO character, int val);
-
+    public abstract void RemubeModifiers(CharacterSO character, int val);
 }

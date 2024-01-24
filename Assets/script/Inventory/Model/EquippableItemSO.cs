@@ -16,13 +16,25 @@ namespace Inventory.Model
             {
 
                 weaponSystem.SetWeapon(this, itemState == null ? DefaultParameterList : itemState);
-
+                
                 foreach (ModifierData data in modifiersDatas)
                 {
-
+                    Debug.Log("arma");
                     data.StatModifier.AffectCharacter(character, data.Value);
 
                 }
+                if (weaponSystem != null)
+                {
+
+                    foreach (ModifierData data in weaponSystem.Weapon.modifiersDatas)
+                    {
+
+                        data.StatModifier.RemubeModifiers(character, data.Value);
+
+                    }
+
+                }
+
 
                 return true;
             }

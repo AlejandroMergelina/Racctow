@@ -16,7 +16,7 @@ MonoBehaviour:
   maxHP: 10
   currentHP: 10
   power:
-    baseValue: 1
+    baseValue: 10
   defense:
     baseValue: 1
   speed:

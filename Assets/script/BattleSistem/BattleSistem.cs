@@ -375,29 +375,39 @@ public class BattleSistem : MonoBehaviour
 
         }
 
-        
+        print("enemigos vivos" + EnemyCharacters.Count);
 
-        foreach (KeyValuePair<int, EnemyCharacter> enemy in EnemyCharacters)
+        count = EnemyCharacters.Count;
+
+        for (int i = 0; i < count; i++)
         {
-            print(enemy.Value.GetName() + "/" + enemy.Value.GetHP() + "/" + MainCharactersAlive.ContainsKey(enemy.Value.GetID()));
-            if (enemy.Value.GetHP() <= 0)
+            EnemyCharacters.TryGetValue(i, out EnemyCharacter enemy);
+            if (enemy.GetHP() <= 0 && MainCharactersAlive.ContainsKey(enemy.GetID()))
             {
 
-                EnemyCharacters.Remove(enemy.Key);
+                EnemyCharacters.Remove(enemy.GetID());
+                print("error");
 
-                foreach (KeyValuePair<int, MainCharacter> main in MainCharactersAlive)
+                if (EnemyCharacters.Count <= 0)
                 {
-                    if (EnemyOrder.Contains(main.Value))
-                        HelpDiccionary.Add(main.Key, main.Value);
+
+                    foreach (KeyValuePair<int, EnemyCharacter> main in EnemyCharacters)
+                    {
+                        if (EnemyOrder.Contains(main.Value))
+                            HelpDiccionary.Add(main.Key, main.Value);
+
+                    }
+                    EnemyOrder.Clear();
+                    SubOrder(HelpDiccionary, EnemyOrder);
+
+                    SubOrder(HelpDiccionary, EnemyOrder);
 
                 }
-                EnemyOrder.Clear();
-                SubOrder(HelpDiccionary, MainChOrder);
 
-                SubOrder(HelpDiccionary, MainChOrder);
             }
-
         }
+
+        
 
 
         //SOLUCIONAR EL IT
@@ -426,7 +436,7 @@ public class BattleSistem : MonoBehaviour
         //        EnemyCharacters.Remove(i);
         //}
 
-        print(EnemyCharacters.Count == 0);
+        
         
         if (MainCharactersAlive.Count == 0)
         {

@@ -10,12 +10,14 @@ public class AgentWeaponSO : ScriptableObject
 {
     [SerializeField]
     private EquippableItemSO weapon;
+    public EquippableItemSO Weapon { get => weapon; set => weapon = value; }
     [SerializeField]
     private InventorySO inventoryData;
     [SerializeField]
     private List<ItemParameter> parametersToModify, itemCurrentState;
 
-    public event Action<List<ModifierData>> OnRemuveWeapon;
+
+    
     public void SetWeapon(EquippableItemSO weaponItemSO, List<ItemParameter> itemState)
     {
         
@@ -23,7 +25,7 @@ public class AgentWeaponSO : ScriptableObject
         {
 
             inventoryData.AddItem(weapon, 1, itemCurrentState);
-            OnRemuveWeapon?.Invoke(weapon.ModifiersDatas);
+            
         }
 
         weapon = weaponItemSO;

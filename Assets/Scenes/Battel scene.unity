@@ -1947,6 +1947,12 @@ MonoBehaviour:
   - quantity: 2
     item: {fileID: 11400000, guid: 5c2f129d5331b1441bbfe34dfcf8a8c2, type: 2}
     itemState: []
+  - quantity: 1
+    item: {fileID: 11400000, guid: ce13d70368a7b954a92b009f07cec5b5, type: 2}
+    itemState: []
+  - quantity: 1
+    item: {fileID: 11400000, guid: 31e3f03533507ea40bb98c37bbe6550e, type: 2}
+    itemState: []
   characters:
   - {fileID: 11400000, guid: eb49a90c64130b5418379bedee9da537, type: 2}
   - {fileID: 11400000, guid: 99166d6b83712674fbf33dccf05e3b31, type: 2}

@@ -11,4 +11,9 @@ public class CharacterHealthModifireSO : CharacterStatModifierSO
         if(character != null)
             character.HealHP(val);
     }
+
+    public override void RemubeModifiers(CharacterSO character, int val)
+    {
+        
+    }
 }

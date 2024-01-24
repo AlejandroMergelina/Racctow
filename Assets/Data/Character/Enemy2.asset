@@ -15,6 +15,11 @@ MonoBehaviour:
   _name: 
   maxHP: 10
   currentHP: 10
-  power: 1
-  defense: 10
-  speed: 1
+  power:
+    baseValue: 0
+  defense:
+    baseValue: 0
+  speed:
+    baseValue: 0
+  iD: 0
+  agentWeapon: {fileID: 11400000, guid: 1f64d36071651d341be181466d5631d4, type: 2}
