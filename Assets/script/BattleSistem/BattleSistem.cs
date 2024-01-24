@@ -324,19 +324,7 @@ public class BattleSistem : MonoBehaviour
     public void CheckLive(string rival)
     {
         Dictionary<int, Character> HelpDiccionary = new Dictionary<int, Character>();
-        if(rival == "Main")
-        {
-
-            foreach (KeyValuePair<int, MainCharacter> main in MainCharactersAlive)
-            {
-
-                main.Value.SetCanDodge(true);
-
-            }
-
-        }
         
-
         foreach (KeyValuePair<int, MainCharacter> main in MainCharactersAlive)
         {
 
@@ -351,7 +339,7 @@ public class BattleSistem : MonoBehaviour
             
             MainCharacters.TryGetValue(i, out MainCharacter mainCh);
 
-            print(mainCh.GetName() + "/" + mainCh.GetHP() + "/" + MainCharactersAlive.ContainsKey(mainCh.GetID()));
+            
 
             if (mainCh.GetHP() <= 0 && MainCharactersAlive.ContainsKey(mainCh.GetID()))
             {
@@ -387,21 +375,23 @@ public class BattleSistem : MonoBehaviour
 
         }
 
-        foreach(KeyValuePair<int, EnemyCharacter> enemy in EnemyCharacters)
-        {
+        
 
+        foreach (KeyValuePair<int, EnemyCharacter> enemy in EnemyCharacters)
+        {
+            print(enemy.Value.GetName() + "/" + enemy.Value.GetHP() + "/" + MainCharactersAlive.ContainsKey(enemy.Value.GetID()));
             if (enemy.Value.GetHP() <= 0)
             {
 
-                MainCharactersAlive.Remove(enemy.Key);
+                EnemyCharacters.Remove(enemy.Key);
 
                 foreach (KeyValuePair<int, MainCharacter> main in MainCharactersAlive)
                 {
-                    if (MainChOrder.Contains(main.Value))
+                    if (EnemyOrder.Contains(main.Value))
                         HelpDiccionary.Add(main.Key, main.Value);
 
                 }
-                MainChOrder.Clear();
+                EnemyOrder.Clear();
                 SubOrder(HelpDiccionary, MainChOrder);
 
                 SubOrder(HelpDiccionary, MainChOrder);
@@ -409,17 +399,17 @@ public class BattleSistem : MonoBehaviour
 
         }
 
-        
+
         //SOLUCIONAR EL IT
         //if (it.GetHP() <= 0)
         //{
-            
+
         //    if (rival == "Main")
         //    {
-                
+
         //        MainCharactersAlive.Remove(i);
-                
-                
+
+
         //        foreach (KeyValuePair<int, MainCharacter> mainCh in MainCharactersAlive)
         //        {
         //            if (MainChOrder.Contains(mainCh.Value))
@@ -429,13 +419,14 @@ public class BattleSistem : MonoBehaviour
         //        MainChOrder.Clear();
 
         //        SubOrder(HelpDiccionary, MainChOrder);
-                
+
         //    }
-                
+
         //    else
         //        EnemyCharacters.Remove(i);
         //}
-        
+
+        print(EnemyCharacters.Count == 0);
         
         if (MainCharactersAlive.Count == 0)
         {
