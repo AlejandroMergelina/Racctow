@@ -232,7 +232,7 @@
             "id": "e0452012-50f1-431b-9cb9-129368ff40f8",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "",
                     "type": "Button",
                     "id": "d45bb217-c5c1-43c7-b3a6-05f320a295ec",
                     "expectedControlType": "Button",
@@ -249,7 +249,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

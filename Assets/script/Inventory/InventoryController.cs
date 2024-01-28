@@ -134,7 +134,7 @@ namespace Inventory
             if (itemAction != null)
             {
 
-                itemAction.PerformAction(character/*aqui ira el jugador seleccionado*/, inventoryItem.ItemState);
+                itemAction.PerformAction(character/*aqui ira el jugador seleccionado*//*, inventoryItem.ItemState*/);
                 if (inventoryData.GetItemAt(itemIndex).IsEmpty)
                     inventoryUI.ResetSelection();
                 inventoryUI.Hide();
@@ -186,12 +186,12 @@ namespace Inventory
             StringBuilder sb = new StringBuilder();
             sb.Append(inventoryItem.Item.Description);
             sb.AppendLine();
-            for(int i = 0; i < inventoryItem.ItemState.Count; i++)
-            {
+            //for(int i = 0; i < inventoryItem.ItemState.Count; i++)
+            //{
 
-                sb.Append($"{inventoryItem.ItemState[i]._ItemParameter.ParameterName}" + $":{inventoryItem.ItemState[i].Values} / {inventoryItem.Item.DefaultParameterList[i].Values}");
-                sb.AppendLine();
-            }
+            //    sb.Append($"{inventoryItem.ItemState[i]._ItemParameter.ParameterName}" + $":{inventoryItem.ItemState[i].Values} / {inventoryItem.Item.DefaultParameterList[i].Values}");
+            //    sb.AppendLine();
+            //}
             return sb.ToString();
 
         }

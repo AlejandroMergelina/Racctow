@@ -29,7 +29,7 @@ namespace Inventory.Model
             }
         }
 
-        public int AddItem(ItemSO item, int quantity, List<ItemParameter> itemState = null)
+        public int AddItem(ItemSO item, int quantity/*, List<ItemParameter> itemState = null*/)
         {
 
             if(item.IsStackable == false)
@@ -40,7 +40,7 @@ namespace Inventory.Model
                     while(quantity > 0 && IsInventoryFull() == false)
                     {
 
-                        quantity -= AddItemToFirstFreeSlot(item, 1, itemState);
+                        quantity -= AddItemToFirstFreeSlot(item, 1/*, itemState*/);
 
                     }
                     InformationAboutChange();
@@ -54,9 +54,9 @@ namespace Inventory.Model
             return quantity;
         }
 
-        private int AddItemToFirstFreeSlot(ItemSO item, int quantity, List<ItemParameter> itemState = null)
+        private int AddItemToFirstFreeSlot(ItemSO item, int quantity/*, List<ItemParameter> itemState = null*/)
         {
-            InventoryItem newItem = new InventoryItem { Item = item, Quantity = quantity, ItemState = new List<ItemParameter>(itemState == null? item.DefaultParameterList : itemState) };
+            InventoryItem newItem = new InventoryItem { Item = item, Quantity = quantity/*, ItemState = new List<ItemParameter>(itemState == null? item.DefaultParameterList : itemState)*/ };
             for (int i = 0; i < inventoryItems.Count; i++)
             {
 
@@ -184,9 +184,9 @@ namespace Inventory.Model
         [SerializeField]
         private ItemSO item;
         public ItemSO Item { get => item; set => item = value; }
-        [SerializeField]
-        private List<ItemParameter> itemState;
-        public List<ItemParameter> ItemState { get => itemState; set => itemState = value; }
+        //[SerializeField]
+        //private List<ItemParameter> itemState;
+        //public List<ItemParameter> ItemState { get => itemState; set => itemState = value; }
         [SerializeField]
         private bool isEmpty => item == null;
         public bool IsEmpty { get => isEmpty; }
@@ -198,7 +198,7 @@ namespace Inventory.Model
             {
                 item = item,//para mantener el mismo item y que no varie
                 quantity = newQuuantity,
-                itemState = new List<ItemParameter>(itemState)
+                //itemState = new List<ItemParameter>(itemState)
             };
 
         }
@@ -208,7 +208,7 @@ namespace Inventory.Model
 
             item = null,
             quantity = 0,
-            itemState = new List<ItemParameter>()
+            //itemState = new List<ItemParameter>()
 
         };
 

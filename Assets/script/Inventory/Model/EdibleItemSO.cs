@@ -13,7 +13,7 @@ namespace Inventory.Model
 
         public string ActionName => "Consume";
 
-        public bool PerformAction(CharacterSO character, List<ItemParameter> itemState = null)
+        public void PerformAction(CharacterSO character/*, List<ItemParameter> itemState = null*/)
         {
             foreach(ModifierData data in modifiersDatas)
             {
@@ -21,7 +21,7 @@ namespace Inventory.Model
                 data.StatModifier.AffectCharacter(character, data.Value);
 
             }
-            return true;
+            
         }
     }
 
@@ -36,7 +36,7 @@ namespace Inventory.Model
     {
         public string ActionName { get;}
 
-        bool PerformAction(CharacterSO character, List<ItemParameter> itemState);
+        void PerformAction(CharacterSO character/*, List<ItemParameter> itemState*/);
     }
 
     [Serializable]
