@@ -19,6 +19,11 @@ public class DialogueDisPlay : MonoBehaviour
     private bool dialogueIsPlaying;
     public bool DialogueIsPlaying { get => dialogueIsPlaying;}
 
+    [SerializeField]
+    private GameObject[] choices;
+    [SerializeField]
+    private TextMeshProUGUI[] choicesText;
+
 
     private void OnEnable()
     {
@@ -56,6 +61,8 @@ public class DialogueDisPlay : MonoBehaviour
 
             dialogueText.text = currentStory.Continue();
 
+            DisplayChoices();
+
         }
         else
         {
@@ -63,6 +70,40 @@ public class DialogueDisPlay : MonoBehaviour
             ExitDialogueMode();
 
         }
+
+    }
+
+    private void DisplayChoices()
+    {
+        print("hola");
+
+        List<Choice> currentChoices = currentStory.currentChoices;
+
+        int index = 0;
+
+        foreach(Choice choice in currentChoices)
+        {
+
+            choices[index].SetActive(true);
+            choicesText[index].text = choice.text;
+            index++;
+        }
+
+        for (int i = index; i < choices.Length; i++)
+        {
+
+            choices[i].SetActive(false);
+
+        }
+
+    }
+
+    public void MakeChoice(int choiceIndex)
+    {
+
+        currentStory.ChooseChoiceIndex(choiceIndex);
+        ContinueStory();
+
 
     }
 

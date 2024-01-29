@@ -2,10 +2,13 @@
 
 
 === main ===
-
-comovas?
-bien verdad
-como queno
+Hola
+¿Comovas?
+    +[bien]
+        Bien verdad
+    +[mal]
+        Como que mal
+-entonces adios
 -> END
 
 
