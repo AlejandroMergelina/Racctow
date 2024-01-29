@@ -232,7 +232,7 @@
             "id": "e0452012-50f1-431b-9cb9-129368ff40f8",
             "actions": [
                 {
-                    "name": "",
+                    "name": "Pumpum",
                     "type": "Button",
                     "id": "d45bb217-c5c1-43c7-b3a6-05f320a295ec",
                     "expectedControlType": "Button",
@@ -243,7 +243,7 @@
             ],
             "bindings": [
                 {
-                    "name": "",
+                    "name": "Pimpam",
                     "id": "881fc409-8b73-48f0-a2a2-0a8a4a03c04e",
                     "path": "",
                     "interactions": "",

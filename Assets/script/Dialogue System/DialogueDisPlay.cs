@@ -13,7 +13,9 @@ public class DialogueDisPlay : MonoBehaviour
     [SerializeField]
     private GameObject dialoguePanel;
     [SerializeField]
-    private TextMeshProUGUI dialogueText;
+    private TMP_Text dialogueText;
+    [SerializeField]
+    private TMP_Text displayNameText;
 
     private Story currentStory;
     private bool dialogueIsPlaying;
@@ -22,8 +24,9 @@ public class DialogueDisPlay : MonoBehaviour
     [SerializeField]
     private GameObject[] choices;
     [SerializeField]
-    private TextMeshProUGUI[] choicesText;
+    private TMP_Text[] choicesText;
 
+    private const string speakerTag = "speaker";
 
     private void OnEnable()
     {
@@ -63,6 +66,7 @@ public class DialogueDisPlay : MonoBehaviour
 
             DisplayChoices();
 
+            HandleTags(currentStory.currentTags);
         }
         else
         {
@@ -70,6 +74,28 @@ public class DialogueDisPlay : MonoBehaviour
             ExitDialogueMode();
 
         }
+
+    }
+
+    void HandleTags(List<string> currentTags)
+    {
+
+        foreach (string tag in currentTags)
+        {
+
+            string[] splitTag = tag.Split(':');
+
+            string tagKey = splitTag[0].Trim();
+            string tagValue = splitTag[1].Trim();
+            if (tagKey == speakerTag)
+            {
+
+                displayNameText.text = tagValue;
+
+            }
+        }
+
+        
 
     }
 
