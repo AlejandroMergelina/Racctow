@@ -6,12 +6,16 @@ using Ink.Runtime;
 
 public class DialogueDisPlay : MonoBehaviour
 {
+    [SerializeField]
+    private float typingSpeed;
 
     [SerializeField]
     private DialogueManager dialogueManager;
 
     [SerializeField]
     private GameObject dialoguePanel;
+    [SerializeField]
+    private GameObject continueButtom;
     [SerializeField]
     private TMP_Text dialogueText;
     [SerializeField]
@@ -21,12 +25,28 @@ public class DialogueDisPlay : MonoBehaviour
     private bool dialogueIsPlaying;
     public bool DialogueIsPlaying { get => dialogueIsPlaying;}
 
+    private bool canContinueToNextLine = false;
+
+    private Coroutine displayLineCoroutine;
+
     [SerializeField]
     private GameObject[] choices;
     [SerializeField]
     private TMP_Text[] choicesText;
 
     private const string speakerTag = "speaker";
+
+    public void ContinueButtom()
+    {
+
+        if (canContinueToNextLine)
+        {
+
+            ContinueStory();
+
+        }
+
+    }
 
     private void OnEnable()
     {
@@ -62,9 +82,15 @@ public class DialogueDisPlay : MonoBehaviour
         if (currentStory.canContinue)
         {
 
-            dialogueText.text = currentStory.Continue();
+            if (displayLineCoroutine != null)
+            {
 
-            DisplayChoices();
+                StopCoroutine(displayLineCoroutine);
+
+            }
+
+            displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
+
 
             HandleTags(currentStory.currentTags);
         }
@@ -72,6 +98,41 @@ public class DialogueDisPlay : MonoBehaviour
         {
 
             ExitDialogueMode();
+
+        }        
+
+    }
+
+    IEnumerator DisplayLine(string line)
+    {
+
+        dialogueText.text = "";
+
+        continueButtom.SetActive(false);
+        HideChoices();
+
+        canContinueToNextLine = false;
+
+        foreach (char letter in line.ToCharArray())
+        {
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(typingSpeed);
+        }
+
+        continueButtom.SetActive(true);
+        DisplayChoices();
+
+        canContinueToNextLine = true;
+
+    }
+
+    void HideChoices()
+    {
+
+        foreach (GameObject choiceButtom in choices)
+        {
+
+            choiceButtom.SetActive(false);
 
         }
 
@@ -126,9 +187,14 @@ public class DialogueDisPlay : MonoBehaviour
 
     public void MakeChoice(int choiceIndex)
     {
+        if (canContinueToNextLine)
+        {
 
-        currentStory.ChooseChoiceIndex(choiceIndex);
-        ContinueStory();
+            currentStory.ChooseChoiceIndex(choiceIndex);
+            ContinueStory();
+
+        }
+            
 
 
     }

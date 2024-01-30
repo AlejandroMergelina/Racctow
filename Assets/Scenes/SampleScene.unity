@@ -566,10 +566,10 @@ RectTransform:
   m_Father: {fileID: 285344907}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -172.87384}
-  m_SizeDelta: {x: 0, y: -345.7477}
+  m_SizeDelta: {x: 800, y: -345.7477}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &138244627
 MonoBehaviour:
@@ -859,7 +859,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &230785192
 RectTransform:
   m_ObjectHideFlags: 0
@@ -927,7 +927,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 285344908}
         m_TargetAssemblyTypeName: DialogueDisPlay, Assembly-CSharp
-        m_MethodName: ContinueStory
+        m_MethodName: ContinueButtom
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1252,8 +1252,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f9ff7aeff4e42c4a958afc2d2fd40bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  typingSpeed: 0.04
   dialogueManager: {fileID: 11400000, guid: 45f44bd4f5234564d9e2154fc106813c, type: 2}
   dialoguePanel: {fileID: 138244625}
+  continueButtom: {fileID: 230785191}
   dialogueText: {fileID: 2003141528}
   displayNameText: {fileID: 190867766}
   choices:
@@ -2321,7 +2323,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &887780406
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3521,7 +3523,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1348335922
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3849,7 +3851,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1655332441
 RectTransform:
   m_ObjectHideFlags: 0
