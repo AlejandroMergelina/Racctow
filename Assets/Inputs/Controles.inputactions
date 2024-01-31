@@ -169,7 +169,7 @@
                 {
                     "name": "",
                     "id": "5ffaa75f-31ec-42bc-b9ae-2b191250701e",
-                    "path": "<Keyboard>/f",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -298,6 +298,34 @@
                     "processors": "",
                     "groups": "",
                     "action": "Main2doge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "DialogueMode",
+            "id": "5765e947-8302-47a1-8468-77e4c140baa3",
+            "actions": [
+                {
+                    "name": "NextLine",
+                    "type": "Button",
+                    "id": "dc7ad81f-0480-4c81-a895-c61dfad9b8e3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "da95adc0-f9b2-4f80-8b88-ba09e2e8e6cc",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextLine",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

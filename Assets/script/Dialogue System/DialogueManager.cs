@@ -8,11 +8,35 @@ using UnityEngine;
 public class DialogueManager : ScriptableObject
 {
     public event Action<TextAsset> OnEnterDialogueMode;
+    public event Action OnContinuedialog;
+
+    [SerializeField]
+    private InputManager inputManager;
+
+    private void OnEnable()
+    {
+        inputManager.OnNextLineAction += ContinueDialogue;
+    }
+
 
     public void EnterDialogueMode(TextAsset inkJSON)
     {
 
+        inputManager.SwichActionMap(ActionMaps.DialogueMode);
         OnEnterDialogueMode?.Invoke(inkJSON);
+
+    }
+
+    public void ContinueDialogue()
+    {
+        
+        OnContinuedialog?.Invoke();
+    }
+
+    public void ExitDialogueMode()
+    {
+
+        inputManager.SwichActionMap(ActionMaps.MoveOut);
 
     }
 

@@ -224,8 +224,8 @@ public class BattleSistem : MonoBehaviour
 
     void PlayerTurn()
     {
-        inputManager.SwichActionMap(ActionMaps.Doge, false);
-        inputManager.SwichActionMap(ActionMaps.CombatMode, true);
+        
+        inputManager.SwichActionMap(ActionMaps.CombatMode);
         tusTurnos++;
 
         optionCanvas.SetActive(true);
@@ -262,8 +262,8 @@ public class BattleSistem : MonoBehaviour
 
         //}
 
-        inputManager.SwichActionMap(ActionMaps.Doge, true);
-        inputManager.SwichActionMap(ActionMaps.CombatMode, false);
+        inputManager.SwichActionMap(ActionMaps.Doge);
+
 
         int rng;
         do

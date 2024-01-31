@@ -35,6 +35,13 @@ public class DialogueDisPlay : MonoBehaviour
     private TMP_Text[] choicesText;
 
     private const string speakerTag = "speaker";
+    private void OnEnable()
+    {
+
+        dialogueManager.OnEnterDialogueMode += EnterDialogueMode;
+        dialogueManager.OnContinuedialog += ContinueButtom;
+
+    }
 
     public void ContinueButtom()
     {
@@ -48,13 +55,6 @@ public class DialogueDisPlay : MonoBehaviour
 
     }
 
-    private void OnEnable()
-    {
-
-        dialogueManager.OnEnterDialogueMode += EnterDialogueMode;
-
-
-    }
 
     void EnterDialogueMode(TextAsset inkJSON)
     {
@@ -73,6 +73,7 @@ public class DialogueDisPlay : MonoBehaviour
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+        dialogueManager.ExitDialogueMode();
 
     }
 

@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public enum ActionMaps { moveOut, CombatMode, Menu , Doge}
+public enum ActionMaps { MoveOut, CombatMode, Menu , Doge, DialogueMode}
 
 [CreateAssetMenu(menuName = "InputManager")]
 public class InputManager : ScriptableObject
@@ -22,6 +23,7 @@ public class InputManager : ScriptableObject
     public event Action OnDogeMain1Action;
     public event Action OnDogeMain2Action;
 
+    public event Action OnNextLineAction;
 
     private void OnEnable()
     {
@@ -41,7 +43,15 @@ public class InputManager : ScriptableObject
 
         controls.Doge.Main1doge.started += OnDogeMain1;
 
+        controls.DialogueMode.NextLine.started += OnNextLine;
 
+        
+    }
+
+    private void OnNextLine(InputAction.CallbackContext obj)
+    {
+        Debug.Log("mal");
+        OnNextLineAction?.Invoke();
     }
 
     private void OnDogeMain1(InputAction.CallbackContext obj)
@@ -96,78 +106,60 @@ public class InputManager : ScriptableObject
 
     }
 
-    public void SwichActionMap(ActionMaps actionMap,bool enable)
+    public void SwichActionMap(ActionMaps actionMap)
     {
-        if (actionMap == ActionMaps.moveOut)
+        if (actionMap == ActionMaps.MoveOut)
         {
+            controls.MoveOut.Enable();
 
-            if(enable)
-            {
-
-                controls.MoveOut.Enable();
-
-            }
-            else
-            {
-
-                controls.MoveOut.Disable();
-            }
+            controls.DialogueMode.Disable();
+            controls.CombatMode.Disable();
+            controls.Menu.Disable();
+            controls.Doge.Disable();
+            
 
         }
-
-
-
         else if (actionMap == ActionMaps.CombatMode)
         {
 
-            if (enable)
-            {
+            controls.CombatMode.Enable();
 
-                controls.CombatMode.Enable();
-
-            }
-            else
-            {
-
-                controls.CombatMode.Disable();
-            }
+            controls.DialogueMode.Disable();
+            controls.MoveOut.Disable();
+            controls.Menu.Disable();
+            controls.Doge.Disable();
 
         }
-
-
         else if (actionMap == ActionMaps.Menu)
         {
+            controls.Menu.Enable();
 
-            if (enable)
-            {
-
-                controls.Menu.Enable();
-
-            }
-            else
-            {
-
-                controls.Menu.Disable();
-            }
+            controls.DialogueMode.Disable();
+            controls.MoveOut.Disable();
+            controls.CombatMode.Disable();
+            controls.Doge.Disable();
 
         }
-
         else if(actionMap == ActionMaps.Doge)
         {
 
+            controls.Doge.Enable();
 
-            if (enable)
-            {
+            controls.DialogueMode.Disable();
+            controls.MoveOut.Disable();
+            controls.CombatMode.Disable();
+            controls.Menu.Disable();
 
-                controls.Doge.Enable();
+        }
+        else if(actionMap == ActionMaps.DialogueMode)
+        {
 
-            }
-            else
-            {
+            controls.DialogueMode.Enable();
 
-                controls.Doge.Disable();
-            }
-
+            controls.MoveOut.Disable();
+            controls.CombatMode.Disable();
+            controls.Menu.Disable();
+            controls.Doge.Disable();
         }
 
 

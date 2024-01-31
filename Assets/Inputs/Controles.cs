@@ -191,7 +191,7 @@ public partial class @Controles : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""5ffaa75f-31ec-42bc-b9ae-2b191250701e"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -254,7 +254,7 @@ public partial class @Controles : IInputActionCollection2, IDisposable
             ""id"": ""e0452012-50f1-431b-9cb9-129368ff40f8"",
             ""actions"": [
                 {
-                    ""name"": ""New action"",
+                    ""name"": ""Pumpum"",
                     ""type"": ""Button"",
                     ""id"": ""d45bb217-c5c1-43c7-b3a6-05f320a295ec"",
                     ""expectedControlType"": ""Button"",
@@ -265,13 +265,13 @@ public partial class @Controles : IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": """",
+                    ""name"": ""Pimpam"",
                     ""id"": ""881fc409-8b73-48f0-a2a2-0a8a4a03c04e"",
                     ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": """",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -324,6 +324,34 @@ public partial class @Controles : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""DialogueMode"",
+            ""id"": ""5765e947-8302-47a1-8468-77e4c140baa3"",
+            ""actions"": [
+                {
+                    ""name"": ""NextLine"",
+                    ""type"": ""Button"",
+                    ""id"": ""dc7ad81f-0480-4c81-a895-c61dfad9b8e3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""da95adc0-f9b2-4f80-8b88-ba09e2e8e6cc"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextLine"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -362,11 +390,14 @@ public partial class @Controles : IInputActionCollection2, IDisposable
         m_CombatMode_ActionP2 = m_CombatMode.FindAction("ActionP2", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
-        m_Menu_Newaction = m_Menu.FindAction("New action", throwIfNotFound: true);
+        m_Menu_Pumpum = m_Menu.FindAction("Pumpum", throwIfNotFound: true);
         // Doge
         m_Doge = asset.FindActionMap("Doge", throwIfNotFound: true);
         m_Doge_Main1doge = m_Doge.FindAction("Main1doge", throwIfNotFound: true);
         m_Doge_Main2doge = m_Doge.FindAction("Main2doge", throwIfNotFound: true);
+        // DialogueMode
+        m_DialogueMode = asset.FindActionMap("DialogueMode", throwIfNotFound: true);
+        m_DialogueMode_NextLine = m_DialogueMode.FindAction("NextLine", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -516,12 +547,12 @@ public partial class @Controles : IInputActionCollection2, IDisposable
     // Menu
     private readonly InputActionMap m_Menu;
     private IMenuActions m_MenuActionsCallbackInterface;
-    private readonly InputAction m_Menu_Newaction;
+    private readonly InputAction m_Menu_Pumpum;
     public struct MenuActions
     {
         private @Controles m_Wrapper;
         public MenuActions(@Controles wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_Menu_Newaction;
+        public InputAction @Pumpum => m_Wrapper.m_Menu_Pumpum;
         public InputActionMap Get() { return m_Wrapper.m_Menu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -531,16 +562,16 @@ public partial class @Controles : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_MenuActionsCallbackInterface != null)
             {
-                @Newaction.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnNewaction;
-                @Newaction.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnNewaction;
-                @Newaction.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnNewaction;
+                @Pumpum.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnPumpum;
+                @Pumpum.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnPumpum;
+                @Pumpum.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnPumpum;
             }
             m_Wrapper.m_MenuActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Newaction.started += instance.OnNewaction;
-                @Newaction.performed += instance.OnNewaction;
-                @Newaction.canceled += instance.OnNewaction;
+                @Pumpum.started += instance.OnPumpum;
+                @Pumpum.performed += instance.OnPumpum;
+                @Pumpum.canceled += instance.OnPumpum;
             }
         }
     }
@@ -586,6 +617,39 @@ public partial class @Controles : IInputActionCollection2, IDisposable
         }
     }
     public DogeActions @Doge => new DogeActions(this);
+
+    // DialogueMode
+    private readonly InputActionMap m_DialogueMode;
+    private IDialogueModeActions m_DialogueModeActionsCallbackInterface;
+    private readonly InputAction m_DialogueMode_NextLine;
+    public struct DialogueModeActions
+    {
+        private @Controles m_Wrapper;
+        public DialogueModeActions(@Controles wrapper) { m_Wrapper = wrapper; }
+        public InputAction @NextLine => m_Wrapper.m_DialogueMode_NextLine;
+        public InputActionMap Get() { return m_Wrapper.m_DialogueMode; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DialogueModeActions set) { return set.Get(); }
+        public void SetCallbacks(IDialogueModeActions instance)
+        {
+            if (m_Wrapper.m_DialogueModeActionsCallbackInterface != null)
+            {
+                @NextLine.started -= m_Wrapper.m_DialogueModeActionsCallbackInterface.OnNextLine;
+                @NextLine.performed -= m_Wrapper.m_DialogueModeActionsCallbackInterface.OnNextLine;
+                @NextLine.canceled -= m_Wrapper.m_DialogueModeActionsCallbackInterface.OnNextLine;
+            }
+            m_Wrapper.m_DialogueModeActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @NextLine.started += instance.OnNextLine;
+                @NextLine.performed += instance.OnNextLine;
+                @NextLine.canceled += instance.OnNextLine;
+            }
+        }
+    }
+    public DialogueModeActions @DialogueMode => new DialogueModeActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -617,11 +681,15 @@ public partial class @Controles : IInputActionCollection2, IDisposable
     }
     public interface IMenuActions
     {
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnPumpum(InputAction.CallbackContext context);
     }
     public interface IDogeActions
     {
         void OnMain1doge(InputAction.CallbackContext context);
         void OnMain2doge(InputAction.CallbackContext context);
+    }
+    public interface IDialogueModeActions
+    {
+        void OnNextLine(InputAction.CallbackContext context);
     }
 }

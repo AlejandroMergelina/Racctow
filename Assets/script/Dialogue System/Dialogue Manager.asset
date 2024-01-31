@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cacd75f4fe93954dad4ac4984d3a2e8, type: 3}
   m_Name: Dialogue Manager
   m_EditorClassIdentifier: 
+  inputManager: {fileID: 11400000, guid: 93d86641cda0e1d4492b2d6deb264733, type: 2}
