@@ -337,6 +337,15 @@ public partial class @Controles : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""ad4ed3d1-81ef-4a30-994d-77682e522061"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -350,6 +359,39 @@ public partial class @Controles : IInputActionCollection2, IDisposable
                     ""action"": ""NextLine"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""abb2a639-9a59-49fc-a29a-7a26d1e2d1da"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""de52be39-8320-45d2-98f0-b5cdf3fd6e2c"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""1cf56b2d-13f7-4372-9739-11e15eb52252"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -398,6 +440,7 @@ public partial class @Controles : IInputActionCollection2, IDisposable
         // DialogueMode
         m_DialogueMode = asset.FindActionMap("DialogueMode", throwIfNotFound: true);
         m_DialogueMode_NextLine = m_DialogueMode.FindAction("NextLine", throwIfNotFound: true);
+        m_DialogueMode_Move = m_DialogueMode.FindAction("Move", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -622,11 +665,13 @@ public partial class @Controles : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_DialogueMode;
     private IDialogueModeActions m_DialogueModeActionsCallbackInterface;
     private readonly InputAction m_DialogueMode_NextLine;
+    private readonly InputAction m_DialogueMode_Move;
     public struct DialogueModeActions
     {
         private @Controles m_Wrapper;
         public DialogueModeActions(@Controles wrapper) { m_Wrapper = wrapper; }
         public InputAction @NextLine => m_Wrapper.m_DialogueMode_NextLine;
+        public InputAction @Move => m_Wrapper.m_DialogueMode_Move;
         public InputActionMap Get() { return m_Wrapper.m_DialogueMode; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -639,6 +684,9 @@ public partial class @Controles : IInputActionCollection2, IDisposable
                 @NextLine.started -= m_Wrapper.m_DialogueModeActionsCallbackInterface.OnNextLine;
                 @NextLine.performed -= m_Wrapper.m_DialogueModeActionsCallbackInterface.OnNextLine;
                 @NextLine.canceled -= m_Wrapper.m_DialogueModeActionsCallbackInterface.OnNextLine;
+                @Move.started -= m_Wrapper.m_DialogueModeActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_DialogueModeActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_DialogueModeActionsCallbackInterface.OnMove;
             }
             m_Wrapper.m_DialogueModeActionsCallbackInterface = instance;
             if (instance != null)
@@ -646,6 +694,9 @@ public partial class @Controles : IInputActionCollection2, IDisposable
                 @NextLine.started += instance.OnNextLine;
                 @NextLine.performed += instance.OnNextLine;
                 @NextLine.canceled += instance.OnNextLine;
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
             }
         }
     }
@@ -691,5 +742,6 @@ public partial class @Controles : IInputActionCollection2, IDisposable
     public interface IDialogueModeActions
     {
         void OnNextLine(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
     }
 }

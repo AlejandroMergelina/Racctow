@@ -45,8 +45,13 @@ public class DialogueDisPlay : MonoBehaviour
 
     public void ContinueButtom()
     {
+        if (displayLineCoroutine != null)
+        {
 
-        if (canContinueToNextLine)
+            StopCoroutine(displayLineCoroutine);
+            DisplayAllLine(currentStory.currentText);
+
+        }else if (canContinueToNextLine)
         {
 
             ContinueStory();
@@ -79,19 +84,11 @@ public class DialogueDisPlay : MonoBehaviour
 
     public void ContinueStory()
     {
-
+        
         if (currentStory.canContinue)
-        {
-
-            if (displayLineCoroutine != null)
-            {
-
-                StopCoroutine(displayLineCoroutine);
-
-            }
+        {            
 
             displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
-
 
             HandleTags(currentStory.currentTags);
         }
@@ -100,9 +97,11 @@ public class DialogueDisPlay : MonoBehaviour
 
             ExitDialogueMode();
 
-        }        
+        }
 
     }
+
+
 
     IEnumerator DisplayLine(string line)
     {
@@ -125,6 +124,22 @@ public class DialogueDisPlay : MonoBehaviour
 
         canContinueToNextLine = true;
 
+        displayLineCoroutine = null;
+
+    }
+
+    void DisplayAllLine(string line)
+    {
+        dialogueText.text = "";
+
+        dialogueText.text = line;
+
+        continueButtom.SetActive(true);
+        DisplayChoices();
+
+        canContinueToNextLine = true;
+
+        displayLineCoroutine = null;
     }
 
     void HideChoices()
