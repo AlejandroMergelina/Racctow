@@ -1,6 +1,7 @@
+INCLUDE globals.ink
 hola1#speaker:Paco
 
--->main
+{actitud == "": ->main | ->alreadyChose}
 
 
 
@@ -9,19 +10,21 @@ Hola rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
 ¿Comovas?
     +[bien]
         Bien verdad #speaker:Prota
+        -->EJEMPLO("bien")
     +[mal]
         Como que mal #speaker:Prota
--entonces adios
+        -->EJEMPLO("mal")
+
 ->DONE
--->EJEMPLO
 
 
-=== EJEMPLO ===
-Hola a todos, ¿cómo estáis?
-    +[Fatal]
-      Pues vaya....
-      -> DONE
-    +[Fenomenal]
-        Cuanto me alegro!
-        -> DONE
+
+=== EJEMPLO(chosen) ===
+~ actitud = chosen
+bueno en relidad me da igual, pero sabias que <color=\#FF1E35> Tom Holand </color> va a ser el nuevo <color=\#FF1E35> Dani Fantom </color>
+entonces adios
 -> END
+
+=== alreadyChose ===
+ya he hablado contigo, largate
+->END
