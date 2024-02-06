@@ -50,7 +50,7 @@ public class InputManager : ScriptableObject
 
     private void OnNextLine(InputAction.CallbackContext obj)
     {
-        Debug.Log("mal");
+        
         OnNextLineAction?.Invoke();
     }
 

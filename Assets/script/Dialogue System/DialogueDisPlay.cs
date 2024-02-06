@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using Ink.Runtime;
 
-public class DialogueDisPlay : MonoBehaviour
+public class DialogueDisplay : MonoBehaviour
 {
     [SerializeField]
     private float typingSpeed;
@@ -45,13 +45,15 @@ public class DialogueDisPlay : MonoBehaviour
 
     public void ContinueButtom()
     {
+        
         if (displayLineCoroutine != null)
         {
 
             StopCoroutine(displayLineCoroutine);
             DisplayAllLine(currentStory.currentText);
 
-        }else if (canContinueToNextLine)
+        }
+        else if (canContinueToNextLine && currentStory.currentChoices.Count <= 0)
         {
 
             ContinueStory();
@@ -106,17 +108,39 @@ public class DialogueDisPlay : MonoBehaviour
     IEnumerator DisplayLine(string line)
     {
 
-        dialogueText.text = "";
+        dialogueText.text = line;
+        dialogueText.maxVisibleCharacters = 0;
 
         continueButtom.SetActive(false);
         HideChoices();
 
         canContinueToNextLine = false;
 
+        bool isAddingRichTextTag = false;
+
         foreach (char letter in line.ToCharArray())
         {
-            dialogueText.text += letter;
-            yield return new WaitForSeconds(typingSpeed);
+            if(letter == '<' || isAddingRichTextTag)
+            {
+
+                isAddingRichTextTag = true;
+                dialogueText.text += letter;
+                if(letter == '>')
+                {
+
+                    isAddingRichTextTag = false;
+
+                }
+
+            }
+            else
+            {
+
+                dialogueText.maxVisibleCharacters++;
+                yield return new WaitForSeconds(typingSpeed);
+
+            }
+            
         }
 
         continueButtom.SetActive(true);
@@ -130,9 +154,8 @@ public class DialogueDisPlay : MonoBehaviour
 
     void DisplayAllLine(string line)
     {
-        dialogueText.text = "";
-
-        dialogueText.text = line;
+        
+        dialogueText.maxVisibleCharacters = line.Length;
 
         continueButtom.SetActive(true);
         DisplayChoices();
@@ -178,7 +201,7 @@ public class DialogueDisPlay : MonoBehaviour
 
     private void DisplayChoices()
     {
-        print("hola");
+        
 
         List<Choice> currentChoices = currentStory.currentChoices;
 
