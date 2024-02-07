@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//cambiar a scriptable y hacer array de Objetos
 public class PruvasParaCogerItems : MonoBehaviour
 {
 

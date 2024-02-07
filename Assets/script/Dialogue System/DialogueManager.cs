@@ -3,27 +3,42 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using Inventory.Model;
 
 [CreateAssetMenu(menuName = "Dialogue Manager")]
 public class DialogueManager : ScriptableObject
 {
-    public event Action<TextAsset> OnEnterDialogueMode;
+    [SerializeField]
+    private TextAsset loadGlobalsJSON;
+
+    public event Action<Story> OnEnterDialogueMode;
     public event Action OnContinuedialog;
 
     [SerializeField]
     private InputManager inputManager;
 
+    [SerializeField]
+    private InventorySO inventory;
+
+    private DialogueVariables dialogueVariables;
+
     private void OnEnable()
     {
         inputManager.OnNextLineAction += ContinueDialogue;
+        
+        dialogueVariables = new DialogueVariables(loadGlobalsJSON);
+
     }
 
 
     public void EnterDialogueMode(TextAsset inkJSON)
     {
+        Story currentStory = new Story(inkJSON.text);
+        dialogueVariables.StartListening(currentStory);
 
         inputManager.SwichActionMap(ActionMaps.DialogueMode);
-        OnEnterDialogueMode?.Invoke(inkJSON);
+        currentStory.BindExternalFunction("PickUpItem", () => Debug.Log("consegiste algo"));
+        OnEnterDialogueMode?.Invoke(currentStory);
 
     }
 
@@ -33,11 +48,22 @@ public class DialogueManager : ScriptableObject
         OnContinuedialog?.Invoke();
     }
 
-    public void ExitDialogueMode()
+    public void ExitDialogueMode(Story story)
     {
+
+        dialogueVariables.StopListening(story);
 
         inputManager.SwichActionMap(ActionMaps.MoveOut);
 
+    }
+
+    public Ink.Runtime.Object GetVariableState(string variableName)
+    {
+
+        Ink.Runtime.Object variableValue = null;
+        dialogueVariables.Variables.TryGetValue(variableName, out variableValue);
+
+        return variableValue;
     }
 
 }

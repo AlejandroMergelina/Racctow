@@ -63,10 +63,10 @@ public class DialogueDisplay : MonoBehaviour
     }
 
 
-    void EnterDialogueMode(TextAsset inkJSON)
+    void EnterDialogueMode(Story currentStory)
     {
 
-        currentStory = new Story(inkJSON.text);
+        this.currentStory = currentStory;
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
 
@@ -80,7 +80,7 @@ public class DialogueDisplay : MonoBehaviour
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
-        dialogueManager.ExitDialogueMode();
+        dialogueManager.ExitDialogueMode(currentStory);
 
     }
 

@@ -26,7 +26,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (playerInRange)
         {
-
+            
             dialogueManager.EnterDialogueMode(inkJSON);
 
         }

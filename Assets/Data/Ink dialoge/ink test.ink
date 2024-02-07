@@ -1,19 +1,19 @@
 INCLUDE globals.ink
-hola1#speaker:Paco
+EXTERNAL PickUpItem()
 
 {actitud == "": ->main | ->alreadyChose}
 
 
 
 === main ===
-Hola rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr#speaker:Paco
+Hola#speaker:Paco
 ¿Comovas?
     +[bien]
         Bien verdad #speaker:Prota
-        -->EJEMPLO("bien")
+        ->EJEMPLO("bien")
     +[mal]
         Como que mal #speaker:Prota
-        -->EJEMPLO("mal")
+        ->EJEMPLO("mal")
 
 ->DONE
 
@@ -21,8 +21,8 @@ Hola rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
 
 === EJEMPLO(chosen) ===
 ~ actitud = chosen
-bueno en relidad me da igual, pero sabias que <color=\#FF1E35> Tom Holand </color> va a ser el nuevo <color=\#FF1E35> Dani Fantom </color>
-entonces adios
+Bueno en relidad me da igual, toma <color=\#FF1E35> esto </color> para que me dejes empaz.
+~ PickUpItem()
 -> END
 
 === alreadyChose ===
