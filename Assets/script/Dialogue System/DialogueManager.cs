@@ -18,7 +18,7 @@ public class DialogueManager : ScriptableObject
     private InputManager inputManager;
 
     [SerializeField]
-    private InventorySO inventory;
+    private InventoryManegment inventory;
 
     private DialogueVariables dialogueVariables;
 
@@ -37,7 +37,7 @@ public class DialogueManager : ScriptableObject
         dialogueVariables.StartListening(currentStory);
 
         inputManager.SwichActionMap(ActionMaps.DialogueMode);
-        currentStory.BindExternalFunction("PickUpItem", () => Debug.Log("consegiste algo"));
+        currentStory.BindExternalFunction("PickUpItem", (string name, int quantity) => inventory.PickUpItem(name, quantity));
         OnEnterDialogueMode?.Invoke(currentStory);
 
     }
