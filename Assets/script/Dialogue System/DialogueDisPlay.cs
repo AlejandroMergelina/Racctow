@@ -34,6 +34,11 @@ public class DialogueDisplay : MonoBehaviour
     [SerializeField]
     private TMP_Text[] choicesText;
 
+    [SerializeField]
+    private AudioClip clip;
+    [SerializeField]
+    private bool stopAudioSource;
+
     private const string speakerTag = "speaker";
     private void OnEnable()
     {
@@ -137,6 +142,13 @@ public class DialogueDisplay : MonoBehaviour
             {
 
                 dialogueText.maxVisibleCharacters++;
+                if(stopAudioSource)
+                {
+
+                    AudioManager.Instance.StopSound();
+
+                }
+                AudioManager.Instance.PlaySound(clip);
                 yield return new WaitForSeconds(typingSpeed);
 
             }

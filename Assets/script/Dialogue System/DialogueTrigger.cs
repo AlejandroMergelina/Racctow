@@ -1,6 +1,9 @@
+using Inventory.Model;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using static UnityEditor.Progress;
 
 public class DialogueTrigger : MonoBehaviour
 {
@@ -8,12 +11,13 @@ public class DialogueTrigger : MonoBehaviour
     private InputManager input;
 
     [SerializeField]
-    private DialogueManager dialogueManager;
+    protected DialogueManager dialogueManager;
 
-    private bool playerInRange = false;
+    protected bool playerInRange = false;
 
     [SerializeField]
-    private TextAsset inkJSON;
+    protected TextAsset inkJSON;
+
 
     private void OnEnable()
     {
@@ -22,7 +26,7 @@ public class DialogueTrigger : MonoBehaviour
         
     }
 
-    private void Interact()
+    protected virtual void Interact()
     {
         if (playerInRange)
         {
@@ -56,5 +60,6 @@ public class DialogueTrigger : MonoBehaviour
         }
 
     }
+
 
 }

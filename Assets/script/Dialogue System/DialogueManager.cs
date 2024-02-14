@@ -17,9 +17,6 @@ public class DialogueManager : ScriptableObject
     [SerializeField]
     private InputManager inputManager;
 
-    [SerializeField]
-    private InventoryManegment inventory;
-
     private DialogueVariables dialogueVariables;
 
     private void OnEnable()
@@ -31,13 +28,23 @@ public class DialogueManager : ScriptableObject
     }
 
 
+    public void EnterDialogueMode(TextAsset inkJSON, DialogueTrigerAction dialogue)
+    {
+        Story currentStory = new Story(inkJSON.text);
+        dialogueVariables.StartListening(currentStory);
+
+        inputManager.SwichActionMap(ActionMaps.DialogueMode);
+        currentStory.BindExternalFunction("PickUpItem", () => dialogue.Action());
+        OnEnterDialogueMode?.Invoke(currentStory);
+
+    }
+
     public void EnterDialogueMode(TextAsset inkJSON)
     {
         Story currentStory = new Story(inkJSON.text);
         dialogueVariables.StartListening(currentStory);
 
         inputManager.SwichActionMap(ActionMaps.DialogueMode);
-        currentStory.BindExternalFunction("PickUpItem", (string name, int quantity) => inventory.PickUpItem(name, quantity));
         OnEnterDialogueMode?.Invoke(currentStory);
 
     }
