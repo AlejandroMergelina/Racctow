@@ -62,4 +62,11 @@ public class AudioManager : MonoBehaviour
 
     }
 
+    public void SetPitch2Fbx(float pitch)
+    {
+
+        fbxSource.pitch = pitch;
+
+    }
+
 }

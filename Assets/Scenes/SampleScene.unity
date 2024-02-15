@@ -1249,7 +1249,7 @@ MonoBehaviour:
   typingSpeed: 0.04
   dialogueManager: {fileID: 11400000, guid: 45f44bd4f5234564d9e2154fc106813c, type: 2}
   dialoguePanel: {fileID: 138244625}
-  continueButtom: {fileID: 1248189899}
+  continueIcone: {fileID: 1248189899}
   dialogueText: {fileID: 2003141528}
   displayNameText: {fileID: 190867766}
   choices:
@@ -1260,7 +1260,11 @@ MonoBehaviour:
   - {fileID: 67281525}
   - {fileID: 1682789031}
   - {fileID: 782189205}
-  clip: {fileID: 8300000, guid: 6157433989aea6348938e5ddcac8f69b, type: 3}
+  clips:
+  - {fileID: 8300000, guid: 6157433989aea6348938e5ddcac8f69b, type: 3}
+  frecuencyLevel: 4
+  minPitch: 2.16
+  maxPitch: -0.13
   stopAudioSource: 1
 --- !u!1001 &322824562
 PrefabInstance:
