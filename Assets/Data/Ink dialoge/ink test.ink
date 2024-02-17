@@ -6,7 +6,7 @@ EXTERNAL PickUpItem()
 
 
 === main ===
-Hola#speaker:Paco
+Hola#speaker:Paco#audio:beep_1
 ¿Comovas?
     +[bien]
         Bien verdad #speaker:Prota

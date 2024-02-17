@@ -35,28 +35,58 @@ public class DialogueDisplay : MonoBehaviour
     private TMP_Text[] choicesText;
 
     [Header("Audio")]
+    [SerializeField]
+    private DialogueAudioInfoSO defaultAudioInfo;
+    [SerializeField]
+    private DialogueAudioInfoSO[] audioInfos;
 
     [SerializeField]
-    private AudioClip[] clips;
+    private bool makePredictable;
 
-    [SerializeField, Range(1, 5)]
-    private int frecuencyLevel;
+    private Dictionary<string, DialogueAudioInfoSO> audioInfoDictionary;
 
-    [SerializeField, Range(-3, 3)]
-    private float minPitch;
+    private DialogueAudioInfoSO currentAudioInfo;
 
-    [SerializeField, Range(-3, 3)]
-    private float maxPitch;
-
-    [SerializeField]
-    private bool stopAudioSource;
-
+    //Ink Tags
     private const string speakerTag = "speaker";
+    private const string audioTag = "audio";
+
     private void OnEnable()
     {
 
         dialogueManager.OnEnterDialogueMode += EnterDialogueMode;
         dialogueManager.OnContinuedialog += ContinueButtom;
+
+        currentAudioInfo = defaultAudioInfo;
+        InitializeAudioInfoDictionary();
+
+    }
+
+    private void InitializeAudioInfoDictionary()
+    {
+
+        audioInfoDictionary = new Dictionary<string, DialogueAudioInfoSO>();
+        audioInfoDictionary.Add(defaultAudioInfo.ID, defaultAudioInfo);
+        foreach (DialogueAudioInfoSO audioInfo in audioInfos)
+        {
+
+            audioInfoDictionary.Add(audioInfo.ID, audioInfo);
+
+        }
+
+    }
+
+    private void SetCurrentAudioInfo(string iD)
+    {
+
+        DialogueAudioInfoSO audioInfo = null;
+        audioInfoDictionary.TryGetValue(iD, out audioInfo);
+        if (audioInfo != null)
+        {
+
+            currentAudioInfo = audioInfo;
+
+        }
 
     }
 
@@ -97,6 +127,9 @@ public class DialogueDisplay : MonoBehaviour
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+
+        SetCurrentAudioInfo(defaultAudioInfo.ID);
+
         dialogueManager.ExitDialogueMode(currentStory);
 
     }
@@ -106,10 +139,10 @@ public class DialogueDisplay : MonoBehaviour
 
         if (currentStory.canContinue)
         {
-
-            displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
-
+            string nextLine = currentStory.Continue();
             HandleTags(currentStory.currentTags);
+            displayLineCoroutine = StartCoroutine(DisplayLine(nextLine));
+
         }
         else
         {
@@ -153,7 +186,7 @@ public class DialogueDisplay : MonoBehaviour
             else
             {
 
-                PlayDialogueSound(dialogueText.maxVisibleCharacters);
+                PlayDialogueSound(dialogueText.maxVisibleCharacters, dialogueText.text[dialogueText.maxVisibleCharacters]);
                 dialogueText.maxVisibleCharacters++;
 
                 yield return new WaitForSeconds(typingSpeed);
@@ -171,9 +204,14 @@ public class DialogueDisplay : MonoBehaviour
 
     }
 
-    private void PlayDialogueSound(int currentDisplayedCharacterCount)
+    private void PlayDialogueSound(int currentDisplayedCharacterCount, char currentCharacter)
     {
 
+        AudioClip[] clips = currentAudioInfo.Clips;
+        int frecuencyLevel = currentAudioInfo.FrecuencyLevel;
+        float minPitch = currentAudioInfo.MinPitch;
+        float maxPitch = currentAudioInfo.MaxPitch;
+        bool stopAudioSource = currentAudioInfo.StopAudioSource;
 
         if(currentDisplayedCharacterCount % frecuencyLevel == 0)
         {
@@ -185,11 +223,47 @@ public class DialogueDisplay : MonoBehaviour
 
             }
 
-            int randomIndex = Random.Range(0, clips.Length);
+            AudioClip soundClip = null;
 
-            AudioManager.Instance.SetPitch2Fbx(Random.Range(minPitch, maxPitch));
+            if (makePredictable)
+            {
 
-            AudioManager.Instance.PlaySound(clips[randomIndex]);
+                int hashCode = currentCharacter.GetHashCode();
+                int predictableIndex = hashCode % clips.Length;
+                soundClip = clips[predictableIndex];
+
+                int minPitchInt = (int)(minPitch * 100);
+                int maxPitchInt = (int)(maxPitch * 100);
+                int pitchRangeInt = maxPitchInt - minPitchInt;
+
+                if(pitchRangeInt != 0)
+                {
+
+                    int predictablePitchInt = (hashCode % pitchRangeInt) + minPitchInt;
+                    float predictablePitch = predictablePitchInt / 100f;
+                    AudioManager.Instance.SetPitch2Fbx(predictablePitch);
+
+                }
+                else
+                {
+
+                    AudioManager.Instance.SetPitch2Fbx(minPitchInt);
+
+                }
+            }
+            else
+            {
+
+                int randomIndex = Random.Range(0, clips.Length);
+                soundClip = clips[randomIndex];
+
+                AudioManager.Instance.SetPitch2Fbx(Random.Range(minPitch, maxPitch));
+
+            }
+
+
+
+            AudioManager.Instance.PlaySound(soundClip);
 
         }
 
@@ -234,6 +308,12 @@ public class DialogueDisplay : MonoBehaviour
             {
 
                 displayNameText.text = tagValue;
+
+            }
+            else if(tagKey == audioTag)
+            {
+
+                SetCurrentAudioInfo(tagValue);
 
             }
         }

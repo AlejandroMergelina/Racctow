@@ -1260,12 +1260,10 @@ MonoBehaviour:
   - {fileID: 67281525}
   - {fileID: 1682789031}
   - {fileID: 782189205}
-  clips:
-  - {fileID: 8300000, guid: 6157433989aea6348938e5ddcac8f69b, type: 3}
-  frecuencyLevel: 4
-  minPitch: 2.16
-  maxPitch: -0.13
-  stopAudioSource: 1
+  defaultAudioInfo: {fileID: 11400000, guid: e4136a14b1200a64396b501b07375e42, type: 2}
+  audioInfos:
+  - {fileID: 11400000, guid: 8ac85242ce95d1a4b9967dba05cdb99f, type: 2}
+  makePredictable: 1
 --- !u!1001 &322824562
 PrefabInstance:
   m_ObjectHideFlags: 0
