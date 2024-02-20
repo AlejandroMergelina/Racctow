@@ -7,64 +7,65 @@ public class SwichModeControler : MonoBehaviour
     [SerializeField]
     private GameObject camera1;
     [SerializeField]
-    private List<GameObject> objectsMode1;
+    private List<GameObject> objectsNavigationMode;
 
     [SerializeField]
     private GameObject camera2;
     [SerializeField]
-    private GameObject[] objectsMode2;
+    private List<GameObject> objectsCombatMode;
     [SerializeField]
     private GameManager gameManager;
 
     private void OnEnable()
     {
-        gameManager.OnChangeCamera += SwichCameras;
+        gameManager.OnChangeCamera2CombatMode += ChangeCamera2CombatMode;
+        gameManager.OnChangeCamera2NavigationMode += ChangeCamera2NavegationMode;
+        gameManager.OnChageNavigationZone += GameManager_OnChageNavigationZone;
     }
 
-    void SwichCameras()
+    private void GameManager_OnChageNavigationZone(List<GameObject> obj)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    void ChangeCamera2NavegationMode()
     {
 
+        camera1.SetActive(false);
+        camera2.SetActive(true);
 
-        if(camera1.active == true)
+        foreach (GameObject gM in objectsNavigationMode)
         {
 
-            camera1.SetActive(false);
-            camera2.SetActive(true);
+            gM.SetActive(false);
 
-            foreach (GameObject gM in objectsMode1)
-            {
-
-                gM.SetActive(false);
-
-            }
-            foreach (GameObject gM in objectsMode2)
-            {
-
-                gM.SetActive(true);
-
-            }
         }
-        else
+        foreach (GameObject gM in objectsCombatMode)
         {
 
-            camera1.SetActive(false);
-            camera2.SetActive(true);
-
-            foreach (GameObject gM in objectsMode2)
-            {
-
-                gM.SetActive(true);
-
-            }
-            foreach (GameObject gM in objectsMode1)
-            {
-
-                gM.SetActive(false);
-
-            }
+            gM.SetActive(true);
 
         }
+        
+    }
 
+    public void ChangeCamera2CombatMode()
+    {
+        camera1.SetActive(false);
+        camera2.SetActive(true);
+
+        foreach (GameObject gM in objectsCombatMode)
+        {
+
+            gM.SetActive(true);
+
+        }
+        foreach (GameObject gM in objectsNavigationMode)
+        {
+
+            gM.SetActive(false);
+
+        }
 
     }
 
