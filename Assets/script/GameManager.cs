@@ -7,27 +7,28 @@ using System;
 public class GameManager : ScriptableObject
 {
 
-    public event Action OnChangeCamera2CombatMode;
-    public event Action OnChangeCamera2NavigationMode;
-    public event Action<List<GameObject>> OnChageNavigationZone;
 
-    public void ChangeCamera2CombatMode()
+    public event Action OnChange2CombatMode;
+    public event Action OnChange2NavigationMode;
+    public event Action<GameObject> OnChageNavigationZone;
+
+    public void Change2CombatMode()
     {
 
-        OnChangeCamera2CombatMode?.Invoke();
+        OnChange2CombatMode?.Invoke();
 
     }
-    public void ChangeCamera2NavigationMode()
+    public void Change2NavigationMode()
     {
 
-        OnChangeCamera2NavigationMode?.Invoke();
+        OnChange2NavigationMode?.Invoke();
 
     }
 
-    public void ChangeNavigationZone(List<GameObject> gameObjects2Change)
+    public void ChangeNavigationZone(GameObject zone2Change)
     {
 
-        OnChageNavigationZone?.Invoke(gameObjects2Change);
+        OnChageNavigationZone?.Invoke(zone2Change);
 
     }
 

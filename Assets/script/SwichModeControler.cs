@@ -4,49 +4,43 @@ using UnityEngine;
 
 public class SwichModeControler : MonoBehaviour
 {
+
     [SerializeField]
     private GameObject camera1;
     [SerializeField]
-    private List<GameObject> objectsNavigationMode;
+    private GameObject zoneNavigationMode;
 
     [SerializeField]
     private GameObject camera2;
     [SerializeField]
-    private List<GameObject> objectsCombatMode;
+    private GameObject zoneCombatMode;
     [SerializeField]
     private GameManager gameManager;
 
     private void OnEnable()
     {
-        gameManager.OnChangeCamera2CombatMode += ChangeCamera2CombatMode;
-        gameManager.OnChangeCamera2NavigationMode += ChangeCamera2NavegationMode;
-        gameManager.OnChageNavigationZone += GameManager_OnChageNavigationZone;
+
+        gameManager.OnChange2CombatMode += ChangeCamera2CombatMode;
+        gameManager.OnChange2NavigationMode += ChangeCamera2NavegationMode;
+        gameManager.OnChageNavigationZone += ChageObjectForNavigationZone;
     }
 
-    private void GameManager_OnChageNavigationZone(List<GameObject> obj)
+    private void ChageObjectForNavigationZone(GameObject obj)
     {
-        throw new System.NotImplementedException();
+
+        zoneNavigationMode = obj;
+
     }
 
     void ChangeCamera2NavegationMode()
     {
 
-        camera1.SetActive(false);
-        camera2.SetActive(true);
+        camera1.SetActive(true);
+        camera2.SetActive(false);
 
-        foreach (GameObject gM in objectsNavigationMode)
-        {
-
-            gM.SetActive(false);
-
-        }
-        foreach (GameObject gM in objectsCombatMode)
-        {
-
-            gM.SetActive(true);
-
-        }
-        
+        zoneNavigationMode.SetActive(true);
+        zoneCombatMode.SetActive(false);
+                
     }
 
     public void ChangeCamera2CombatMode()
@@ -54,19 +48,8 @@ public class SwichModeControler : MonoBehaviour
         camera1.SetActive(false);
         camera2.SetActive(true);
 
-        foreach (GameObject gM in objectsCombatMode)
-        {
-
-            gM.SetActive(true);
-
-        }
-        foreach (GameObject gM in objectsNavigationMode)
-        {
-
-            gM.SetActive(false);
-
-        }
-
+        zoneNavigationMode.SetActive(false);
+        zoneCombatMode.SetActive(true);
     }
 
 }

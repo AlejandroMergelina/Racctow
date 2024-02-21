@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Hitter : MonoBehaviour
 {
+
+
+
     [SerializeField]
     private float damage;
 
@@ -18,7 +22,7 @@ public class Hitter : MonoBehaviour
         if(other.CompareTag(targetToDamage))
         {
             print("te pille");
-            gameManager.ChangeCamera();
+            gameManager.Change2CombatMode();
         }
     }
 }

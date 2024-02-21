@@ -48,7 +48,7 @@ public class BattleSistem : MonoBehaviour
     public static BattleSistem Instance;
 
 
-    public void Start()
+    public void StartCombat()
     {
         state = BattleState.START;
 
